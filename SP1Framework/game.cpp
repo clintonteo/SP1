@@ -243,9 +243,9 @@ void update(double dt, player & user)
     user.inventory3 = "another item";
 
     // TEST FOR POINTS
-    if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && user.TTaken == 0)
+	if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && user.TTaken != 1)
     {
-        user.points += 1;
+        user.points++;
 		user.TTaken = 1; 
     }
 
