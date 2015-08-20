@@ -9,12 +9,15 @@ using std::endl;
 using std::string;
 PMAP MapRender;
 const char block = 219;
-void createMap(COORD charLocation, bool blind, int range)
+const char grass = 177;
+const char lava = 247;
+const char trap = 178;
+void createMap(COORD charLocation, bool blind, int range, bool switch1)
 {
     // clear previous screen
     colour(0x0F);
     cls();
-	MapRender = load_map("map.txt");
+	MapRender = load_map("stage1.txt");
     //render the game
 
     //render test screen code (not efficient at all)
@@ -30,6 +33,7 @@ void createMap(COORD charLocation, bool blind, int range)
 	cout << "Coordinates :" << charLocation.X << " " << charLocation.Y;
 	if(blind == 1)
 	{
+		//Set Offset when player is near the Edge of the screen
 		if(charLocation.X < temprange)
 		{
 			Xoffset = temprange - charLocation.X;
@@ -41,7 +45,8 @@ void createMap(COORD charLocation, bool blind, int range)
 
 		for(int i=0;i < range*2+1-Yoffset;++i)
 		{
-			if(charLocation.Y+temprange-i < 27 && charLocation.X-temprange < 79)// && charLocation.Y-temprange-Yoffset > 0)
+			//Cout Char Elements Before the player (X-axis)
+			if(charLocation.Y+temprange-i < MapRender->nrow && charLocation.X-temprange < MapRender->ncol)
 			{
 			// && charLocation.Y-temprange+offset >-1  charLocation.X-temprange+offset >-1
 			gotoXY(charLocation.X-temprange+Xoffset, charLocation.Y+temprange-i);
@@ -50,25 +55,61 @@ void createMap(COORD charLocation, bool blind, int range)
 			for(int j = 0;j < range-Xoffset;++j)
 			{
 				line = MapRender->data[charLocation.Y+temprange-i];
-				if(line[charLocation.X-temprange+Xoffset+j] == 'B')
+				if(line[charLocation.X-temprange+Xoffset+j] == 'W')
 				{
+					colour(1);
 					cout << block;
+				}else if(line[charLocation.X-temprange+Xoffset+j] == 'D')
+				{
+					colour(0xff);
+					cout << trap;
+				}else if(line[charLocation.X-temprange+Xoffset+j] == 'X' && switch1 == 0)
+				{
+					colour(0xf1);
+					cout << "X";
+				}else if(line[charLocation.X-temprange+Xoffset+j] == '1')
+				{
+					colour(8);
+					cout << "/";
+				}else if(line[charLocation.X-temprange+Xoffset+j] == 'L')
+				{
+					colour(0x0C);
+					cout << lava;
 				}else{
-					cout << " ";
+					colour(0xf7);
+					cout << grass;
 				}
 			}
-			//}
+			//Cout Char Elements After the player (Y-axis)
 			for(int k = 0;k < range+1;++k)
 			{
 				if(charLocation.X == 0)
 				{
 					line = MapRender->data[charLocation.Y+temprange-i];
 				}
-				if(line[charLocation.X+k] == 'B')
+				if(line[charLocation.X+k] == 'W')
 				{
+					colour(1);
 				cout << block;
+				}else if(line[charLocation.X+k] == 'D')
+				{
+					colour(0xff);
+					cout << trap;
+				}else if(line[charLocation.X+k] == '1')
+				{
+					colour(8);
+					cout << "/";
+				}else if(line[charLocation.X+k] == 'X'&& switch1 == 0)
+				{
+					colour(0xf1);
+					cout << "X";
+				}else if(line[charLocation.X+k] == 'L')
+				{
+					colour(0x0C);
+					cout << lava;
 				}else{
-					cout << " ";
+					colour(0xf7);
+					cout << grass;
 				}
 			}
 			}
@@ -84,17 +125,21 @@ void createMap(COORD charLocation, bool blind, int range)
 		//}
 	}else
 	{
-		for(int i=0;i<27;++i)
+		//Cout the whole map
+		for(int i=0;i<MapRender->nrow;++i)
 		{
 			gotoXY(0, i);
-			for(int j=0; j<79; ++j)
+			for(int j=0; j<MapRender->ncol; ++j)
 			{
-				if(MapRender->data[i][j] == 'B')
+				if(MapRender->data[i][j] == 'W')
 				{
 					cout << block;
+				}else if(MapRender->data[i][j] == 'D')
+				{
+					cout << "D";
 				}else
 				{
-					cout << " ";
+					cout << ".";
 				}
 			}
 		}
