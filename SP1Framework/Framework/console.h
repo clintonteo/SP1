@@ -5,7 +5,7 @@
 
 // Go to a specific coordinate in the console
 // Top left is origin (0,0), consoles usually have a width of 80 and height of 40
-void gotoXY(int x,int y);
+;void gotoXY(int x,int y);
 void gotoXY(COORD c);
 
 // Sets the test and background to be of a specific colour
