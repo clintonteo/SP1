@@ -25,6 +25,8 @@ PMAP MapCollision;
 int lastX = 0;
 int lastY = 0;
 
+player user;
+
 void init()
 {
     // Set precision for floating point output
@@ -50,11 +52,11 @@ void init()
 	//15 69 23
     elapsedTime = 0.0;
 	MapCollision = load_map("stage1.txt");
-
-   /* player user;
-    bool damage = 0;
+    
     user.lives = 10;
-    int * livesptr = &user.lives;*/
+    user.points = 0;
+    user.select = 1;
+   
 }
 
 void shutdown()
@@ -76,7 +78,7 @@ void getInput()
 
    
 
-void update(double dt, player & user)
+void update(double dt)
 {
     // get the delta time
     elapsedTime += dt;
@@ -180,7 +182,7 @@ void update(double dt, player & user)
 // Input	: void
 // Output	: void
 //--------------------------------------------------------------
-void render( player & user )
+void render()
 {
     // Creating Map
 	createMap(charLocation, 1, 6, flipswitch1);
