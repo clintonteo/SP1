@@ -21,16 +21,6 @@ struct player
     int select;
 };
 
-enum items
-{
-    item1 = 1,
-    item2,
-    item3,
-    item4,
-    item5,
-    item6,
-};
-
 void timer (double g_dElapsedTime);
 void lives (player & user);
 void divider();
