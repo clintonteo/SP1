@@ -57,6 +57,7 @@ void init()
     user.points = 0;
     user.select = 1;
 	user.boost = 0;
+	user.ITaken = 0;
    
 }
 
@@ -299,9 +300,10 @@ void render()
 		gotoXY(50, 9);
 		cout << "YOU Activated Y Switch!";
 	}
-	if(MapCollision->data[charLocation.Y][charLocation.X] == 'I')
+	if(MapCollision->data[charLocation.Y][charLocation.X] == 'I' && user.ITaken == 0)
 	{
 		user.boost = 1;
+		user.ITaken = 1;
 		gotoXY(50, 9);
 		cout << "You can now boost!" << user.boost;
 	}

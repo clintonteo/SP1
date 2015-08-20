@@ -20,9 +20,13 @@ struct player
     int points;
     int select;
 	bool boost;
+	bool ITaken;
 	bool explode;
+	bool JTaken;
 	bool strength;
+	bool KTaken;
 	bool invis;
+	bool LTaken;
 };
 
 void timer (double g_dElapsedTime);
