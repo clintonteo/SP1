@@ -14,6 +14,10 @@ struct player
     string inventory4;
     string inventory5;
     int points;
+	bool switch1;
+	bool switch2;
+	bool switch3;
+	bool TTaken;
 };
 
 enum items

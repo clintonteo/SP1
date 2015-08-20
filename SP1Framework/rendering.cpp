@@ -69,6 +69,16 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1, bool swi
 					colour(0xf1);
 					cout << "X";
 				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'Y' && switch2 == 0)
+				{
+					colour(0xf1);
+					cout << "Y";
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'Z' && switch3 == 0)
+				{
+					colour(0xf1);
+					cout << "Z";
+				}
 				else if(line[charLocation.X-temprange+Xoffset+j] == '1' && switch1 == 0)
 				{
 					colour(8);
@@ -133,7 +143,18 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1, bool swi
 				{
 					colour(0xf1);
 					cout << "X";
-				}else if(line[charLocation.X+k] == '=')
+				}
+				else if(line[charLocation.X+k] == 'Y' && switch2 == 0)
+				{
+					colour(0xf1);
+					cout << "Y";
+				}
+				else if(line[charLocation.X+k] == 'Z' && switch3 == 0)
+				{
+					colour(0xf1);
+					cout << "";
+				}
+				else if(line[charLocation.X+k] == '=')
 				{
 					colour(0x0C);
 					cout << lava;
