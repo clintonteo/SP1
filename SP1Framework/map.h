@@ -1,6 +1,9 @@
 #ifndef _MAP_H__
 #define _MAP_H__
 
+#include "Framework\timer.h"
+#include "UI.h"
+
 typedef struct sMap
 {
 	int		nrow, ncol;
@@ -48,6 +51,8 @@ MAP, * PMAP;
 PMAP load_map(char* filename);
 
 void free_map(PMAP pmap);
+void createMap(COORD charLocation, bool blind, int range, player &user); //Creates Map for Output
+void blockp(COORD &charLocation, COORD &blocks, COORD &lastknown, int range);
 
 
 

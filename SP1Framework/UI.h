@@ -1,6 +1,7 @@
 #ifndef _UI_H
 #define _UI_H
 #include <string>
+#include "Framework\console.h"
 #include <vector>
 using std::string;
 using std::vector;
@@ -29,6 +30,7 @@ struct player
 	bool KTaken;
 	bool invis;
 	bool LTaken;
+	COORD block;
 };
 
 void timer (double g_dElapsedTime);

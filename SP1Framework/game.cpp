@@ -19,8 +19,12 @@ bool keyPressed[K_COUNT];
 
 COORD charLocation;
 COORD consoleSize;
-
+COORD blocks;
+COORD lastknown;
 PMAP MapCollision;
+
+int range = 6;
+
 //Last known Coordinates
 int lastX = 0;
 int lastY = 0;
@@ -46,8 +50,8 @@ void init()
     consoleSize.Y = csbi.srWindow.Bottom + 1;
 
     // set the character to be in the center of the screen.
-    charLocation.X = 1;
-    charLocation.Y = 1;
+    charLocation.X = 40;
+    charLocation.Y = 12;
 	// 76 17
 	//15 69 23
     elapsedTime = 0.0;
@@ -58,6 +62,10 @@ void init()
     user.select = 1;
 	user.boost = 0;
 	user.ITaken = 0;
+	blocks.X = 41;
+	blocks.Y = 12;
+	lastknown.X = 0;
+	lastknown.Y = 0;
    
 }
 
@@ -76,6 +84,7 @@ void getInput()
     keyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
     keyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key
     keyPressed[K_USE] = isKeyPressed(VK_SPACE); // Spacebar // Use items
+	keyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
 }
 
    
@@ -253,6 +262,11 @@ void update(double dt)
     {
         g_quitGame = true;    
 	}
+	//RESET
+	if(keyPressed[K_RESET])
+	{
+		init();
+	}
 
     if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && user.TTaken == 0)
     {
@@ -291,28 +305,28 @@ void update(double dt)
 void render()
 {
     // Creating Map
-	createMap(charLocation, 1, 6, user);
-
+	createMap(charLocation, 1, range, user);
+	blockp(charLocation, blocks, lastknown, range);
 	if(MapCollision->data[charLocation.Y][charLocation.X] == '1')
 	{
 		user.switch1 = 1;
-		gotoXY(50, 9);
+		gotoXY(51, 12);
 		cout << "YOU Activated X Switch!";
 	}
 	if(MapCollision->data[charLocation.Y][charLocation.X] == '2')
 	{
 		user.switch2 = 1;
-		gotoXY(50, 9);
+		gotoXY(51, 12);
 		cout << "YOU Activated Y Switch!";
 	}
 	if(MapCollision->data[charLocation.Y][charLocation.X] == 'I' && user.ITaken == 0)
 	{
 		user.boost = 1;
 		user.ITaken = 1;
-		gotoXY(50, 9);
+		gotoXY(50, 12);
 		cout << "You can now boost!" << user.boost;
 	}
-	gotoXY(50, 3);
+	gotoXY(51, 12);
 	if(MapCollision->data[charLocation.Y][charLocation.X] == 'D' && user.lives > 0)
 	{
 		cout << "You have been hurt!" << endl;
@@ -329,7 +343,10 @@ void render()
 	}
     else if(MapCollision->data[charLocation.Y][charLocation.X] == '=' && user.lives > 0)
 	{
-		user.lives -= user.lives;
+		if(charLocation.X != blocks.X || charLocation.Y != blocks.Y)
+		{
+			user.lives -= user.lives;
+		}
 	}
     else
 	{
@@ -344,6 +361,7 @@ void render()
 	} 
    
     //UI functions
+	colour(0x01);
     divider();
     timer(elapsedTime);
     lives( user );

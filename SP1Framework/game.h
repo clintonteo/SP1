@@ -16,6 +16,7 @@ enum Keys
     K_ESCAPE,
     K_SELECT,
     K_USE,
+	K_RESET,
     K_COUNT
 };
 
@@ -23,7 +24,6 @@ void init();                // initialize your variables, allocate memory, etc
 void getInput();            // get input from player
 void update(double dt);     // update the game and the state of the game
 void render();// renders the current state of the game to the console
-void createMap(COORD charLocation, bool blind, int range, player &user); //Creates Map for Output
 void shutdown();            // do clean up, free memory
 
 #endif // _GAME_H

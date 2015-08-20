@@ -8,11 +8,15 @@ using std::cout;
 using std::endl;
 using std::string;
 PMAP MapRender;
+PMAP Push;
+
 const char block = 219;
-const char grass = 177;
+const char grass = 58;
 const char lava = 247;
-const char trap = 178;
+const char trap = 59;
 const char treasure = 36;
+char arr[12][12];
+
 
 void createMap(COORD charLocation, bool blind, int range, player &user)
 {
@@ -57,13 +61,14 @@ void createMap(COORD charLocation, bool blind, int range, player &user)
 			for(int j = 0;j < range-Xoffset;++j)
 			{
 				line = MapRender->data[charLocation.Y+temprange-i];
+				arr[i][j] = line[charLocation.X - temprange+Xoffset+j];
 				if(line[charLocation.X-temprange+Xoffset+j] == 'W')
 				{
-					colour(1);
+					colour(0xf1);
 					cout << block;
 				}else if(line[charLocation.X-temprange+Xoffset+j] == 'D')
 				{
-					colour(0xff);
+					colour(0xf7);
 					cout << trap;
 				}else if(line[charLocation.X-temprange+Xoffset+j] == 'X' && user.switch1 == 0)
 				{
@@ -82,22 +87,22 @@ void createMap(COORD charLocation, bool blind, int range, player &user)
 				}
 				else if(line[charLocation.X-temprange+Xoffset+j] == '1' && user.switch1 == 0)
 				{
-					colour(8);
+					colour(0xf8);
 					cout << "/";
 				}
 				else if(line[charLocation.X-temprange+Xoffset+j] == '2' && user.switch2 == 0)
 				{
-					colour(8);
+					colour(0xf8);
 					cout << "/";
 				}
 				else if(line[charLocation.X-temprange+Xoffset+j] == '3' && user.switch3 == 0)
 				{
-					colour(8);
+					colour(0xf8);
 					cout << "/";
 				}
 				else if(line[charLocation.X-temprange+Xoffset+j] == '=')
 				{
-					colour(0x0C);
+					colour(0xfC);
 					cout << lava;
 				}
 				else if (line[charLocation.X-temprange+Xoffset+j] == 'T' && user.TTaken == 0)
@@ -116,28 +121,29 @@ void createMap(COORD charLocation, bool blind, int range, player &user)
 				{
 					line = MapRender->data[charLocation.Y+temprange-i];
 				}
+				arr[i][range+k] = line[charLocation.X+k];
 				if(line[charLocation.X+k] == 'W')
 				{
-					colour(1);
-				cout << block;
+					colour(0xf1);
+					cout << block;
 				}else if(line[charLocation.X+k] == 'D')
 				{
-					colour(0xff);
+					colour(0xf7);
 					cout << trap;
 				}
 				else if(line[charLocation.X+k] == '1' && user.switch1 == 0)
 				{
-					colour(8);
+					colour(0xf8);
 					cout << "/";
 				}
 				else if(line[charLocation.X+k] == '2' && user.switch2 == 0)
 				{
-					colour(8);
+					colour(0xf8);
 					cout << "/";
 				}
 				else if(line[charLocation.X+k] == '3' && user.switch3 == 0)
 				{
-					colour(8);
+					colour(0xf8);
 					cout << "/";
 				}
 				else if(line[charLocation.X+k] == 'X'&& user.switch1 == 0)
@@ -157,20 +163,35 @@ void createMap(COORD charLocation, bool blind, int range, player &user)
 				}
 				else if(line[charLocation.X+k] == '=')
 				{
-					colour(0x0C);
+					colour(0xfC);
 					cout << lava;
 				}
 				else if (line[charLocation.X+k] == 'T' && user.TTaken == 0)
 				{
 					cout << treasure;
 				}
-				else{
+				else if(charLocation.X+k < 51){
 					colour(0xf7);
 					cout << grass;
 				}
+
 			}
 			}
 		}
+		//Arr RADAR
+		//for(int i = 0; i< range*2; ++i)
+		//{
+		//	for(int j = 0; j < range*2; ++j)
+		//	{
+		//		colour(0x03);
+		//		gotoXY(50+j,16+i);
+		//		if(i == range && j == range)
+		//		{
+		//			arr[i][j] = 'A';
+		//		}
+		//		cout << arr[range*2-i][j];
+		//	}
+		//}
 	}else
 	{
 		//Cout the whole map
@@ -200,7 +221,7 @@ void createMap(COORD charLocation, bool blind, int range, player &user)
 				}
 				else if(MapRender->data[i][j] == '3' && user.switch3 == 0)
 				{
-					colour(8);
+					colour(0xf8);
 					cout << "/";
 				}
 				else if(MapRender->data[i][j] == 'X'&& user.switch1 == 0)
@@ -247,6 +268,130 @@ void createMap(COORD charLocation, bool blind, int range, player &user)
 
     // render character
     gotoXY(charLocation);
-    colour(0x0C);
+    colour(0xfC);
     std::cout << (char)1;
+}
+void blockp(COORD &charLocation, COORD &blocks, COORD &lastknown, int range)
+{
+	//COUT BLOCK IF IN RANGE
+	if((charLocation.X - range-1 < blocks.X && charLocation.X + range+1 > blocks.X) && (charLocation.Y - range-1 < blocks.Y && charLocation.Y + range+1 > blocks.Y))
+	{
+	gotoXY(blocks.X, blocks.Y);
+	cout << "B";
+	}
+	if(charLocation.X == blocks.X - 1 && charLocation.Y == blocks.Y)
+	{
+		if(MapRender->data[blocks.Y][blocks.X+1] != 'W')
+		{
+			gotoXY(51, 11);
+			cout << "You can push the block! LEFT";
+			cout << MapRender->data[blocks.Y][blocks.X];
+			lastknown.X = charLocation.X;
+			lastknown.Y = charLocation.Y;
+		}else
+		{
+			gotoXY(51, 11);
+			cout << "You can't push the block anymore..";
+		}
+	}else if(charLocation.X == blocks.X + 1 && charLocation.Y == blocks.Y)
+	{
+		if(MapRender->data[blocks.Y][blocks.X-1] != 'W')
+		{
+			gotoXY(51, 11);
+			cout << "You can push the block! RIGHT";
+			cout << MapRender->data[blocks.Y][blocks.X];
+			lastknown.X = charLocation.X;
+			lastknown.Y = charLocation.Y;
+		}else
+		{
+			cout << "You can't push the block anymore..";
+		}
+	}else if(charLocation.X == blocks.X && charLocation.Y == blocks.Y +1)
+	{
+		if(MapRender->data[blocks.Y+1][blocks.X] != 'W')
+		{
+			gotoXY(51, 11);
+			cout << "You can push the block! BOTTOM";
+			cout << MapRender->data[blocks.Y][blocks.X];
+			lastknown.X = charLocation.X;
+			lastknown.Y = charLocation.Y;
+		}else
+		{
+			cout << "You can't push the block anymore..";
+		}
+	}else if(charLocation.X == blocks.X && charLocation.Y == blocks.Y -1)
+	{
+		if(MapRender->data[blocks.Y+1][blocks.X] != 'W')
+		{
+			gotoXY(51, 11);
+			cout << "You can push the block! TOP";
+			cout << MapRender->data[blocks.Y][blocks.X];
+			lastknown.X = charLocation.X;
+			lastknown.Y = charLocation.Y;
+		}else
+		{
+			cout << "You can't push the block anymore..";
+		}
+	}else if(charLocation.X != blocks.X || charLocation.Y != blocks.Y){
+			lastknown.X = charLocation.X;
+			lastknown.Y = charLocation.Y;
+	}else if(charLocation.X == blocks.X && charLocation.Y == blocks.Y)
+	{
+		gotoXY(51, 11);
+		cout << "You are standing on the box..";
+	}
+	if(charLocation.X == blocks.X && charLocation.Y == blocks.Y)
+	{
+		if(lastknown.X == charLocation.X -1 && lastknown.Y == charLocation.Y)
+		{
+			if(MapRender->data[blocks.Y][blocks.X +1] != 'W')
+			{
+				if(MapRender->data[blocks.Y][blocks.X] != '=')
+				{
+					charLocation.X -=1;
+					blocks.X +=1;
+				}
+			}
+		}
+		if(lastknown.X == charLocation.X +1 && lastknown.Y == charLocation.Y)
+		{
+			if(MapRender->data[blocks.Y][blocks.X -1] != 'W')
+			{
+				if(MapRender->data[blocks.Y][blocks.X] != '=')
+				{
+					charLocation.X +=1;
+					blocks.X -=1;
+				}
+			}
+		}
+		if((lastknown.X == charLocation.X) && (lastknown.Y == charLocation.Y-1))
+		{
+			if(MapRender->data[blocks.Y+1][blocks.X] != 'W')
+			{
+				if(MapRender->data[blocks.Y][blocks.X] != '=')
+				{
+					charLocation.Y -=1;
+					blocks.Y +=1;
+				}
+			}
+		}
+		if((lastknown.X == charLocation.X) && (lastknown.Y == charLocation.Y+1))
+		{
+			if(MapRender->data[blocks.Y-1][blocks.X] != 'W')
+			{
+				if(MapRender->data[blocks.Y][blocks.X] != '=')
+				{
+				charLocation.Y +=1;
+				blocks.Y -=1;
+				}
+			}
+		}
+	}
+	colour(0x0f);
+	gotoXY(51, 16);
+	cout << "Block X: " << blocks.X << " " << blocks.Y;
+	gotoXY(51, 20);
+	cout << "LastCoord: " << lastknown.X << " " << lastknown.Y;
+	gotoXY(51, 18);
+	cout << "CharCoord: " << charLocation.X << " " << charLocation.Y;
 }
