@@ -1,27 +1,21 @@
+20 50
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-W        S        W             W        H       W
-W                 W		        W                W
-W                 W		        W        N       W
-W        D        W		        W                W
-W                 W		        W                W
-W                 W		        W        D       W
-W  D           D  W		        WLLLLLLLLLLLLLLLLW
-W                 W		        WLLLLLLLLLLLLLLLLW
-W                 W	            WLLLLLLLLLLLLLLLLW
+W                 WWWWWWWWWWWWWWW        H       W
+W                 WWWWWWWWWWWWWWW                W
+W                 WWWWWWWWWWWWWWW        N       W
+W        D        WWWWWWWWWWWWWWW                W
+W                 WWWWWWWWWWWWWWW                W
+W                 WWWWWWWWWWWWWWW        D       W
+W  D           D  WWWWWWWWWWWWWWWLLLLLLLLLLLLLLLLW
+W                 WWWWWWWWWWWWWWWLLLLLLLLLLLLLLLLW
+W                 WWWWWWWWWWWWWWWLLLLLLLLLLLLLLLLW
 WWWWWWW     WWWWWWWWWWWWWWWWWWWWWWWWWWYYYYYWWWWWWW
-W     W         D              DW                W
-W     W               WW        W                W
-W     W    DWWWWWW    WW   WWW  W       W        W
-W     W     WD        WW  DW W          W        W
-WWWWWWWYYYWWWWWWWWWWWWWW   W W          W        W
-W 	    D W            W   WWW  WWWWWXXXWWWW     W
+WWWWWWW         D              DW                W
+WWWWWWW               WW        W                W
+WWWWWWW    DWWWWWW    WW   WWW  W       W        W
+WWWWWWW     WD        WW  DWWW          W        W
+WWWWWWWYYYWWWWWWWWWWWWWW   WWW          W        W
+W       D W            W   WWW  WWWWWXXXWWWW     W
 W  T      W    1    D           W          W    DW
-W	      W                     W   I      W    2W
+W         W                     W   I      W    2W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-
-X = switch 1 open
-Y = switch 2 open
-Z = switch 3 open
-N = hard monster
-I = item
-H = exit
