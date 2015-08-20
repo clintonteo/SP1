@@ -39,7 +39,7 @@ PMAP load_map(char* filename)
 			getline(infile, line);
 			if (line.length())
 			{
-				memcpy(map->data[i],line.c_str(), nrow); 
+				memcpy(map->data[i],line.c_str(), ncol); 
 				i++;
 			}
 		}

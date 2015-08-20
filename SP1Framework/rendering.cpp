@@ -12,7 +12,8 @@ const char block = 219;
 const char grass = 177;
 const char lava = 247;
 const char trap = 178;
-void createMap(COORD charLocation, bool blind, int range, bool switch1)
+const char treasure = 36;
+void createMap(COORD charLocation, bool blind, int range, bool switch1, bool switch2, bool switch3, bool t)
 {
     // clear previous screen
     colour(0x0F);
@@ -67,15 +68,32 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1)
 				{
 					colour(0xf1);
 					cout << "X";
-				}else if(line[charLocation.X-temprange+Xoffset+j] == '1')
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == '1' && switch1 == 0)
 				{
 					colour(8);
 					cout << "/";
-				}else if(line[charLocation.X-temprange+Xoffset+j] == 'L')
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == '2' && switch2 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == '3' && switch3 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == '=')
 				{
 					colour(0x0C);
 					cout << lava;
-				}else{
+				}
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'T' && t == 0)
+				{
+					cout << treasure;
+				}
+				else{
 					colour(0xf7);
 					cout << grass;
 				}
@@ -95,19 +113,36 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1)
 				{
 					colour(0xff);
 					cout << trap;
-				}else if(line[charLocation.X+k] == '1')
+				}
+				else if(line[charLocation.X+k] == '1' && switch1 == 0)
 				{
 					colour(8);
 					cout << "/";
-				}else if(line[charLocation.X+k] == 'X'&& switch1 == 0)
+				}
+				else if(line[charLocation.X+k] == '2' && switch2 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(line[charLocation.X+k] == '3' && switch3 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(line[charLocation.X+k] == 'X'&& switch1 == 0)
 				{
 					colour(0xf1);
 					cout << "X";
-				}else if(line[charLocation.X+k] == 'L')
+				}else if(line[charLocation.X+k] == '=')
 				{
 					colour(0x0C);
 					cout << lava;
-				}else{
+				}
+				else if (line[charLocation.X+k] == 'T' && t == 0)
+				{
+					cout << treasure;
+				}
+				else{
 					colour(0xf7);
 					cout << grass;
 				}

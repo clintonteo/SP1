@@ -15,8 +15,10 @@ using std::endl;
 double elapsedTime;
 double deltaTime;
 bool keyPressed[K_COUNT];
+bool TTaken = 0;
 bool flipswitch1 = 0;
 bool flipswitch2 = 0;
+bool flipswitch3 = 0;
 COORD charLocation;
 COORD consoleSize;
 
@@ -105,14 +107,33 @@ void update(double dt, player & user)
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y + 1][charLocation.X] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y+1][charLocation.X] != 'X')
+			if(MapCollision->data[charLocation.Y+1][charLocation.X] == 'X')
+			{
+				if(flipswitch1 == 1)
+				{
+					charLocation.Y++;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y+1][charLocation.X] == 'Y')
+			{
+				if(flipswitch2 == 1)
+				{
+					charLocation.Y++;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y+1][charLocation.X] == 'Z')
+			{
+				if(flipswitch3 == 1)
+				{
+					charLocation.Y++;
+				}
+			}
+			else
 			{
 				charLocation.Y++;
-			}else if(flipswitch1 == 1)
-			{
-				charLocation.Y++;
-			}	
+			}
 		}
+
 	}
     if (keyPressed[K_RIGHT]/* && charLocation.X < consoleSize.X - 1*/)
     {
@@ -151,9 +172,10 @@ void update(double dt, player & user)
     user.inventory3 = "another item";
 
     // TEST FOR POINTS
-    if (keyPressed[K_DOWN])
+    if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && TTaken == 0)
     {
         user.points += 1;
+		TTaken = 1; 
     }
 
     // TEST FOR SELECTON
@@ -172,13 +194,20 @@ void render( player & user )
 {
     
     //UI functions
-	createMap(charLocation, 1, 6, flipswitch1);
+	createMap(charLocation, 1, 6, flipswitch1, TTaken);
 
 	if(MapCollision->data[charLocation.Y][charLocation.X] == '1')
 	{
 		flipswitch1 = 1;
 		gotoXY(50, 4);
 		cout << "YOU Activated X Switch!";
+	}
+
+	if(MapCollision->data[charLocation.Y][charLocation.X] == '2')
+	{
+		flipswitch2 = 1;
+		gotoXY(50, 4);
+		cout << "YOU Activated Y Switch!";
 	}
 
 	gotoXY(50, 3);
@@ -194,7 +223,7 @@ void render( player & user )
 		user.lives--;
 		lastY = charLocation.Y;
 		}
-	}else if(MapCollision->data[charLocation.Y][charLocation.X] == 'L' && user.lives > 0)
+	}else if(MapCollision->data[charLocation.Y][charLocation.X] == '=' && user.lives > 0)
 	{
 		user.lives-=user.lives;
 	}else
@@ -211,7 +240,10 @@ void render( player & user )
     // render time taken to calculate this frame
 
     timer(elapsedTime);
-
+	gotoXY(50, 9);
+	cout << charLocation.X << " " << charLocation.Y;
+	gotoXY(50, 10);
+	cout << MapCollision->data[charLocation.Y][charLocation.X];
     lives( user );
     renderInventory ( user );
     point( user );

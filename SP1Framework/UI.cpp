@@ -102,7 +102,7 @@ void renderInventory( player & user )
 
 void point( player & user )
 {
-    (50,7);
+    gotoXY(50,7);
     
     cout << "Points: " << user.points;
 }
