@@ -188,14 +188,14 @@ void update(double dt, player & user)
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X + 1] != 'W')
 		{
-			if(MapCollision->[charLocation.Y][charLocation.X + 1] == 'X')
+			if(MapCollision->data[charLocation.Y][charLocation.X + 1] == 'X')
 			{
 				if(flipswitch1 == 1)
 				{
 					charLocation.X++;
 				}
 			}
-			else if (MapCollision->[charLocation.Y][charLocation.X + 1] == 'Y')
+			else if (MapCollision->data[charLocation.Y][charLocation.X + 1] == 'Y')
 			{
 				if(flipswitch2 == 1)
 				{
