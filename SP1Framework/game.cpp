@@ -15,18 +15,17 @@ using std::endl;
 double elapsedTime;
 double deltaTime;
 bool keyPressed[K_COUNT];
-//bool TTaken = 0;
-//bool flipswitch1 = 0;
-//bool flipswitch2 = 0;
-//bool flipswitch3 = 0;
+bool flipswitch1 = 0;
+bool flipswitch2 = 0;
 COORD charLocation;
 COORD consoleSize;
 
 PMAP MapCollision;
-//Start Health
-int health = 5;
+//Last known Coordinates
 int lastX = 0;
 int lastY = 0;
+
+player user;
 
 void init()
 {
@@ -53,11 +52,11 @@ void init()
 	//15 69 23
     elapsedTime = 0.0;
 	MapCollision = load_map("stage1.txt");
-
-   /* player user;
-    bool damage = 0;
+    
     user.lives = 10;
-    int * livesptr = &user.lives;*/
+    user.points = 0;
+    user.select = 1;
+   
 }
 
 void shutdown()
@@ -74,11 +73,12 @@ void getInput()
     keyPressed[K_RIGHT] = isKeyPressed(VK_RIGHT);
     keyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
     keyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key
+    keyPressed[K_USE] = isKeyPressed(VK_SPACE); // Spacebar // Use items
 }
 
    
 
-void update(double dt, player & user)
+void update(double dt)
 {
     // get the delta time
     elapsedTime += dt;
@@ -86,68 +86,20 @@ void update(double dt, player & user)
 
     // Updating the location of the character based on the key press
 	// providing a beep sound whenver we shift the character
-    if (keyPressed[K_UP] && charLocation.Y > 0 && health > 0)
+    if (keyPressed[K_UP] && charLocation.Y > 0 && user.lives > 0)
     {
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y - 1][charLocation.X] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y - 1][charLocation.X] == 'X')
-			{
-				if(user.switch1 == 1)
-				{
-					charLocation.Y--;
-				}
-			}
-			else if (MapCollision->data[charLocation.Y - 1][charLocation.X] == 'Y')
-			{
-				if(user.switch2 == 1)
-				{
-					charLocation.Y--;
-				}
-			}
-			else if (MapCollision->data[charLocation.Y - 1][charLocation.X] == 'Z')
-			{
-				if(user.switch3 == 1)
-				{
-					charLocation.Y--;
-				}
-			}
-			else
-			{
-				charLocation.Y--;
-			}
+			charLocation.Y--;
 		}		
     }
-    if (keyPressed[K_LEFT] && charLocation.X > 0 && health > 0)
+    if (keyPressed[K_LEFT] && charLocation.X > 0 && user.lives > 0)
     {
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X - 1] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y][charLocation.X - 1] == 'X')
-			{
-				if(user.switch1 == 1)
-				{
-					charLocation.X--;
-				}
-			}
-			else if (MapCollision->data[charLocation.Y][charLocation.X - 1] == 'Y')
-			{
-				if(user.switch2 == 1)
-				{
-					charLocation.X--;
-				}
-			}
-			else if (MapCollision->data[charLocation.Y][charLocation.X - 1] == 'Z')
-			{
-				if(user.switch3 == 1)
-				{
-					charLocation.X--;
-				}
-			}
-			else
-			{
-				charLocation.X--;
-			}
+			charLocation.X--;
 		}
     }
     if (keyPressed[K_DOWN] && charLocation.Y < consoleSize.Y - 1)
@@ -155,66 +107,34 @@ void update(double dt, player & user)
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y + 1][charLocation.X] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y+1][charLocation.X] == 'X')
-			{
-				if(user.switch1 == 1)
-				{
-					charLocation.Y++;
-				}
-			}
-			else if (MapCollision->data[charLocation.Y+1][charLocation.X] == 'Y')
-			{
-				if(user.switch2 == 1)
-				{
-					charLocation.Y++;
-				}
-			}
-			else if (MapCollision->data[charLocation.Y+1][charLocation.X] == 'Z')
-			{
-				if(user.switch3 == 1)
-				{
-					charLocation.Y++;
-				}
-			}
-			else
+			if(MapCollision->data[charLocation.Y+1][charLocation.X] != 'X')
 			{
 				charLocation.Y++;
-			}
+			}else if(flipswitch1 == 1)
+			{
+				charLocation.Y++;
+			}	
 		}
-
 	}
-    if (keyPressed[K_RIGHT]/* && charLocation.X < consoleSize.X - 1*/)
+    if (keyPressed[K_RIGHT] && charLocation.X < consoleSize.X - 1)
     {
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X + 1] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y][charLocation.X + 1] == 'X')
-			{
-				if(user.switch1 == 1)
-				{
-					charLocation.X++;
-				}
-			}
-			else if (MapCollision->data[charLocation.Y][charLocation.X + 1] == 'Y')
-			{
-				if(user.switch2 == 1)
-				{
-					charLocation.X++;
-				}
-			}
-			else if (MapCollision->data[charLocation.Y][charLocation.X + 1] == 'Z')
-			{
-				if(user.switch3 == 1)
-				{
-					charLocation.X++;
-				}
-			}
-			else
-			{
-				charLocation.X++;
-			}
+			charLocation.X++;
 		}
+ 
     }
+
+    if (keyPressed[K_SELECT]) // Z key
+    {
+        user.select += 1;
+        if (user.select == 7)
+        {
+            user.select = 1;
+        }
+    }
+
 
     // quits the game if player hits the escape key
     if (keyPressed[K_ESCAPE])
@@ -239,21 +159,22 @@ void update(double dt, player & user)
     }
     user.inventory[0] = 't';
     user.inventory[3] = 't';
+    user.inventory[1] = 't';
     user.inventory0 = "test item";
     user.inventory3 = "another item";
+    user.inventory1 = "some item";
 
     // TEST FOR POINTS
-	if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && user.TTaken != 1)
+    if (keyPressed[K_DOWN])
     {
-        user.points++;
-		user.TTaken = 1; 
+        user.points += 1;
     }
 
-    // TEST FOR SELECTON
-    if (keyPressed[K_SELECT])
-    {
-        g_quitGame = true;
-    }
+    //// TEST FOR SELECTON
+    //if (keyPressed[K_SELECT])
+    //{
+    //    g_quitGame = true;
+    //}
 }
 
 //--------------------------------------------------------------
@@ -261,24 +182,16 @@ void update(double dt, player & user)
 // Input	: void
 // Output	: void
 //--------------------------------------------------------------
-void render( player & user )
+void render()
 {
-    
-    //UI functions
-	createMap(charLocation, 1, 6, user.switch1, user.switch2, user.switch3, user.TTaken);
+    // Creating Map
+	createMap(charLocation, 1, 6, flipswitch1);
 
 	if(MapCollision->data[charLocation.Y][charLocation.X] == '1')
 	{
-		user.switch1 = 1;
+		flipswitch1 = 1;
 		gotoXY(50, 4);
 		cout << "YOU Activated X Switch!";
-	}
-
-	if(MapCollision->data[charLocation.Y][charLocation.X] == '2')
-	{
-		user.switch2 = 1;
-		gotoXY(50, 4);
-		cout << "YOU Activated Y Switch!";
 	}
 
 	gotoXY(50, 3);
@@ -287,35 +200,36 @@ void render( player & user )
 		cout << "You have been hurt!" << endl;
 		if(lastX != charLocation.X)
 		{
-		user.lives--;
-		lastX = charLocation.X;
-		}else if(lastY != charLocation.Y)
-		{
-		user.lives--;
-		lastY = charLocation.Y;
+		    user.lives--;
+		    lastX = charLocation.X;
 		}
-	}else if(MapCollision->data[charLocation.Y][charLocation.X] == '=' && user.lives > 0)
+        else if(lastY != charLocation.Y)
+		{
+		    user.lives--;
+		    lastY = charLocation.Y;
+		}
+	}
+    else if(MapCollision->data[charLocation.Y][charLocation.X] == '=' && user.lives > 0)
 	{
-		user.lives-=user.lives;
-	}else
+		user.lives -= user.lives;
+	}
+    else
 	{
 		lastX = charLocation.X;
 		lastY = charLocation.Y;
 	}
-	if(user.lives <= 0)
+	if (user.lives <= 0)
 	{
 		gotoXY(50, 4);
 		cout << "YOU DIED!";
 		Beep(2000, 1000);
 	} 
-    // render time taken to calculate this frame
-
+   
+    //UI functions
+    divider();
     timer(elapsedTime);
-	gotoXY(50, 9);
-	cout << charLocation.X << " " << charLocation.Y;
-	gotoXY(50, 10);
-	cout << MapCollision->data[charLocation.Y][charLocation.X];
     lives( user );
     renderInventory ( user );
     point( user );
+    selector ( user );
 }

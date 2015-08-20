@@ -14,10 +14,7 @@ struct player
     string inventory4;
     string inventory5;
     int points;
-	bool switch1;
-	bool switch2;
-	bool switch3;
-	bool TTaken;
+    int select;
 };
 
 enum items
@@ -32,8 +29,10 @@ enum items
 
 void timer (double g_dElapsedTime);
 void lives (player & user);
+void divider();
 //void damagetaken ( player user, bool damage );
 void renderInventory ( player & user );
 void point( player & user );
+void selector( player & user );
 
 #endif // _UI_H

@@ -15,14 +15,15 @@ enum Keys
     K_RIGHT,
     K_ESCAPE,
     K_SELECT,
+    K_USE,
     K_COUNT
 };
 
 void init();                // initialize your variables, allocate memory, etc
 void getInput();            // get input from player
-void update(double dt, player & user);     // update the game and the state of the game
-void render(player & user);// renders the current state of the game to the console
-void createMap(COORD charLocation, bool blind, int range, bool switch1 = 0, bool switch2 = 0, bool switch3 = 0, bool t = 0); //Creates Map for Output
+void update(double dt);     // update the game and the state of the game
+void render();// renders the current state of the game to the console
+void createMap(COORD charLocation, bool blind, int range, bool switch1); //Creates Map for Output
 void shutdown();            // do clean up, free memory
 
 #endif // _GAME_H

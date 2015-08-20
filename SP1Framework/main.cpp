@@ -29,19 +29,17 @@ int main()
 void mainLoop()
 {
     g_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
-    
-    /*player * user = new player;
-    user->lives = 10*/
 
-    player user;
+    /*player user;
     user.lives = 10;
     user.points = 0;
+    user.select = 1;*/
 
     while (!g_quitGame)      // run this loop until user wants to quit 
 	{        
         getInput();                         // get keyboard input
-        update(g_timer.getElapsedTime(),user);   // update the game
-        render(user);                           // render the graphics output to screen
+        update(g_timer.getElapsedTime());   // update the game
+        render();                           // render the graphics output to screen
         g_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.      
 	}    
 }

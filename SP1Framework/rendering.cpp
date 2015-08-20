@@ -12,8 +12,7 @@ const char block = 219;
 const char grass = 177;
 const char lava = 247;
 const char trap = 178;
-const char treasure = 36;
-void createMap(COORD charLocation, bool blind, int range, bool switch1, bool switch2, bool switch3, bool t)
+void createMap(COORD charLocation, bool blind, int range, bool switch1)
 {
     // clear previous screen
     colour(0x0F);
@@ -68,42 +67,15 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1, bool swi
 				{
 					colour(0xf1);
 					cout << "X";
-				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == 'Y' && switch2 == 0)
-				{
-					colour(0xf1);
-					cout << "Y";
-				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == 'Z' && switch3 == 0)
-				{
-					colour(0xf1);
-					cout << "Z";
-				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == '1' && switch1 == 0)
+				}else if(line[charLocation.X-temprange+Xoffset+j] == '1')
 				{
 					colour(8);
 					cout << "/";
-				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == '2' && switch2 == 0)
-				{
-					colour(8);
-					cout << "/";
-				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == '3' && switch3 == 0)
-				{
-					colour(8);
-					cout << "/";
-				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == '=')
+				}else if(line[charLocation.X-temprange+Xoffset+j] == '=')
 				{
 					colour(0x0C);
 					cout << lava;
-				}
-				else if (line[charLocation.X-temprange+Xoffset+j] == 'T' && t == 0)
-				{
-					cout << treasure;
-				}
-				else{
+				}else{
 					colour(0xf7);
 					cout << grass;
 				}
@@ -123,47 +95,19 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1, bool swi
 				{
 					colour(0xff);
 					cout << trap;
-				}
-				else if(line[charLocation.X+k] == '1' && switch1 == 0)
+				}else if(line[charLocation.X+k] == '1')
 				{
 					colour(8);
 					cout << "/";
-				}
-				else if(line[charLocation.X+k] == '2' && switch2 == 0)
-				{
-					colour(8);
-					cout << "/";
-				}
-				else if(line[charLocation.X+k] == '3' && switch3 == 0)
-				{
-					colour(8);
-					cout << "/";
-				}
-				else if(line[charLocation.X+k] == 'X'&& switch1 == 0)
+				}else if(line[charLocation.X+k] == 'X'&& switch1 == 0)
 				{
 					colour(0xf1);
 					cout << "X";
-				}
-				else if(line[charLocation.X+k] == 'Y' && switch2 == 0)
-				{
-					colour(0xf1);
-					cout << "Y";
-				}
-				else if(line[charLocation.X+k] == 'Z' && switch3 == 0)
-				{
-					colour(0xf1);
-					cout << "";
-				}
-				else if(line[charLocation.X+k] == '=')
+				}else if(line[charLocation.X+k] == '=')
 				{
 					colour(0x0C);
 					cout << lava;
-				}
-				else if (line[charLocation.X+k] == 'T' && t == 0)
-				{
-					cout << treasure;
-				}
-				else{
+				}else{
 					colour(0xf7);
 					cout << grass;
 				}
@@ -201,90 +145,6 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1, bool swi
 		}
 	}
 
- //   gotoXY(charLocation);
- //   colour(0x0C);
- //   std::cout << (char)1;
-	//if(blind == 1)
-	//{
-	//	for(int i=0;i < range*2+1;++i)
-	//	{
-	//		gotoXY(charLocation.X-range, charLocation.Y+range-i);
-	//		for(int j = 0;j < range;++j)
-	//		{
-
-	//			cout << arr[charLocation.Y+range-i][charLocation.X-range+j];
-	//		}
-	//		for(int k = 0;k < range+1;++k)
-	//		{
-	//			cout << arr[charLocation.Y+range-i][charLocation.X+k];
-	//		}
-	//	}
-		//if(charLocation.X - range < range)
-		//{
-		//	gotoXY(charLocation.X, charLocation.Y+1);
-		//}else
-		//{
-		//gotoXY(charLocation.X-range, charLocation.Y+1);
-		//}
-		//for(int i = 0;i < range;++i)
-		//{
-
-		//	cout << arr[charLocation.Y+1][charLocation.X-range+i];
-		//}
-		//for(int i = 0;i < range+1;++i)
-		//{
-		//	cout << arr[charLocation.Y+1][charLocation.X+i];
-		//}
-	
-		//if(charLocation.X - range < range)
-		//{
-		//	gotoXY(charLocation.X, charLocation.Y);
-		//}else
-		//{
-		//gotoXY(charLocation.X-range, charLocation.Y);
-		//}
-		//for(int i = 0;i < range;++i)
-		//{
-		//	cout << arr[charLocation.Y][charLocation.X-range+i];
-		//}
-		//for(int i = 0;i < range+1;++i)
-		//{
-		//	cout << arr[charLocation.Y][charLocation.X+i];
-		//}
-		//if(charLocation.X - range < range)
-		//{
-		//	gotoXY(charLocation.X, charLocation.Y-1);
-		//}else
-		//{
-		//gotoXY(charLocation.X-range, charLocation.Y-1);
-		//}
-		//for(int i = 0;i < range;++i)
-		//{
-		//	cout << arr[charLocation.Y-1][charLocation.X-range+i];
-		//}
-		//for(int i = 0;i < range+1;++i)
-		//{
-		//	cout << arr[charLocation.Y-1][charLocation.X+i];
-		//}
-	//}else
-	//{
-	//	for (int col = 0; col < 27; col++)
-	//	{
-	//		for(int row = 0; row < 79; row++)
-	//		{
-	//			cout << arr[col][row];
-	//		}
-	//		cout << endl;
-	//	}
-	//}
-	/*gotoXY(20, 5);
-	cout << "Element in Array: " <<arr[charLocation.Y][charLocation.X];
-	gotoXY(20, 6);
-	cout << "Element ID in Array: " <<static_cast<int>(arr[charLocation.Y][charLocation.X]);
-	gotoXY(20, 7);
-	cout << "Character Coords: " <<charLocation.X << " " << charLocation.Y;
-	gotoXY(20, 8);
-	cout << "Arr Element testing: " << arr[0][0];*/
     //// render time taken to calculate this frame
     //gotoXY(70, 0);
     //colour(0x1A);
