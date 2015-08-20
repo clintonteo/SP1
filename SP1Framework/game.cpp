@@ -91,7 +91,31 @@ void update(double dt, player & user)
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y - 1][charLocation.X] != 'W')
 		{
-			charLocation.Y--;
+			if(MapCollision->data[charLocation.Y - 1][charLocation.X] == 'X')
+			{
+				if(flipswitch1 == 1)
+				{
+					charLocation.Y--;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y - 1][charLocation.X] == 'Y')
+			{
+				if(flipswitch2 == 1)
+				{
+					charLocation.Y--;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y - 1][charLocation.X] == 'Z')
+			{
+				if(flipswitch3 == 1)
+				{
+					charLocation.Y--;
+				}
+			}
+			else
+			{
+				charLocation.Y--;
+			}
 		}		
     }
     if (keyPressed[K_LEFT] && charLocation.X > 0 && health > 0)
@@ -99,7 +123,31 @@ void update(double dt, player & user)
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X - 1] != 'W')
 		{
-			charLocation.X--;
+			if(MapCollision->data[charLocation.Y][charLocation.X - 1] == 'X')
+			{
+				if(flipswitch1 == 1)
+				{
+					charLocation.X--;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y][charLocation.X - 1] == 'Y')
+			{
+				if(flipswitch2 == 1)
+				{
+					charLocation.X--;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y][charLocation.X - 1] == 'Z')
+			{
+				if(flipswitch3 == 1)
+				{
+					charLocation.X--;
+				}
+			}
+			else
+			{
+				charLocation.X--;
+			}
 		}
     }
     if (keyPressed[K_DOWN] && charLocation.Y < consoleSize.Y - 1)
@@ -140,9 +188,32 @@ void update(double dt, player & user)
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X + 1] != 'W')
 		{
-			charLocation.X++;
+			if(MapCollision->[charLocation.Y][charLocation.X + 1] == 'X')
+			{
+				if(flipswitch1 == 1)
+				{
+					charLocation.X++;
+				}
+			}
+			else if (MapCollision->[charLocation.Y][charLocation.X + 1] == 'Y')
+			{
+				if(flipswitch2 == 1)
+				{
+					charLocation.X++;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y][charLocation.X + 1] == 'Z')
+			{
+				if(flipswitch3 == 1)
+				{
+					charLocation.X++;
+				}
+			}
+			else
+			{
+				charLocation.X++;
+			}
 		}
- 
     }
 
     // quits the game if player hits the escape key
