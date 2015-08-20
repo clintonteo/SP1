@@ -1,18 +1,20 @@
 #ifndef _UI_H
 #define _UI_H
 #include <string>
+#include <vector>
 using std::string;
-
+using std::vector;
 struct player
 {
     int lives;
     char inventory[6];
-    string inventory0;
-    string inventory1;
-    string inventory2;
-    string inventory3;
-    string inventory4;
-    string inventory5;
+    //string inventory0;
+    //string inventory1;
+    //string inventory2;
+    //string inventory3;
+    //string inventory4;
+    //string inventory5;
+    vector<string>inventoryitems;
 	bool switch1;
 	bool switch2;
 	bool switch3;
