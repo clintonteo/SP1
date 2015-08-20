@@ -1,28 +1,29 @@
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-W1               WWH          ZWWD      D    W   W
-W   WWWWWWWWWWWD WW            WW  M        DC   W
-W   WD       DW  WW      M     WW D          CDB W
-W   WD  DDD  DW  WW            WW      D   DDC   W
-W PDWD  DTD  DW  WWLLLLLLLLLLLLWW  D    D    WLLLW
-W   WD  D    DW  WW            WW  WWWWWW    W   W
-W   WD  DDDDDDW DWW            WW     2WW  P WI  W
-WD  WWZZZZZZZWW  WWYYYYYYYYYYYYWW      WW    WWWWW
+W1               WWH          ZWWD       D      LW
+W   WWWWWWWWWWWD WW            WW  E       WWWWWWW
+W   W=       =W  WW      E     WW D             DW
+W   W=  ===D =W  WW            WW      D  B      W
+W PDW=  =T=  =W  WW============WW  D    D        W
+W   W=D =   D=W  WW            WW  WWWWWW   DW===W
+W   W=  ======W DWW            WW     2WW  P W   W
+WD  WWZZZZZZZWW  WWYYYYYYYYYYYYWW      WW    WI  W
 W   WWZZZZZZZWW  WWYYYYYYYYYYYYWWWWWWWWWWD   WWWWW
 W    D           WW                          D   W
-W          D    WW                  D          DKW
+W          D     WW                 D          DKW
 WWWWWWWW   WWWWWWWWXXXXXXXXXXXXWWWWWWWWWWWWWWWWWWW
 WWWWWWWW   WWWWWWWWXXXXXXXXXXXXWWWWWWWWWWWWWWWWWWW
 W          D            P                        W
 W                D                 D             W
-W    D                     D             D  S    W
+W    D     F               D             D  S    W
 W                    WZZZZZW                     W
-WJD               D  W  M  W                     W
+WJD               D  W  E  W                     W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
 X = switch 1 open
 Y = switch 2 open
 Z = switch 3 open
-N = hard monster
+E = monster
+F = hard monster
 H = exit
 B = pushable block
 P = pitfall
@@ -30,3 +31,5 @@ C = cracked wall
 I = boost
 J = bomb
 K = strength potions
+L = invis potions
+= = lava
