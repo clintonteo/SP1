@@ -171,14 +171,6 @@ void createMap(COORD charLocation, bool blind, int range, player &user)
 			}
 			}
 		}
-		//for(int i = 0 ; i < range*2+1; ++i)
-		//{
-		//	gotoXY(charLocation.X-range, charLocation.Y);
-		//	for(int j = 0; j < range; ++j)
-		//	{
-		//		cout << MapRender->data[charLocation.Y-range+i][]
-		//	}
-		//}
 	}else
 	{
 		//Cout the whole map
@@ -189,13 +181,55 @@ void createMap(COORD charLocation, bool blind, int range, player &user)
 			{
 				if(MapRender->data[i][j] == 'W')
 				{
-					cout << block;
+					colour(1);
+				cout << block;
 				}else if(MapRender->data[i][j] == 'D')
 				{
-					cout << "D";
-				}else
+					colour(0xff);
+					cout << trap;
+				}
+				else if(MapRender->data[i][j] == '1' && user.switch1 == 0)
 				{
-					cout << ".";
+					colour(8);
+					cout << "/";
+				}
+				else if(MapRender->data[i][j] == '2' && user.switch2 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(MapRender->data[i][j] == '3' && user.switch3 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(MapRender->data[i][j] == 'X'&& user.switch1 == 0)
+				{
+					colour(0xf1);
+					cout << "X";
+				}
+				else if(MapRender->data[i][j] == 'Y' && user.switch2 == 0)
+				{
+					colour(0xf1);
+					cout << "Y";
+				}
+				else if(MapRender->data[i][j] == 'Z' && user.switch3 == 0)
+				{
+					colour(0xf1);
+					cout << "";
+				}
+				else if(MapRender->data[i][j] == '=')
+				{
+					colour(0x0C);
+					cout << lava;
+				}
+				else if (MapRender->data[i][j] == 'T' && user.TTaken == 0)
+				{
+					cout << treasure;
+				}
+				else{
+					colour(0xf7);
+					cout << grass;
 				}
 			}
 		}
