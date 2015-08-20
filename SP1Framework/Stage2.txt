@@ -1,16 +1,16 @@
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 WT                            W                 KW
-W             W          E    W    N         S   W
+W             W          H    W    F         S   W
 W    D                        W                  W
 W                             W          B       W
-W               M      W      WLLLLLLLLLLLLLLLLLLW
+W               E      W      W==================W
 W                             W                  W
-W        W                    W     D            W
+W       LW                    W     D            W
 W                     D       W           WWW    W
 W                             W           WWW    W
 WCCCWWWWWWWWWWWWWWWWWWWWWWWWWWW     WWW   WWW    W
-W   WW                  LD          WWW   WWW    W
-W   WW    I             L           WWW   WWWD   W
+W   WW                  =D          WWW   WWW    W
+W   WW    I             =           WWW   WWWD   W
 WD  WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW   WWW    W
 W                  X                      WWW    W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW    W
@@ -22,7 +22,8 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 X = switch 1 open
 Y = switch 2 open
 Z = switch 3 open
-N = hard monster
+E = monster
+F = hard monster
 H = exit
 B = pushable block
 P = pitfall
@@ -30,3 +31,5 @@ C = cracked wall
 I = boost
 J = bomb
 K = strength potions
+L = invis pot
+= = lava

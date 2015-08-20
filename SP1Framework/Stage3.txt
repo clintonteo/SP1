@@ -2,20 +2,20 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 W                WWWWW      WWWWWWWWWWWWWWWWWWWWWW
 W S              XXXXX                       ZZ  W
 W           D1   XXXXX      WWWWWWWWWW  D  WWWWD W
-W                WWWWW   D  WWWWWWWWWW     WWWW  W
-WWWWWWWWYYYWWWWWWWWWWW      W       2W     WWWW  W
-WWWWWWWWYYYWWWWWWWWWWW        P      W     WWWW IW
+W                WWWWWWWWD  WWWWWWWWWW     WWWW  W
+WWWWWWWWYYYWWWWWWWWWWWWWW   W       2W     WWWW  W
+WWWWWWWWYYYWWWWWWWWWWWL       P      W     WWWW IW
 WWWWWWWWYYYWWWWWWWWWWWWWWWWWWWWWWWWWWWCCCCCWWWWWWW
-WLLLLLLL   LLLLLLWWWWWWWWWWLLLLLLLLLLLLLLLLLLLLLLW
-WLLLLLLL   LLLLLLWWWWWWWWWWLLLLLLLLLLLLLLLLLLLLLLW
-WLLLLLLL   LLLLLLWWWWWWWWWWLLLLLLLLLLLLLLLLLLLLLLW
+W=======   ======WWWWWWWWWW======================W
+W=======   ======WWWWWWWWWW======================W
+W=======   ======WWWWWWWWWW======================W
 W                D   JWWWWWWWWWWWWWWWW  W  WWWWWWW
 W     WWD       WW    WWWWW             W        W
 W     WW        WW    WWWWW   D         WDDDDDD  W
-W                     WWWWW       M     W   DDDD W
-W          M          WWWWW             W        W
+W                     WWWWW       E     W   DDDD W
+W          E          WWWWW             W        W
 W    DWW        WW  D WWWWW    WWWWWWWWWWDDD  DDDW
-W  N  WW        WW    WWWWW H    DDD     DDDD  DDW
+W  F  WW        WW    WWWWW H    DDD     DDDD  DDW
 WT     P             3WWWWW          DDD       DDW
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
@@ -30,3 +30,5 @@ C = cracked wall
 I = boost
 J = bomb
 K = strength potions
+L = invis pots
+= = lava
