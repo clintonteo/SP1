@@ -216,6 +216,32 @@ void update(double dt)
 		}
     }
 
+    // POINTS
+    if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && user.TTaken == 0)
+    {
+        user.points += 1;
+		user.TTaken = 1; 
+    }
+
+    // SELECTON
+    if (keyPressed[K_SELECT])
+    {
+        user.select += 1;
+        if (user.select == 7)
+        {
+            user.select = 1;
+        }
+    }
+
+    // INVENTORY
+    int count = 0;
+    if (MapCollision->data[charLocation.Y][charLocation.X] == 'I')
+    {
+        user.inventory[count] = 't';
+        user.inventoryitems.push_back("Boost");
+        ++count;
+    }
+
     // quits the game if player hits the escape key
     if (keyPressed[K_ESCAPE])
         g_quitGame = true;
@@ -226,34 +252,19 @@ void update(double dt)
         g_quitGame = true;    
 	}
 
-    ////TEST FOR DAMAGE
-    //if (keyPressed[K_UP])
+    ////TEST FOR INVENTORY
+    //for (int i = 1; i < 6; ++i)
     //{
-    //    user.lives -= 1;
+    //    user.inventory[i] = 'f';
     //}
+    //user.inventory[0] = 't';
+    //user.inventory[3] = 't';
+    //user.inventory0 = "test item";
+    //user.inventory3 = "another item";
 
-    //TEST FOR INVENTORY
-    for (int i = 1; i < 6; ++i)
-    {
-        user.inventory[i] = 'f';
-    }
-    user.inventory[0] = 't';
-    user.inventory[3] = 't';
-    user.inventory0 = "test item";
-    user.inventory3 = "another item";
+    
 
-    // TEST FOR POINTS
-    if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && user.TTaken == 0)
-    {
-        user.points += 1;
-		user.TTaken = 1; 
-    }
-
-    // TEST FOR SELECTON
-    if (keyPressed[K_SELECT])
-    {
-		
-    }
+    
 }
 
 //--------------------------------------------------------------
