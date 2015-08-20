@@ -35,7 +35,7 @@ void init()
     SetConsoleTitle(L"SP1 Framework");
 
     // Sets the console size, this is the biggest so far.
-    setConsoleSize(79, 28);
+    setConsoleSize(84, 28);
 
     // Get console width and height
     CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */     
@@ -91,7 +91,31 @@ void update(double dt)
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y - 1][charLocation.X] != 'W')
 		{
-			charLocation.Y--;
+			if(MapCollision->data[charLocation.Y - 1][charLocation.X] == 'X')
+			{
+				if(user.switch1 == 1)
+				{
+					charLocation.Y--;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y - 1][charLocation.X] == 'Y')
+			{
+				if(user.switch2 == 1)
+				{
+					charLocation.Y--;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y - 1][charLocation.X] == 'Z')
+			{
+				if(user.switch3 == 1)
+				{
+					charLocation.Y--;
+				}
+			}
+			else
+			{
+				charLocation.Y--;
+			}
 		}		
     }
     if (keyPressed[K_LEFT] && charLocation.X > 0 && user.lives > 0)
@@ -99,7 +123,31 @@ void update(double dt)
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X - 1] != 'W')
 		{
-			charLocation.X--;
+			if(MapCollision->data[charLocation.Y][charLocation.X - 1] == 'X')
+			{
+				if(user.switch1 == 1)
+				{
+					charLocation.X--;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y][charLocation.X - 1] == 'Y')
+			{
+				if(user.switch2 == 1)
+				{
+					charLocation.X--;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y][charLocation.X - 1] == 'Z')
+			{
+				if(user.switch3 == 1)
+				{
+					charLocation.X--;
+				}
+			}
+			else
+			{
+				charLocation.X--;
+			}
 		}
     }
     if (keyPressed[K_DOWN] && charLocation.Y < consoleSize.Y - 1)
@@ -107,34 +155,66 @@ void update(double dt)
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y + 1][charLocation.X] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y+1][charLocation.X] != 'X')
+			if(MapCollision->data[charLocation.Y+1][charLocation.X] == 'X')
+			{
+				if(user.switch1 == 1)
+				{
+					charLocation.Y++;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y+1][charLocation.X] == 'Y')
+			{
+				if(user.switch2 == 1)
+				{
+					charLocation.Y++;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y+1][charLocation.X] == 'Z')
+			{
+				if(user.switch3 == 1)
+				{
+					charLocation.Y++;
+				}
+			}
+			else
 			{
 				charLocation.Y++;
-			}else if(flipswitch1 == 1)
-			{
-				charLocation.Y++;
-			}	
+			}
 		}
+
 	}
-    if (keyPressed[K_RIGHT] && charLocation.X < consoleSize.X - 1)
+    if (keyPressed[K_RIGHT]/* && charLocation.X < consoleSize.X - 1*/)
     {
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X + 1] != 'W')
 		{
-			charLocation.X++;
+			if(MapCollision->data[charLocation.Y][charLocation.X + 1] == 'X')
+			{
+				if(user.switch1 == 1)
+				{
+					charLocation.X++;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y][charLocation.X + 1] == 'Y')
+			{
+				if(user.switch2 == 1)
+				{
+					charLocation.X++;
+				}
+			}
+			else if (MapCollision->data[charLocation.Y][charLocation.X + 1] == 'Z')
+			{
+				if(user.switch3 == 1)
+				{
+					charLocation.X++;
+				}
+			}
+			else
+			{
+				charLocation.X++;
+			}
 		}
- 
     }
-
-    if (keyPressed[K_SELECT]) // Z key
-    {
-        user.select += 1;
-        if (user.select == 7)
-        {
-            user.select = 1;
-        }
-    }
-
 
     // quits the game if player hits the escape key
     if (keyPressed[K_ESCAPE])
@@ -159,22 +239,21 @@ void update(double dt)
     }
     user.inventory[0] = 't';
     user.inventory[3] = 't';
-    user.inventory[1] = 't';
     user.inventory0 = "test item";
     user.inventory3 = "another item";
-    user.inventory1 = "some item";
 
     // TEST FOR POINTS
-    if (keyPressed[K_DOWN])
+    if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && user.TTaken == 0)
     {
         user.points += 1;
+		user.TTaken = 1; 
     }
 
-    //// TEST FOR SELECTON
-    //if (keyPressed[K_SELECT])
-    //{
-    //    g_quitGame = true;
-    //}
+    // TEST FOR SELECTON
+    if (keyPressed[K_SELECT])
+    {
+		
+    }
 }
 
 //--------------------------------------------------------------
@@ -185,13 +264,19 @@ void update(double dt)
 void render()
 {
     // Creating Map
-	createMap(charLocation, 1, 6, flipswitch1);
+	createMap(charLocation, 1, 6, user);
 
 	if(MapCollision->data[charLocation.Y][charLocation.X] == '1')
 	{
-		flipswitch1 = 1;
-		gotoXY(50, 4);
+		user.switch1 = 1;
+		gotoXY(50, 9);
 		cout << "YOU Activated X Switch!";
+	}
+	if(MapCollision->data[charLocation.Y][charLocation.X] == '2')
+	{
+		user.switch2 = 1;
+		gotoXY(50, 9);
+		cout << "YOU Activated Y Switch!";
 	}
 
 	gotoXY(50, 3);

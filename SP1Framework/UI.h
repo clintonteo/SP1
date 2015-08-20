@@ -13,6 +13,10 @@ struct player
     string inventory3;
     string inventory4;
     string inventory5;
+	bool switch1;
+	bool switch2;
+	bool switch3;
+	bool TTaken;
     int points;
     int select;
 };

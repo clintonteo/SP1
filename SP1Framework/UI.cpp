@@ -28,17 +28,17 @@ void timer(double g_dElapsedTime)
     if ((g_dElapsedTime >= 120) && (g_dElapsedTime <= 130))
     {
         gotoXY(50,0);
-        cout << "Time is "<< g_dElapsedTime << "! You have a min left to clear the level!";
+        cout << "Time is "<< g_dElapsedTime << "! You have a min left!";
     }
     if ((g_dElapsedTime >= 500) && (g_dElapsedTime <= 510))
     {
         gotoXY(50,0);
-        cout << "Time is "<< g_dElapsedTime << "! You have a min left to clear the level!";
+        cout << "Time is "<< g_dElapsedTime << "! You have a min left!";
     }
     if ((g_dElapsedTime >= 480) && (g_dElapsedTime <= 490))
     {
         gotoXY(50,0);
-        cout << "Time is "<< g_dElapsedTime << "! You have a min left to clear the level!";
+        cout << "Time is "<< g_dElapsedTime << "! You have a min left!";
     }
 
     //Timer

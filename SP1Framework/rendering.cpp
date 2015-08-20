@@ -12,7 +12,9 @@ const char block = 219;
 const char grass = 177;
 const char lava = 247;
 const char trap = 178;
-void createMap(COORD charLocation, bool blind, int range, bool switch1)
+const char treasure = 36;
+
+void createMap(COORD charLocation, bool blind, int range, player &user)
 {
     // clear previous screen
     colour(0x0F);
@@ -29,8 +31,8 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1)
 	int temprange = range;
 	int Xoffset = 0;
 	int Yoffset = 0;
-	gotoXY(40, 20);
-	cout << "Coordinates :" << charLocation.X << " " << charLocation.Y;
+	//gotoXY(40, 20);
+	//cout << "Coordinates :" << charLocation.X << " " << charLocation.Y;
 	if(blind == 1)
 	{
 		//Set Offset when player is near the Edge of the screen
@@ -63,19 +65,46 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1)
 				{
 					colour(0xff);
 					cout << trap;
-				}else if(line[charLocation.X-temprange+Xoffset+j] == 'X' && switch1 == 0)
+				}else if(line[charLocation.X-temprange+Xoffset+j] == 'X' && user.switch1 == 0)
 				{
 					colour(0xf1);
 					cout << "X";
-				}else if(line[charLocation.X-temprange+Xoffset+j] == '1')
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'Y' && user.switch2 == 0)
+				{
+					colour(0xf1);
+					cout << "Y";
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'Z' && user.switch3 == 0)
+				{
+					colour(0xf1);
+					cout << "Z";
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == '1' && user.switch1 == 0)
 				{
 					colour(8);
 					cout << "/";
-				}else if(line[charLocation.X-temprange+Xoffset+j] == '=')
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == '2' && user.switch2 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == '3' && user.switch3 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == '=')
 				{
 					colour(0x0C);
 					cout << lava;
-				}else{
+				}
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'T' && user.TTaken == 0)
+				{
+					cout << treasure;
+				}
+				else{
 					colour(0xf7);
 					cout << grass;
 				}
@@ -95,26 +124,53 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1)
 				{
 					colour(0xff);
 					cout << trap;
-				}else if(line[charLocation.X+k] == '1')
+				}
+				else if(line[charLocation.X+k] == '1' && user.switch1 == 0)
 				{
 					colour(8);
 					cout << "/";
-				}else if(line[charLocation.X+k] == 'X'&& switch1 == 0)
+				}
+				else if(line[charLocation.X+k] == '2' && user.switch2 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(line[charLocation.X+k] == '3' && user.switch3 == 0)
+				{
+					colour(8);
+					cout << "/";
+				}
+				else if(line[charLocation.X+k] == 'X'&& user.switch1 == 0)
 				{
 					colour(0xf1);
 					cout << "X";
-				}else if(line[charLocation.X+k] == '=')
+				}
+				else if(line[charLocation.X+k] == 'Y' && user.switch2 == 0)
+				{
+					colour(0xf1);
+					cout << "Y";
+				}
+				else if(line[charLocation.X+k] == 'Z' && user.switch3 == 0)
+				{
+					colour(0xf1);
+					cout << "";
+				}
+				else if(line[charLocation.X+k] == '=')
 				{
 					colour(0x0C);
 					cout << lava;
-				}else{
+				}
+				else if (line[charLocation.X+k] == 'T' && user.TTaken == 0)
+				{
+					cout << treasure;
+				}
+				else{
 					colour(0xf7);
 					cout << grass;
 				}
 			}
 			}
 		}
-		
 		//for(int i = 0 ; i < range*2+1; ++i)
 		//{
 		//	gotoXY(charLocation.X-range, charLocation.Y);
