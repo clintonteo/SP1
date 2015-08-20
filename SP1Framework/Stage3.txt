@@ -9,7 +9,7 @@ WWWWWWWWYYYWWWWWWWWWWWWWWWWWWWWWWWWWWWCCCCCWWWWWWW
 WLLLLLLL   LLLLLLWWWWWWWWWWLLLLLLLLLLLLLLLLLLLLLLW
 WLLLLLLL   LLLLLLWWWWWWWWWWLLLLLLLLLLLLLLLLLLLLLLW
 WLLLLLLL   LLLLLLWWWWWWWWWWLLLLLLLLLLLLLLLLLLLLLLW
-W                D   KWWWWWWWWWWWWWWWW  W  WWWWWWW
+W                D   JWWWWWWWWWWWWWWWW  W  WWWWWWW
 W     WWD       WW    WWWWW             W        W
 W     WW        WW    WWWWW   D         WDDDDDD  W
 W                     WWWWW       M     W   DDDD W
@@ -23,10 +23,10 @@ X = switch 1 open
 Y = switch 2 open
 Z = switch 3 open
 N = hard monster
-I = boost
 H = exit
 B = pushable block
 P = pitfall
 C = cracked wall
-K = bomb
-L = strength potions
+I = boost
+J = bomb
+K = strength potions
