@@ -36,6 +36,7 @@ void mainLoop()
     player user;
     user.lives = 10;
     user.points = 0;
+    user.select = 1;
 
     while (!g_quitGame)      // run this loop until user wants to quit 
 	{        

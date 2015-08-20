@@ -21,8 +21,7 @@ COORD charLocation;
 COORD consoleSize;
 
 PMAP MapCollision;
-//Start Health
-int health = 5;
+//Last known Coordinates
 int lastX = 0;
 int lastY = 0;
 
@@ -72,6 +71,7 @@ void getInput()
     keyPressed[K_RIGHT] = isKeyPressed(VK_RIGHT);
     keyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
     keyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key
+    keyPressed[K_USE] = isKeyPressed(VK_SPACE); // Spacebar // Use items
 }
 
    
@@ -84,7 +84,7 @@ void update(double dt, player & user)
 
     // Updating the location of the character based on the key press
 	// providing a beep sound whenver we shift the character
-    if (keyPressed[K_UP] && charLocation.Y > 0 && health > 0)
+    if (keyPressed[K_UP] && charLocation.Y > 0 && user.lives > 0)
     {
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y - 1][charLocation.X] != 'W')
@@ -92,7 +92,7 @@ void update(double dt, player & user)
 			charLocation.Y--;
 		}		
     }
-    if (keyPressed[K_LEFT] && charLocation.X > 0 && health > 0)
+    if (keyPressed[K_LEFT] && charLocation.X > 0 && user.lives > 0)
     {
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X - 1] != 'W')
@@ -114,7 +114,7 @@ void update(double dt, player & user)
 			}	
 		}
 	}
-    if (keyPressed[K_RIGHT]/* && charLocation.X < consoleSize.X - 1*/)
+    if (keyPressed[K_RIGHT] && charLocation.X < consoleSize.X - 1)
     {
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X + 1] != 'W')
@@ -123,6 +123,16 @@ void update(double dt, player & user)
 		}
  
     }
+
+    if (keyPressed[K_SELECT]) // Z key
+    {
+        user.select += 1;
+        if (user.select == 7)
+        {
+            user.select = 1;
+        }
+    }
+
 
     // quits the game if player hits the escape key
     if (keyPressed[K_ESCAPE])
@@ -147,8 +157,10 @@ void update(double dt, player & user)
     }
     user.inventory[0] = 't';
     user.inventory[3] = 't';
+    user.inventory[1] = 't';
     user.inventory0 = "test item";
     user.inventory3 = "another item";
+    user.inventory1 = "some item";
 
     // TEST FOR POINTS
     if (keyPressed[K_DOWN])
@@ -156,11 +168,11 @@ void update(double dt, player & user)
         user.points += 1;
     }
 
-    // TEST FOR SELECTON
-    if (keyPressed[K_SELECT])
-    {
-        g_quitGame = true;
-    }
+    //// TEST FOR SELECTON
+    //if (keyPressed[K_SELECT])
+    //{
+    //    g_quitGame = true;
+    //}
 }
 
 //--------------------------------------------------------------
@@ -170,8 +182,7 @@ void update(double dt, player & user)
 //--------------------------------------------------------------
 void render( player & user )
 {
-    
-    //UI functions
+    // Creating Map
 	createMap(charLocation, 1, 6, flipswitch1);
 
 	if(MapCollision->data[charLocation.Y][charLocation.X] == '1')
@@ -187,32 +198,36 @@ void render( player & user )
 		cout << "You have been hurt!" << endl;
 		if(lastX != charLocation.X)
 		{
-		user.lives--;
-		lastX = charLocation.X;
-		}else if(lastY != charLocation.Y)
-		{
-		user.lives--;
-		lastY = charLocation.Y;
+		    user.lives--;
+		    lastX = charLocation.X;
 		}
-	}else if(MapCollision->data[charLocation.Y][charLocation.X] == 'L' && user.lives > 0)
+        else if(lastY != charLocation.Y)
+		{
+		    user.lives--;
+		    lastY = charLocation.Y;
+		}
+	}
+    else if(MapCollision->data[charLocation.Y][charLocation.X] == '=' && user.lives > 0)
 	{
-		user.lives-=user.lives;
-	}else
+		user.lives -= user.lives;
+	}
+    else
 	{
 		lastX = charLocation.X;
 		lastY = charLocation.Y;
 	}
-	if(user.lives <= 0)
+	if (user.lives <= 0)
 	{
 		gotoXY(50, 4);
 		cout << "YOU DIED!";
 		Beep(2000, 1000);
 	} 
-    // render time taken to calculate this frame
-
+   
+    //UI functions
+    divider();
     timer(elapsedTime);
-
     lives( user );
     renderInventory ( user );
     point( user );
+    selector ( user );
 }

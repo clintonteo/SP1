@@ -15,6 +15,7 @@ enum Keys
     K_RIGHT,
     K_ESCAPE,
     K_SELECT,
+    K_USE,
     K_COUNT
 };
 
