@@ -260,11 +260,7 @@ void update(double dt)
 		user.TTaken = 1; 
     }
 
-    // TEST FOR SELECTON
-    if (keyPressed[K_SELECT])
-    {
-		
-    }
+    //Boost
 	if (user.boost == 1)
 	{
 		if(keyPressed[K_UP] && keyPressed[K_USE])
