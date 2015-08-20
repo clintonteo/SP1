@@ -126,4 +126,5 @@ void selector( player & user )
     gotoXY(50, 13);
     cout << "Item " << user.select << " selected.";
 }
+
     

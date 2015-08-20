@@ -80,7 +80,6 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
-    <ClCompile Include="modifiers.cpp" />
     <ClCompile Include="rendering.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>

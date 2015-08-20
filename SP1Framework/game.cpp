@@ -15,8 +15,7 @@ using std::endl;
 double elapsedTime;
 double deltaTime;
 bool keyPressed[K_COUNT];
-bool flipswitch1 = 0;
-bool flipswitch2 = 0;
+
 COORD charLocation;
 COORD consoleSize;
 
