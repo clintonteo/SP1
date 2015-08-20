@@ -3,6 +3,7 @@
 //
 #include "game.h"
 #include "map.h"
+#include "UI.h"
 #include "Framework\console.h"
 #include <iostream>
 #include <iomanip>
@@ -44,6 +45,11 @@ void init()
 	//15 69 23
     elapsedTime = 0.0;
 	MapCollision = load_map("map.txt");
+
+   /* player user;
+    bool damage = 0;
+    user.lives = 10;
+    int * livesptr = &user.lives;*/
 }
 
 void shutdown()
@@ -59,9 +65,12 @@ void getInput()
     keyPressed[K_LEFT] = isKeyPressed(VK_LEFT);
     keyPressed[K_RIGHT] = isKeyPressed(VK_RIGHT);
     keyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
+    keyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key
 }
 
-void update(double dt)
+   
+
+void update(double dt, player & user)
 {
 	//char arr[27][79];
 	//std::ifstream myfile;
@@ -141,9 +150,44 @@ void update(double dt)
 	//		g_cCharLocation.X--;
 	//	}
 	//}
+    
     // quits the game if player hits the escape key
     if (keyPressed[K_ESCAPE])
-        g_quitGame = true;    
+        g_quitGame = true;
+
+    // quits if player lives at 0
+    if (user.lives == 0)
+    {
+        g_quitGame = true;
+    }
+
+    //TEST FOR DAMAGE
+    if (keyPressed[K_UP])
+    {
+        user.lives -= 1;
+    }
+
+    //TEST FOR INVENTORY
+    for (int i = 1; i < 6; ++i)
+    {
+        user.inventory[i] = 'f';
+    }
+    user.inventory[0] = 't';
+    user.inventory[3] = 't';
+    user.inventory0 = "test item";
+    user.inventory3 = "another item";
+
+    // TEST FOR POINTS
+    if (keyPressed[K_DOWN])
+    {
+        user.points += 1;
+    }
+
+    // TEST FOR SELECTON
+    if (keyPressed[K_SELECT])
+    {
+        g_quitGame = true;
+    }
 }
 
 //--------------------------------------------------------------
@@ -151,7 +195,14 @@ void update(double dt)
 // Input	: void
 // Output	: void
 //--------------------------------------------------------------
-void render()
+void render( player & user )
 {
 	createMap(charLocation, 1, 10);
+    
+    //UI functions
+    timer(elapsedTime);
+
+    lives( user );
+    renderInventory ( user );
+    point( user );
 }
