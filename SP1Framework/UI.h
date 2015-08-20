@@ -19,6 +19,10 @@ struct player
 	bool TTaken;
     int points;
     int select;
+	bool boost;
+	bool explode;
+	bool strength;
+	bool invis;
 };
 
 void timer (double g_dElapsedTime);

@@ -1,6 +1,7 @@
 // This is the main file for the game logic and function
 //
 //
+#include "item.h"
 #include "game.h"
 #include "map.h"
 #include "UI.h"
@@ -55,6 +56,7 @@ void init()
     user.lives = 10;
     user.points = 0;
     user.select = 1;
+	user.boost = 0;
    
 }
 
@@ -253,6 +255,26 @@ void update(double dt)
     {
 		
     }
+	if (user.boost == 1)
+	{
+		if(keyPressed[K_UP] && keyPressed[K_USE])
+		{
+			item1up(MapCollision, charLocation);
+		}
+		else if(keyPressed[K_LEFT] && keyPressed[K_USE])
+		{
+			item1left(MapCollision, charLocation);
+		}
+		else if(keyPressed[K_DOWN] && keyPressed[K_USE])
+		{
+			item1down(MapCollision, charLocation);
+		}
+		else if(keyPressed[K_RIGHT] && keyPressed[K_USE])
+		{
+			item1right(MapCollision, charLocation);
+		}
+	}
+
 }
 
 //--------------------------------------------------------------
@@ -277,7 +299,12 @@ void render()
 		gotoXY(50, 9);
 		cout << "YOU Activated Y Switch!";
 	}
-
+	if(MapCollision->data[charLocation.Y][charLocation.X] == 'I')
+	{
+		user.boost = 1;
+		gotoXY(50, 9);
+		cout << "You can now boost!" << user.boost;
+	}
 	gotoXY(50, 3);
 	if(MapCollision->data[charLocation.Y][charLocation.X] == 'D' && user.lives > 0)
 	{
