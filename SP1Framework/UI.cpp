@@ -15,29 +15,29 @@ void timer(double g_dElapsedTime)
 {
     if ((g_dElapsedTime >= 240) && (g_dElapsedTime <= 245))
     {
-        gotoXY(0,19);
+        gotoXY(50,0);
         cout << "Time is "<< g_dElapsedTime << "! ";
     }
     if ((g_dElapsedTime >= 540) && (g_dElapsedTime <= 545))
     {
-        gotoXY(0,19);
+        gotoXY(50,0);
         cout << "Time is "<< g_dElapsedTime << "! ";
     }
     if ((g_dElapsedTime >= 840) && (g_dElapsedTime <= 845))
     {
-        gotoXY(0,19);
+        gotoXY(50,0);
         cout << "Time is "<< g_dElapsedTime << "! ";
     }
     if ((g_dElapsedTime >= 10) && (g_dElapsedTime <= 15))
     {
-        gotoXY(0,19);
+        gotoXY(50,0);
         cout << "Time is "<< g_dElapsedTime << "! ";
     }
 
     //Timer
-    gotoXY(0, 20);
+    gotoXY(50,1);
     cout << "Timer:";
-    gotoXY(0, 21);
+    gotoXY(50,2);
     cout << g_dElapsedTime;
 }
     
@@ -45,10 +45,10 @@ void timer(double g_dElapsedTime)
 //Lives
 void lives( player & user )
 {
-    gotoXY(10, 20);
+    gotoXY(50,3);
 
     cout << "Lives: ";
-    gotoXY(10, 21);
+    gotoXY(50,4);
     for (int count = 1; count <= user.lives; ++count)
     {
         cout << (char)1 << "  ";
@@ -69,10 +69,10 @@ void lives( player & user )
 //Render Inventory
 void renderInventory( player & user )
 {
-    gotoXY(40, 20);
+    gotoXY(50,5);
 
     cout << "Inventory: ";
-    gotoXY(40, 21);
+    gotoXY(50,6);
     
     if (user.inventory[0] == 't')
     {
@@ -102,7 +102,7 @@ void renderInventory( player & user )
 
 void point( player & user )
 {
-    gotoXY(60, 20);
+    (50,7);
     
     cout << "Points: " << user.points;
 }

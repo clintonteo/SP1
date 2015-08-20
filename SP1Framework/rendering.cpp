@@ -17,7 +17,7 @@ void createMap(COORD charLocation, bool blind, int range, bool switch1)
     // clear previous screen
     colour(0x0F);
     cls();
-	MapRender = load_map("map.txt");
+	MapRender = load_map("stage1.txt");
     //render the game
 
     //render test screen code (not efficient at all)

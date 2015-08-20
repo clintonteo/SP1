@@ -45,12 +45,12 @@ void init()
     consoleSize.Y = csbi.srWindow.Bottom + 1;
 
     // set the character to be in the center of the screen.
-    charLocation.X = 32;
-    charLocation.Y = 25;
+    charLocation.X = 1;
+    charLocation.Y = 1;
 	// 76 17
 	//15 69 23
     elapsedTime = 0.0;
-	MapCollision = load_map("map.txt");
+	MapCollision = load_map("stage1.txt");
 
    /* player user;
     bool damage = 0;
@@ -78,26 +78,6 @@ void getInput()
 
 void update(double dt, player & user)
 {
-	//char arr[27][79];
-	//std::ifstream myfile;
-	//myfile.open("testlevel.txt");
-	//std::string line;
-	//for(int i=0;i<27;++i)
-	//{
-	//	getline(myfile, line);
-	//	for(int j=0;j<79;++j)
-	//	{
-	//		if(line[j] == -90)
-	//		{
-	//		arr[i][j] = 219;
-	//		}else
-	//		{
-	//			arr[i][j] = 255;
-	//		}
-	//	}
-	//}
-	//gotoXY(0, 0);
-	//myfile.close();
     // get the delta time
     elapsedTime += dt;
     deltaTime = dt;
@@ -120,12 +100,7 @@ void update(double dt, player & user)
 			charLocation.X--;
 		}
     }
-	//if(g_abKeyPressed[K_LEFT] && g_cCharLocation.X == 0)
-	//{
-	//	Beep(1440, 30);
-	//	g_cCharLocation.X += g_cConsoleSize.X -1; 
-	//}
-    if (keyPressed[K_DOWN] && charLocation.Y < consoleSize.Y - 1 && health > 0)
+    if (keyPressed[K_DOWN] && charLocation.Y < consoleSize.Y - 1)
     {
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y + 1][charLocation.X] != 'W')
@@ -136,10 +111,10 @@ void update(double dt, player & user)
 			}else if(flipswitch1 == 1)
 			{
 				charLocation.Y++;
-			
-		}	
-    }
-    if (keyPressed[K_RIGHT] && charLocation.X < consoleSize.X - 1 && health > 0)
+			}	
+		}
+	}
+    if (keyPressed[K_RIGHT]/* && charLocation.X < consoleSize.X - 1*/)
     {
         Beep(1440, 30);
 		if(MapCollision->data[charLocation.Y][charLocation.X + 1] != 'W')
@@ -157,13 +132,13 @@ void update(double dt, player & user)
     if (user.lives == 0)
     {
         g_quitGame = true;    
-}
+	}
 
-    //TEST FOR DAMAGE
-    if (keyPressed[K_UP])
-    {
-        user.lives -= 1;
-    }
+    ////TEST FOR DAMAGE
+    //if (keyPressed[K_UP])
+    //{
+    //    user.lives -= 1;
+    //}
 
     //TEST FOR INVENTORY
     for (int i = 1; i < 6; ++i)
@@ -198,44 +173,41 @@ void render( player & user )
     
     //UI functions
 	createMap(charLocation, 1, 6, flipswitch1);
-	/*if(MapCollision->data[charLocation.Y][charLocation.X] == '1')
+
+	if(MapCollision->data[charLocation.Y][charLocation.X] == '1')
 	{
 		flipswitch1 = 1;
 		gotoXY(50, 4);
 		cout << "YOU Activated X Switch!";
 	}
-	for(int i=0; i < health; ++i)
-	{
-		cout << "<3 ";
-	}
 
 	gotoXY(50, 3);
-	if(MapCollision->data[charLocation.Y][charLocation.X] == 'D' && health > 0)
+	if(MapCollision->data[charLocation.Y][charLocation.X] == 'D' && user.lives > 0)
 	{
 		cout << "You have been hurt!" << endl;
 		if(lastX != charLocation.X)
 		{
-		health--;
+		user.lives--;
 		lastX = charLocation.X;
 		}else if(lastY != charLocation.Y)
 		{
-		health--;
+		user.lives--;
 		lastY = charLocation.Y;
 		}
-	}else if(MapCollision->data[charLocation.Y][charLocation.X] == 'L' && health > 0)
+	}else if(MapCollision->data[charLocation.Y][charLocation.X] == 'L' && user.lives > 0)
 	{
-		health-=health;
+		user.lives-=user.lives;
 	}else
 	{
 		lastX = charLocation.X;
 		lastY = charLocation.Y;
 	}
-	if(health <= 0)
+	if(user.lives <= 0)
 	{
 		gotoXY(50, 4);
 		cout << "YOU DIED!";
 		Beep(2000, 1000);
-	} */
+	} 
     // render time taken to calculate this frame
 
     timer(elapsedTime);
