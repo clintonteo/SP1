@@ -1,3 +1,4 @@
+20 50
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 W        S        W             W        H       W
 W                 W             W                W
@@ -18,11 +19,3 @@ W       D W            W   WWW  WWWWWXXXWWWW     W
 W  T      W    1    D           W          W    DW
 W         W                     W   I      W    2W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-
-X = switch 1 open
-Y = switch 2 open
-Z = switch 3 open
-F = hard monster
-I = boost item
-H = exit
-= = lava

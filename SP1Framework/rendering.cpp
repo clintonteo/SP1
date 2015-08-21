@@ -26,7 +26,7 @@ char arr[12][12];
 
 void createMap(COORD charLocation, bool blind, int range, player &user, Console &g_Console)
 {
-	MapRender = load_map("stage1.txt");
+	MapRender = load_map("stage2.txt");
     //render the game
 
     //render test screen code (not efficient at all)

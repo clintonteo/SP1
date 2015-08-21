@@ -56,12 +56,12 @@ void init( void )
     // sets the initial state for the game
     g_eGameState = S_SPLASHSCREEN;
 
-    g_sChar.m_cLocation.X = 3;
-    g_sChar.m_cLocation.Y = 3;
+    g_sChar.m_cLocation.X = 48;
+    g_sChar.m_cLocation.Y = 8;
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
-	MapCollision = load_map("stage1.txt");
+	MapCollision = load_map("stage2.txt");
     
     user.lives = 10;
     user.points = 0;
@@ -447,6 +447,39 @@ void moveCharacter()
 			item1right(MapCollision, g_sChar.m_cLocation,user);
 		}
 	}
+	//explode
+	if(user.bomb >= 1)
+	{
+		int amt = user.bomb;
+		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
+		{
+			if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
+			{
+				item2(user);
+			}
+		}
+		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'C')
+		{
+			if(g_abKeyPressed[K_LEFT] && g_abKeyPressed[K_USE])
+			{
+				item2(user);
+			}
+		}
+		if(MapCollision->data[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X] == 'C')
+		{
+			if(g_abKeyPressed[K_DOWN] && g_abKeyPressed[K_USE])
+			{
+				item2(user);
+			}
+		}
+		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'C')
+		{
+			if(g_abKeyPressed[K_RIGHT] && g_abKeyPressed[K_USE])
+			{
+				item2(user);
+			}
+		}
+	}
 }
 void processUserInput()
 {
@@ -481,7 +514,7 @@ void renderGame()
     //renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     // Creating Map
-	//blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1')
 	{
 		user.switch1 = 1;
@@ -497,6 +530,12 @@ void renderGame()
 		user.boost = 1;
 		user.ITaken = 1;
 		g_Console.writeToBuffer(51, 12, "You can now Boost!", 0xf1);
+	}
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.JTaken == 0)
+	{
+		user.bomb++;
+		user.JTaken = 1;
+		g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
 	}
 
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.lives > 0)

@@ -24,7 +24,7 @@ struct player
     int select;
 	bool boost;
 	bool ITaken;
-	bool bomb;
+	int bomb;
 	bool JTaken;
 	bool Cexplode;
 	bool strength;
