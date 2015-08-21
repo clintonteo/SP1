@@ -23,7 +23,11 @@ COORD blocks;
 COORD lastknown;
 PMAP MapCollision;
 
+bool init1 = 0;
+bool init2 = 0;
+
 int range = 6;
+double Endtime;
 
 //Last known Coordinates
 int lastX = 0;
@@ -56,20 +60,15 @@ void init( void )
     // sets the initial state for the game
     g_eGameState = S_SPLASHSCREEN;
 
-    g_sChar.m_cLocation.X = 48;
-    g_sChar.m_cLocation.Y = 8;
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
-    g_Console.setConsoleFont(0, 16, L"Consolas");
-	MapCollision = load_map("stage2.txt");
+    g_Console.setConsoleFont(0, 40, L"Consolas");
     
     user.lives = 5;
     user.points = 0;
     user.select = 0;
 	user.boost = 0;
 	user.ITaken = 0;
-	blocks.X = 41;
-	blocks.Y = 12;
 	lastknown.X = 0;
 	lastknown.Y = 0;}
 
@@ -135,8 +134,47 @@ void update(double dt)
     {
         case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
             break;
-        case S_GAME: gameplay(); // gameplay logic when we are in the game
+        case S_GAME1:
+			if(init1 == 0)
+			{
+				g_sChar.m_cLocation.X = 1;
+				g_sChar.m_cLocation.Y = 1;
+				init1 = 1;
+			}
+			gameplay(); // gameplay logic when we are in the game
+			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
+			{
+				Endtime = g_dElapsedTime;
+				g_eGameState = S_SPLASHSCREEN2;
+			}
             break;
+		case S_SPLASHSCREEN2: splashStage2Wait();
+			break;
+		case S_GAME2:
+			if(init2 == 0)
+			{
+				g_sChar.m_cLocation.X = 46;
+				g_sChar.m_cLocation.Y = 3;
+				blocks.X = 41;
+				blocks.Y = 4;
+				user.boost = 0;
+				user.switch1 = 0;
+				user.switch2 = 0;
+				user.switch3 = 0;
+				user.bomb = 0;
+				user.invis = 0;
+				user.TTaken = 0;
+				user.ITaken = 0;
+				user.strength = 0;
+				for(int i=0; i < 6; ++i)
+				{
+					user.inventory[i] = 'f';
+				}
+				user.inventoryitems.clear();
+				init2 = 1;
+			}
+			gameplay();
+			break;
     }
 }
 
@@ -156,8 +194,18 @@ void render()
     {
         case S_SPLASHSCREEN: renderSplashScreen();
             break;
-        case S_GAME: renderGame();
+        case S_GAME1: 
+			renderStage1();
+			renderGame();
+			g_Console.writeToBuffer(51, 10, "STAGE 1", 0xf0);
             break;
+		case S_SPLASHSCREEN2: renderSplashStage2();
+			break;
+		case S_GAME2:
+			renderStage2();
+			renderGame();
+			g_Console.writeToBuffer(51, 10, "STAGE 2", 0xf0);
+			break;
     }
     //renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
@@ -165,10 +213,14 @@ void render()
 
 void splashScreenWait()    // waits for time to pass in splash screen
 {
-    if (g_dElapsedTime > 1.0) // wait for 3 seconds to switch to game mode, else do nothing
-        g_eGameState = S_GAME;
+    if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
+        g_eGameState = S_GAME1;
 }
-
+void splashStage2Wait()    // waits for time to pass in splash screen
+{
+    if (g_dElapsedTime > Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
+        g_eGameState = S_GAME2;
+}
 void gameplay()            // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
@@ -222,13 +274,13 @@ void moveCharacter()
     
    	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 /* && user.lives > 0*/)
     	{
-        Beep(1440, 30);
 		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] != 'W')
 		{
 			if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'X')
 			{
 				if(user.switch1 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
 				}
 			}
@@ -236,6 +288,7 @@ void moveCharacter()
 			{
 				if(user.switch2 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
 				}
 			}
@@ -243,6 +296,7 @@ void moveCharacter()
 			{
 				if(user.switch3 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
 				}
 			}
@@ -255,6 +309,7 @@ void moveCharacter()
 			}
 			else 
 			{ 
+				        Beep(1440, 30);
 				g_sChar.m_cLocation.Y--;
 			}
 		}		
@@ -268,6 +323,7 @@ void moveCharacter()
 			{
 				if(user.switch1 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
 				}
 			}
@@ -275,6 +331,7 @@ void moveCharacter()
 			{
 				if(user.switch2 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
 				}
 			}
@@ -282,6 +339,7 @@ void moveCharacter()
 			{
 				if(user.switch3 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
 				}
 			}
@@ -294,19 +352,20 @@ void moveCharacter()
 			}
 			else
 			{
+				        Beep(1440, 30);
 				g_sChar.m_cLocation.X--;
 			}
 		}
     }
 	if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
     {
-        Beep(1440, 30);
 		if(MapCollision->data[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X] != 'W')
 		{
 			if(MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'X')
 			{
 				if(user.switch1 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y++;
 				}
 			}
@@ -314,6 +373,7 @@ void moveCharacter()
 			{
 				if(user.switch2 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y++;
 				}
 			}
@@ -321,6 +381,7 @@ void moveCharacter()
 			{
 				if(user.switch3 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y++;
 				}
 			}
@@ -333,20 +394,21 @@ void moveCharacter()
 			}
 			else
 			{
+				        Beep(1440, 30);
 				g_sChar.m_cLocation.Y++;
 			}
 		}
 
 	}
-    if (g_abKeyPressed[K_RIGHT]/* && charLocation.X < consoleSize.X - 1*/)
+    if (g_abKeyPressed[K_RIGHT] /*&& g_sChar.m_cLocation.X < consoleSize.X - 1*/)
     {
-        Beep(1440, 30);
 		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] != 'W')
 		{
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'X')
 			{
 				if(user.switch1 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.X++;
 				}
 			}
@@ -354,6 +416,7 @@ void moveCharacter()
 			{
 				if(user.switch2 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.X++;
 				}
 			}
@@ -361,6 +424,7 @@ void moveCharacter()
 			{
 				if(user.switch3 == 1)
 				{
+					        Beep(1440, 30);
 					g_sChar.m_cLocation.X++;
 				}
 			}
@@ -373,6 +437,7 @@ void moveCharacter()
 			}
 			else
 			{
+				        Beep(1440, 30);
 				g_sChar.m_cLocation.X++;
 			}
 		}
@@ -418,7 +483,7 @@ void moveCharacter()
 	//RESET
 	if(g_abKeyPressed[K_RESET])
 	{
-		init();
+		g_eGameState = S_SPLASHSCREEN2;
 	}
 
     //POINTS
@@ -503,19 +568,41 @@ void renderSplashScreen()  // renders the splash screen
     g_Console.writeToBuffer(c, "A game in 3 seconds", 0xf3);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 20;
-    g_Console.writeToBuffer(c, "Press <Space> to change character colour", 0xf9);
+    g_Console.writeToBuffer(c, "Hint: You can use boost over lava!!", 0xf9);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
 }
 
+void renderSplashStage2()  // renders the splash screen
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 3;
+    c.X = c.X  / 2 - 9;
+    g_Console.writeToBuffer(c, "STAGE 2", 0xf3);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X  / 2 - 20;
+    g_Console.writeToBuffer(c, "Hint: You can move diagonally", 0xf9);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 9;
+    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
+}
+
+void renderStage1()
+{
+	MapCollision = load_map("stage1.txt");
+	createMap1(g_sChar.m_cLocation, 1, range, user, g_Console);
+}
+void renderStage2()
+{
+	MapCollision = load_map("stage2.txt");
+	createMap2(g_sChar.m_cLocation, 1, range, user, g_Console);
+	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+}
 void renderGame()
 {
-	createMap(g_sChar.m_cLocation, 1, range, user, g_Console);
-    //renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     // Creating Map
-	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1')
 	{
 		user.switch1 = 1;

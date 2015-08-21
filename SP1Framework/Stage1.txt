@@ -1,20 +1,20 @@
 20 50
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-W        S        W             W        H       W
-W                 W             W                W
-W                 W             W        F       W
-W        D        W             W                W
-W                 W             W                W
-W                 W             W        D       W
-W  D           D  W             W================W
-W                 W             W================W
-W                 W             W================W
+W        S        WWWWWWWWWWWWWWW        H       W
+W                 WWWWWWWWWWWWWWW                W
+W                 WWWWWWWWWWWWWWW        F       W
+W        D        WWWWWWWWWWWWWWW                W
+W                 WWWWWWWWWWWWWWW                W
+W                 WWWWWWWWWWWWWWW        D       W
+W  D           D  WWWWWWWWWWWWWWW================W
+W                 WWWWWWWWWWWWWWW================W
+W                 WWWWWWWWWWWWWWW================W
 WWWWWWW     WWWWWWWWWWWWWWWWWWWWWWWWWWYYYYYWWWWWWW
-W     W         D              DW                W
-W     W               WW        W                W
-W     W    DWWWWWW    WW   WWW  W    D  W        W
-W     W     WD        WW  DW W          W        W
-WWWWWWWYYYWWWWWWWWWWWWWW   W W          W        W
+WWWWWWw         D              DW                W
+WWWWWWW               WW        W                W
+WWWWWWW    DWWWWWW    WW   WWW  W    D  W        W
+WWWWWWW     WD        WW  DWWW          W        W
+WWWWWWWYYYWWWWWWWWWWWWWW   WWW          W        W
 W       D W            W   WWW  WWWWWXXXWWWW     W
 W  T      W    1    D           W          W    DW
 W         W                     W   I      W    2W

@@ -47,15 +47,15 @@ void timer(double g_dElapsedTime, Console & g_Console)
 
     if ((g_dElapsedTime >= 120) && (g_dElapsedTime <= 130))
     {
-        g_Console.writeToBuffer(61, 3, "You have 7mins left! ", 10);
+        g_Console.writeToBuffer(56, 3, "You have 7mins left! ", 10);
     }
     if ((g_dElapsedTime >= 500) && (g_dElapsedTime <= 510))
     {
-        g_Console.writeToBuffer(61, 3, "You have 4mins left! ", 10);
+        g_Console.writeToBuffer(56, 3, "You have 4mins left! ", 10);
     }
     if ((g_dElapsedTime >= 480) && (g_dElapsedTime <= 490))
     {
-        g_Console.writeToBuffer(61, 3, "You have 1min left! ", 10);
+        g_Console.writeToBuffer(56, 3, "You have 1min left! ", 10);
     }
 }
     
