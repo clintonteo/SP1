@@ -369,13 +369,14 @@ void moveCharacter()
 
     // INVENTORY
     int count = 0;
-    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.ITaken == 0))
-    {
-        user.inventory[count] = 't';
-        user.inventoryitems.push_back("Boost");
-        ++count;
-        user.ITaken = 1;
-    }
+  //  if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.ITaken == 0))
+  //  {
+  //      user.inventory[count] = 't';
+  //      user.inventoryitems.push_back("Boost");
+  //      ++count;
+  //      user.ITaken = 1;
+		//user.boost = 1;
+  //  }
 
     // quits the game if player hits the escape key
     if (g_abKeyPressed[K_ESCAPE])
