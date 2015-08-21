@@ -246,6 +246,13 @@ void moveCharacter()
 					g_sChar.m_cLocation.Y--;
 				}
 			}
+			else if (MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
+			{
+				if(user.Cexplode == 1)
+				{
+					g_sChar.m_cLocation.Y--;
+				}
+			}
 			else 
 			{ 
 				g_sChar.m_cLocation.Y--;
@@ -276,6 +283,13 @@ void moveCharacter()
 				if(user.switch3 == 1)
 				{
 					g_sChar.m_cLocation.X--;
+				}
+			}
+			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'C')
+			{
+				if(user.Cexplode == 1)
+				{
+					g_sChar.m_cLocation.Y--;
 				}
 			}
 			else
@@ -310,6 +324,13 @@ void moveCharacter()
 					g_sChar.m_cLocation.Y++;
 				}
 			}
+			else if (MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'C')
+			{
+				if(user.Cexplode == 1)
+				{
+					g_sChar.m_cLocation.Y--;
+				}
+			}
 			else
 			{
 				g_sChar.m_cLocation.Y++;
@@ -341,6 +362,13 @@ void moveCharacter()
 				if(user.switch3 == 1)
 				{
 					g_sChar.m_cLocation.X++;
+				}
+			}
+			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'C')
+			{
+				if(user.Cexplode == 1)
+				{
+					g_sChar.m_cLocation.Y--;
 				}
 			}
 			else
@@ -453,7 +481,7 @@ void renderGame()
     //renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     // Creating Map
-	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+	//blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1')
 	{
 		user.switch1 = 1;

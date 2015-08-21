@@ -10,13 +10,13 @@ W                     D       W           WWW    W
 W                             W           WWW    W
 WCCCWWWWWWWWWWWWWWWWWWWWWWWWWWW     WWW   WWW    W
 W   WW                  =D          WWW   WWW    W
-W   WW    I             =           WWW   WWWD   W
+W   WW    1             =           WWW   WWWD   W
 WD  WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW   WWW    W
 W                  X                      WWW    W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW    W
-W    D DDDJDDDDDDDD D    D    D   D              W
+WD   D DDDJDDDDDDDD D    D    D   D              W
 W  D    DD DD   D    D P   D DD D                W
-W1  D         D    D      D D    D               W
+WI  D        DD    D     DD D    D               W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
 X = switch 1 open
