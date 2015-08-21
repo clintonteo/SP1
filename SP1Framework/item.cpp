@@ -149,7 +149,7 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user)
 		}
 		if (MapCollision->data[charLocation.Y][charLocation.X + count] == 'D')
 		{
-			user.lives--;
+			user.lives -= 1;
 
 		}
 		if (user.switch1 == 0)
