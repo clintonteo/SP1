@@ -246,11 +246,12 @@ void update(double dt)
 
     // INVENTORY
     int count = 0;
-    if (MapCollision->data[charLocation.Y][charLocation.X] == 'I')
+    if ((MapCollision->data[charLocation.Y][charLocation.X] == 'I') && (user.ITaken == 0))
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Boost");
         ++count;
+        user.ITaken = 1;
     }
 
     // quits the game if player hits the escape key
