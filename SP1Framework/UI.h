@@ -33,9 +33,9 @@ struct player
 	COORD block;
 };
 
-void timer (double g_dElapsedTime);
-void lives (player & user);
-void divider();
+void timer (double g_dElapsedTime, Console & g_Console);
+void lives (player & user, Console & g_Console);
+void divider(Console & g_Console);
 //void damagetaken ( player user, bool damage );
 void renderInventory ( player & user );
 void point( player & user );

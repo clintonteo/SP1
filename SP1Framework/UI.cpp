@@ -5,18 +5,18 @@
 #include "Framework\console.h"
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 using std::cout;
 using std::endl;
 // UI THINGY
 
 //Divider
-void divider()
+void divider(Console & g_Console)
 {
     for (int i = 0; i < 28; ++i)
     {
-        gotoXY(50,i);
-        cout << "|";
+		g_Console.writeToBuffer(50, i, "|", 0xf1);
     }
 }
 
@@ -48,15 +48,13 @@ void timer(double g_dElapsedTime)
     
 
 //Lives
-void lives( player & user )
+void lives( player & user, Console &g_Console )
 {
-    gotoXY(51,3);
+	g_Console.writeToBuffer(51, 3, "Lives: ", 0xf1);
 
-    cout << "Lives: ";
-    gotoXY(51,4);
     for (int count = 1; count <= user.lives; ++count)
     {
-        cout << (char)1 << "  ";
+		g_Console.writeToBuffer(51, 4, 'L', 0xf1);
     }
 
 }

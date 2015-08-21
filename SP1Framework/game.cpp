@@ -3,21 +3,21 @@
 //
 #include "item.h"
 #include "game.h"
+#include "Framework\console.h"
 #include "map.h"
 #include "UI.h"
-#include "Framework\console.h"
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <sstream>
 #include <string>
 using std::cout;
 using std::endl;
 
-double elapsedTime;
-double deltaTime;
-bool keyPressed[K_COUNT];
+double  g_dElapsedTime;
+double  g_dDeltaTime;
+bool    g_abKeyPressed[K_COUNT];
 
-COORD charLocation;
 COORD consoleSize;
 COORD blocks;
 COORD lastknown;
@@ -31,30 +31,36 @@ int lastY = 0;
 
 player user;
 
-void init()
+
+// Game specific variables here
+SGameChar   g_sChar;
+EGAMESTATES g_eGameState = S_SPLASHSCREEN;
+double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
+
+// Console object
+Console g_Console(80, 28, "SP1 Framework");
+
+//--------------------------------------------------------------
+// Purpose  : Initialisation function
+//            Initialize variables, allocate memory, load data from file, etc. 
+//            This is called once before entering into your main loop
+// Input    : void
+// Output   : void
+//--------------------------------------------------------------
+void init( void )
 {
     // Set precision for floating point output
-    std::cout << std::fixed << std::setprecision(3);
+    g_dElapsedTime = 0.0;
+    g_dBounceTime = 0.0;
 
-    SetConsoleTitle(L"SP1 Framework");
+    // sets the initial state for the game
+    g_eGameState = S_SPLASHSCREEN;
 
-    // Sets the console size, this is the biggest so far.
-    setConsoleSize(84, 28);
-
-    // Get console width and height
-    CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */     
-
-    /* get the number of character cells in the current buffer */ 
-    GetConsoleScreenBufferInfo( GetStdHandle( STD_OUTPUT_HANDLE ), &csbi );
-    consoleSize.X = csbi.srWindow.Right + 1;
-    consoleSize.Y = csbi.srWindow.Bottom + 1;
-
-    // set the character to be in the center of the screen.
-    charLocation.X = 40;
-    charLocation.Y = 12;
-	// 76 17
-	//15 69 23
-    elapsedTime = 0.0;
+    g_sChar.m_cLocation.X = 3;
+    g_sChar.m_cLocation.Y = 3;
+    g_sChar.m_bActive = true;
+    // sets the width, height and the font name to use in the console
+    g_Console.setConsoleFont(0, 16, L"Consolas");
 	MapCollision = load_map("stage1.txt");
     
     user.lives = 10;
@@ -65,177 +71,294 @@ void init()
 	blocks.X = 41;
 	blocks.Y = 12;
 	lastknown.X = 0;
-	lastknown.Y = 0;
-   
-}
+	lastknown.Y = 0;}
 
-void shutdown()
+//--------------------------------------------------------------
+// Purpose  : Reset before exiting the program
+//            Do your clean up of memory here
+//            This is called once just before the game exits
+// Input    : Void
+// Output   : void
+//--------------------------------------------------------------
+void shutdown( void )
 {
     // Reset to white text on black background
-	colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+    colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+
+    g_Console.clearBuffer();
 }
 
-void getInput()
+//--------------------------------------------------------------
+// Purpose  : Getting all the key press states
+//            This function checks if any key had been pressed since the last time we checked
+//            If a key is pressed, the value for that particular key will be true
+//
+//            Add more keys to the enum in game.h if you need to detect more keys
+//            To get other VK key defines, right click on the VK define (e.g. VK_UP) and choose "Go To Definition" 
+//            For Alphanumeric keys, the values are their ascii values (uppercase).
+// Input    : Void
+// Output   : void
+//--------------------------------------------------------------
+void getInput( void )
 {    
-    keyPressed[K_UP] = isKeyPressed(VK_UP);
-    keyPressed[K_DOWN] = isKeyPressed(VK_DOWN);
-    keyPressed[K_LEFT] = isKeyPressed(VK_LEFT);
-    keyPressed[K_RIGHT] = isKeyPressed(VK_RIGHT);
-    keyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
-    keyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key
-    keyPressed[K_USE] = isKeyPressed(VK_SPACE); // Spacebar // Use items
-	keyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
+    g_abKeyPressed[K_UP] = isKeyPressed(VK_UP);
+    g_abKeyPressed[K_DOWN] = isKeyPressed(VK_DOWN);
+    g_abKeyPressed[K_LEFT] = isKeyPressed(VK_LEFT);
+    g_abKeyPressed[K_RIGHT] = isKeyPressed(VK_RIGHT);
+    g_abKeyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
+    g_abKeyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key
+    g_abKeyPressed[K_USE] = isKeyPressed(VK_SPACE); // Spacebar // Use items
+	g_abKeyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
 }
 
-   
-
+//--------------------------------------------------------------
+// Purpose  : Update function
+//            This is the update function
+//            double dt - This is the amount of time in seconds since the previous call was made
+//
+//            Game logic should be done here.
+//            Such as collision checks, determining the position of your game characters, status updates, etc
+//            If there are any calls to write to the console here, then you are doing it wrong.
+//
+//            If your game has multiple states, you should determine the current state, and call the relevant function here.
+//
+// Input    : dt = deltatime
+// Output   : void
+//--------------------------------------------------------------
 void update(double dt)
 {
     // get the delta time
-    elapsedTime += dt;
-    deltaTime = dt;
+    g_dElapsedTime += dt;
+    g_dDeltaTime = dt;
 
-    // Updating the location of the character based on the key press
-	// providing a beep sound whenver we shift the character
-    if (keyPressed[K_UP] && charLocation.Y > 0 && user.lives > 0)
+    switch (g_eGameState)
     {
+        case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
+            break;
+        case S_GAME: gameplay(); // gameplay logic when we are in the game
+            break;
+    }
+}
+
+
+//--------------------------------------------------------------
+// Purpose  : Render function is to update the console screen
+//            At this point, you should know exactly what to draw onto the screen.
+//            Just draw it!
+//            To get an idea of the values for colours, look at console.h and the URL listed there
+// Input    : void
+// Output   : void
+//--------------------------------------------------------------
+void render()
+{
+    clearScreen();      // clears the current screen and draw from scratch 
+    switch (g_eGameState)
+    {
+        case S_SPLASHSCREEN: renderSplashScreen();
+            break;
+        case S_GAME: renderGame();
+            break;
+    }
+    renderFramerate();  // renders debug information, frame rate, elapsed time, etc
+    renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
+}
+
+void splashScreenWait()    // waits for time to pass in splash screen
+{
+    if (g_dElapsedTime > 1.0) // wait for 3 seconds to switch to game mode, else do nothing
+        g_eGameState = S_GAME;
+}
+
+void gameplay()            // gameplay logic
+{
+    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
+    moveCharacter();    // moves the character, collision detection, physics, etc
+                        // sound can be played here too.
+}
+
+void moveCharacter()
+{
+    bool bSomethingHappened = false;
+    if (g_dBounceTime > g_dElapsedTime)
+        return;
+
+    //// Updating the location of the character based on the key press
+    //// providing a beep sound whenver we shift the character
+    //if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0)
+    //{
+    //    //Beep(1440, 30);
+    //    g_sChar.m_cLocation.Y--;
+    //    bSomethingHappened = true;
+    //}
+    //if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0)
+    //{
+    //    //Beep(1440, 30);
+    //    g_sChar.m_cLocation.X--;
+    //    bSomethingHappened = true;
+    //}
+    //if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    //{
+    //    //Beep(1440, 30);
+    //    g_sChar.m_cLocation.Y++;
+    //    bSomethingHappened = true;
+    //}
+    //if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    //{
+    //    //Beep(1440, 30);
+    //    g_sChar.m_cLocation.X++;
+    //    bSomethingHappened = true;
+    //}
+    //if (g_abKeyPressed[K_SPACE])
+    //{
+    //    g_sChar.m_bActive = !g_sChar.m_bActive;
+    //    bSomethingHappened = true;
+    //}
+
+    //if (bSomethingHappened)
+    //{
+    //    // set the bounce time to some time in the future to prevent accidental triggers
+    //    g_dBounceTime = g_dElapsedTime + 0.125; // 125ms should be enough
+    //}
+    
+   	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 /* && user.lives > 0*/)
+    	{
         Beep(1440, 30);
-		if(MapCollision->data[charLocation.Y - 1][charLocation.X] != 'W')
+		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y - 1][charLocation.X] == 'X')
+			if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'X')
 			{
 				if(user.switch1 == 1)
 				{
-					charLocation.Y--;
+					g_sChar.m_cLocation.Y--;
 				}
 			}
-			else if (MapCollision->data[charLocation.Y - 1][charLocation.X] == 'Y')
+			else if (MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'Y')
 			{
 				if(user.switch2 == 1)
 				{
-					charLocation.Y--;
+					g_sChar.m_cLocation.Y--;
 				}
 			}
-			else if (MapCollision->data[charLocation.Y - 1][charLocation.X] == 'Z')
+			else if (MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'Z')
 			{
 				if(user.switch3 == 1)
 				{
-					charLocation.Y--;
+					g_sChar.m_cLocation.Y--;
 				}
 			}
-			else
-			{
-				charLocation.Y--;
+			else 
+			{ 
+				g_sChar.m_cLocation.Y--;
 			}
 		}		
     }
-    if (keyPressed[K_LEFT] && charLocation.X > 0 && user.lives > 0)
+    if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && user.lives > 0)
     {
         Beep(1440, 30);
-		if(MapCollision->data[charLocation.Y][charLocation.X - 1] != 'W')
+		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y][charLocation.X - 1] == 'X')
+			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'X')
 			{
 				if(user.switch1 == 1)
 				{
-					charLocation.X--;
+					g_sChar.m_cLocation.X--;
 				}
 			}
-			else if (MapCollision->data[charLocation.Y][charLocation.X - 1] == 'Y')
+			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'Y')
 			{
 				if(user.switch2 == 1)
 				{
-					charLocation.X--;
+					g_sChar.m_cLocation.X--;
 				}
 			}
-			else if (MapCollision->data[charLocation.Y][charLocation.X - 1] == 'Z')
+			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'Z')
 			{
 				if(user.switch3 == 1)
 				{
-					charLocation.X--;
+					g_sChar.m_cLocation.X--;
 				}
 			}
 			else
 			{
-				charLocation.X--;
+				g_sChar.m_cLocation.X--;
 			}
 		}
     }
-    if (keyPressed[K_DOWN] && charLocation.Y < consoleSize.Y - 1)
+	if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
     {
         Beep(1440, 30);
-		if(MapCollision->data[charLocation.Y + 1][charLocation.X] != 'W')
+		if(MapCollision->data[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y+1][charLocation.X] == 'X')
+			if(MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'X')
 			{
 				if(user.switch1 == 1)
 				{
-					charLocation.Y++;
+					g_sChar.m_cLocation.Y++;
 				}
 			}
-			else if (MapCollision->data[charLocation.Y+1][charLocation.X] == 'Y')
+			else if (MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'Y')
 			{
 				if(user.switch2 == 1)
 				{
-					charLocation.Y++;
+					g_sChar.m_cLocation.Y++;
 				}
 			}
-			else if (MapCollision->data[charLocation.Y+1][charLocation.X] == 'Z')
+			else if (MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'Z')
 			{
 				if(user.switch3 == 1)
 				{
-					charLocation.Y++;
+					g_sChar.m_cLocation.Y++;
 				}
 			}
 			else
 			{
-				charLocation.Y++;
+				g_sChar.m_cLocation.Y++;
 			}
 		}
 
 	}
-    if (keyPressed[K_RIGHT]/* && charLocation.X < consoleSize.X - 1*/)
+    if (g_abKeyPressed[K_RIGHT]/* && charLocation.X < consoleSize.X - 1*/)
     {
         Beep(1440, 30);
-		if(MapCollision->data[charLocation.Y][charLocation.X + 1] != 'W')
+		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] != 'W')
 		{
-			if(MapCollision->data[charLocation.Y][charLocation.X + 1] == 'X')
+			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'X')
 			{
 				if(user.switch1 == 1)
 				{
-					charLocation.X++;
+					g_sChar.m_cLocation.X++;
 				}
 			}
-			else if (MapCollision->data[charLocation.Y][charLocation.X + 1] == 'Y')
+			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'Y')
 			{
 				if(user.switch2 == 1)
 				{
-					charLocation.X++;
+					g_sChar.m_cLocation.X++;
 				}
 			}
-			else if (MapCollision->data[charLocation.Y][charLocation.X + 1] == 'Z')
+			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'Z')
 			{
 				if(user.switch3 == 1)
 				{
-					charLocation.X++;
+					g_sChar.m_cLocation.X++;
 				}
 			}
 			else
 			{
-				charLocation.X++;
+				g_sChar.m_cLocation.X++;
 			}
 		}
     }
 
     // POINTS
-    if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && user.TTaken == 0)
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && user.TTaken == 0)
     {
         user.points += 1;
 		user.TTaken = 1; 
     }
 
     // SELECTON
-    if (keyPressed[K_SELECT])
+    if (g_abKeyPressed[K_SELECT])
     {
         user.select += 1;
         if (user.select == 7)
@@ -246,7 +369,7 @@ void update(double dt)
 
     // INVENTORY
     int count = 0;
-    if ((MapCollision->data[charLocation.Y][charLocation.X] == 'I') && (user.ITaken == 0))
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.ITaken == 0))
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Boost");
@@ -255,21 +378,21 @@ void update(double dt)
     }
 
     // quits the game if player hits the escape key
-    if (keyPressed[K_ESCAPE])
-        g_quitGame = true;
+    if (g_abKeyPressed[K_ESCAPE])
+        g_bQuitGame = true;
 
     // quits if player lives at 0
     if (user.lives == 0)
     {
-        g_quitGame = true;    
+        g_bQuitGame = true;    
 	}
 	//RESET
-	if(keyPressed[K_RESET])
+	if(g_abKeyPressed[K_RESET])
 	{
 		init();
 	}
 
-    if (MapCollision->data[charLocation.Y][charLocation.X] == 'T' && user.TTaken == 0)
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && user.TTaken == 0)
     {
         user.points += 1;
 		user.TTaken = 1; 
@@ -278,95 +401,168 @@ void update(double dt)
     //Boost
 	if (user.boost == 1)
 	{
-		if(keyPressed[K_UP] && keyPressed[K_USE])
+		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 		{
-			item1up(MapCollision, charLocation);
+			item1up(MapCollision, g_sChar.m_cLocation);
 		}
-		else if(keyPressed[K_LEFT] && keyPressed[K_USE])
+		else if(g_abKeyPressed[K_LEFT] && g_abKeyPressed[K_USE])
 		{
-			item1left(MapCollision, charLocation);
+			item1left(MapCollision, g_sChar.m_cLocation);
 		}
-		else if(keyPressed[K_DOWN] && keyPressed[K_USE])
+		else if(g_abKeyPressed[K_DOWN] && g_abKeyPressed[K_USE])
 		{
-			item1down(MapCollision, charLocation);
+			item1down(MapCollision, g_sChar.m_cLocation);
 		}
-		else if(keyPressed[K_RIGHT] && keyPressed[K_USE])
+		else if(g_abKeyPressed[K_RIGHT] && g_abKeyPressed[K_USE])
 		{
-			item1right(MapCollision, charLocation);
+			item1right(MapCollision, g_sChar.m_cLocation);
 		}
 	}
-
+}
+void processUserInput()
+{
+    // quits the game if player hits the escape key
+    if (g_abKeyPressed[K_ESCAPE])
+        g_bQuitGame = true;    
 }
 
-//--------------------------------------------------------------
-// Purpose	: Render function is to update the console screen
-// Input	: void
-// Output	: void
-//--------------------------------------------------------------
-void render()
+void clearScreen()
 {
+    // Clears the buffer with this colour attribute
+    g_Console.clearBuffer(0xff);
+}
+
+void renderSplashScreen()  // renders the splash screen
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 3;
+    c.X = c.X / 2 - 9;
+    g_Console.writeToBuffer(c, "A game in 3 seconds", 0xf3);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 20;
+    g_Console.writeToBuffer(c, "Press <Space> to change character colour", 0xf9);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 9;
+    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
+}
+
+void renderGame()
+{
+	createMap(g_sChar.m_cLocation, 1, range, user, g_Console);
+    //renderMap();        // renders the map to the buffer first
+    renderCharacter();  // renders the character into the buffer
     // Creating Map
-	createMap(charLocation, 1, range, user);
-	blockp(charLocation, blocks, lastknown, range);
-	if(MapCollision->data[charLocation.Y][charLocation.X] == '1')
+	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1')
 	{
 		user.switch1 = 1;
-		gotoXY(51, 12);
-		cout << "YOU Activated X Switch!";
+		g_Console.writeToBuffer(51, 12, "You activated X Switch!", 0xf1);
 	}
-	if(MapCollision->data[charLocation.Y][charLocation.X] == '2')
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '2')
 	{
 		user.switch2 = 1;
-		gotoXY(51, 12);
-		cout << "YOU Activated Y Switch!";
+		g_Console.writeToBuffer(51, 12, "You activated Y Switch!", 0xf1);
 	}
-	if(MapCollision->data[charLocation.Y][charLocation.X] == 'I' && user.ITaken == 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.ITaken == 0)
 	{
 		user.boost = 1;
 		user.ITaken = 1;
-		gotoXY(50, 12);
-		cout << "You can now boost!" << user.boost;
+		g_Console.writeToBuffer(51, 12, "You can now Boost!", 0xf1);
 	}
-	gotoXY(51, 12);
-	if(MapCollision->data[charLocation.Y][charLocation.X] == 'D' && user.lives > 0)
+
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.lives > 0)
 	{
-		cout << "You have been hurt!" << endl;
-		if(lastX != charLocation.X)
+		g_Console.writeToBuffer(51, 12, "You have been hurt!", 0xf1);
+		if(lastX != g_sChar.m_cLocation.X)
 		{
 		    user.lives--;
-		    lastX = charLocation.X;
+		    lastX = g_sChar.m_cLocation.X;
 		}
-        else if(lastY != charLocation.Y)
+        else if(lastY != g_sChar.m_cLocation.Y)
 		{
 		    user.lives--;
-		    lastY = charLocation.Y;
+		    lastY = g_sChar.m_cLocation.Y;
 		}
 	}
-    else if(MapCollision->data[charLocation.Y][charLocation.X] == '=' && user.lives > 0)
+    else if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.lives > 0)
 	{
-		if(charLocation.X != blocks.X || charLocation.Y != blocks.Y)
+		if(g_sChar.m_cLocation.X != blocks.X || g_sChar.m_cLocation.Y != blocks.Y)
 		{
 			user.lives -= user.lives;
 		}
 	}
     else
 	{
-		lastX = charLocation.X;
-		lastY = charLocation.Y;
+		lastX = g_sChar.m_cLocation.X;
+		lastY = g_sChar.m_cLocation.Y;
 	}
 	if (user.lives <= 0)
 	{
-		gotoXY(50, 4);
-		cout << "YOU DIED!";
+		colour(BACKGROUND_RED);
+		g_Console.writeToBuffer(51, 13, "YOU DIED", 0xf1);
 		Beep(2000, 1000);
 	} 
    
     //UI functions
-	colour(0x01);
-    divider();
-    timer(elapsedTime);
-    lives( user );
-    renderInventory ( user );
-    point( user );
-    selector ( user );
+	//colour(0x01);
+    divider(g_Console);
+    //timer(g_dElapsedTime);
+    lives( user , g_Console);
+    //renderInventory ( user );
+    //point( user );
+    //selector ( user );
+
+}
+
+void renderMap()
+{
+    // Set up sample colours, and output shadings
+    const WORD colors[] = {
+        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+    };
+
+    COORD c;
+    for (int i = 0; i < 12; ++i)
+    {
+        c.X = 5 * i;
+        c.Y = i + 1;
+        colour(colors[i]);
+        g_Console.writeToBuffer(c, " °±²Û", colors[i]);
+    }
+}
+
+void renderCharacter()
+{
+    // Draw the location of the character
+    WORD charColor = 0x0C;
+    if (g_sChar.m_bActive)
+    {
+        charColor = 0xfA;
+    }
+    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+}
+
+void renderFramerate()
+{
+    COORD c;
+    // displays the framerate
+    std::ostringstream ss;
+    ss << std::fixed << std::setprecision(3);
+    ss << 1.0 / g_dDeltaTime << "fps";
+    c.X = 51;
+    c.Y = 0;
+    g_Console.writeToBuffer(c, ss.str());
+
+    // displays the elapsed time
+    ss.str("");
+    ss << g_dElapsedTime << "secs";
+    c.X = 51;
+    c.Y = 1;
+    g_Console.writeToBuffer(c, ss.str(), 0x59);
+}
+void renderToScreen()
+{
+    // Writes the buffer to the console, hence you will see what you have written
+    g_Console.flushBufferToConsole();
 }
