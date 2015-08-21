@@ -9,12 +9,6 @@ struct player
 {
     int lives;
     char inventory[6];
-    //string inventory0;
-    //string inventory1;
-    //string inventory2;
-    //string inventory3;
-    //string inventory4;
-    //string inventory5;
     vector<string>inventoryitems;
 	bool switch1;
 	bool switch2;
@@ -32,14 +26,16 @@ struct player
 	bool invis;
 	bool LTaken;
 	COORD block;
+    int timer;
 };
 
 void timer (double g_dElapsedTime, Console & g_Console);
 void lives (player & user, Console & g_Console);
 void divider(Console & g_Console);
 //void damagetaken ( player user, bool damage );
-void renderInventory ( player & user );
-void point( player & user );
-void selector( player & user );
+void renderInventory ( player & user , Console & g_Console );
+void point( player & user , Console & g_Console );
+void selector( player & user , Console & g_Console);
+void background( Console & g_Console );
 
 #endif // _UI_H

@@ -63,9 +63,9 @@ void init( void )
     g_Console.setConsoleFont(0, 16, L"Consolas");
 	MapCollision = load_map("stage2.txt");
     
-    user.lives = 10;
+    user.lives = 5;
     user.points = 0;
-    user.select = 1;
+    user.select = 0;
 	user.boost = 0;
 	user.ITaken = 0;
 	blocks.X = 41;
@@ -106,7 +106,7 @@ void getInput( void )
     g_abKeyPressed[K_LEFT] = isKeyPressed(VK_LEFT);
     g_abKeyPressed[K_RIGHT] = isKeyPressed(VK_RIGHT);
     g_abKeyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
-    g_abKeyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key
+    g_abKeyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key // Select items
     g_abKeyPressed[K_USE] = isKeyPressed(VK_SPACE); // Spacebar // Use items
 	g_abKeyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
 }
@@ -159,7 +159,7 @@ void render()
         case S_GAME: renderGame();
             break;
     }
-    renderFramerate();  // renders debug information, frame rate, elapsed time, etc
+    //renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
 
@@ -386,25 +386,25 @@ void moveCharacter()
     }
 
     // SELECTON
-    if (g_abKeyPressed[K_SELECT])
+    if ((g_abKeyPressed[K_SELECT]) && (user.inventory[0] == 't'))
     {
         user.select += 1;
-        if (user.select == 7)
+        if (user.select == user.inventoryitems.size()+1)
         {
-            user.select = 1;
+            user.select = 0;
         }
     }
 
     // INVENTORY
     int count = 0;
-  //  if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.ITaken == 0))
-  //  {
-  //      user.inventory[count] = 't';
-  //      user.inventoryitems.push_back("Boost");
-  //      ++count;
-  //      user.ITaken = 1;
-		//user.boost = 1;
-  //  }
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.ITaken == 0))
+    {
+        user.inventory[count] = 't';
+        user.inventoryitems.push_back("Boost");
+        ++count;
+        user.ITaken = 1;
+		user.boost = 1;
+    }
 
     // quits the game if player hits the escape key
     if (g_abKeyPressed[K_ESCAPE])
@@ -421,6 +421,7 @@ void moveCharacter()
 		init();
 	}
 
+    //POINTS
     if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && user.TTaken == 0)
     {
         user.points += 1;
@@ -572,13 +573,13 @@ void renderGame()
 	} 
    
     //UI functions
-	//colour(0x01);
+    background ( g_Console );
     divider(g_Console);
-    //timer(g_dElapsedTime);
+    timer(g_dElapsedTime, g_Console);
     lives( user , g_Console);
-    //renderInventory ( user );
-    //point( user );
-    //selector ( user );
+    renderInventory ( user , g_Console);
+    point( user , g_Console);
+    selector ( user , g_Console);
 
 }
 
@@ -618,16 +619,16 @@ void renderFramerate()
     std::ostringstream ss;
     ss << std::fixed << std::setprecision(3);
     ss << 1.0 / g_dDeltaTime << "fps";
-    c.X = 51;
+    c.X = 72;
     c.Y = 0;
     g_Console.writeToBuffer(c, ss.str());
 
     // displays the elapsed time
     ss.str("");
     ss << g_dElapsedTime << "secs";
-    c.X = 51;
-    c.Y = 1;
-    g_Console.writeToBuffer(c, ss.str(), 0x59);
+    c.X = 59;
+    c.Y = 2;
+    g_Console.writeToBuffer(c, ss.str(), 10);
 }
 void renderToScreen()
 {
