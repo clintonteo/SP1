@@ -1,3 +1,4 @@
+20 50
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 WT                            W                 KW
 W             W          H    W    F         S   W
@@ -18,18 +19,3 @@ WD   D DDDJDDDDDDDD D    D    D   D              W
 W  D    DD DD   D    D P   D DD D                W
 WI  D        DD    D     DD D    D               W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-
-X = switch 1 open
-Y = switch 2 open
-Z = switch 3 open
-E = monster
-F = hard monster
-H = exit
-B = pushable block
-P = pitfall
-C = cracked wall
-I = boost
-J = bomb
-K = strength potions
-L = invis pot
-= = lava
