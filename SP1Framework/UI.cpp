@@ -7,124 +7,128 @@
 #include <iomanip>
 #include <string>
 
+
 using std::cout;
 using std::endl;
+using std::string;
 // UI THINGY
+
+//Background
+void background( Console & g_Console )
+{
+    for (int y_axis = 0; y_axis < 28; ++y_axis)
+    {
+        for (int x_axis = 50; x_axis < 80; ++x_axis)
+        {
+            g_Console.writeToBuffer(x_axis, y_axis, " ", 01);
+        }
+    }
+}
+
 
 //Divider
 void divider(Console & g_Console)
 {
     for (int i = 0; i < 28; ++i)
     {
-		g_Console.writeToBuffer(50, i, "|", 0xf1);
+		g_Console.writeToBuffer(50, i, "|", 0);
     }
 }
 
 
 
 //Timer Notification
-void timer(double g_dElapsedTime)
+void timer(double g_dElapsedTime, Console & g_Console)
 {
-    gotoXY(51,0);
+    //Timer
+    g_Console.writeToBuffer(61, 1, "Timer: ", 10);
+
+    renderFramerate();
+
     if ((g_dElapsedTime >= 120) && (g_dElapsedTime <= 130))
     {
-        cout << "Time is "<< g_dElapsedTime << "! You have a min left!";
+        g_Console.writeToBuffer(61, 3, "You have 7mins left! ", 10);
     }
     if ((g_dElapsedTime >= 500) && (g_dElapsedTime <= 510))
     {
-        cout << "Time is "<< g_dElapsedTime << "! You have a min left!";
+        g_Console.writeToBuffer(61, 3, "You have 4mins left! ", 10);
     }
     if ((g_dElapsedTime >= 480) && (g_dElapsedTime <= 490))
     {
-        cout << "Time is "<< g_dElapsedTime << "! You have a min left!";
+        g_Console.writeToBuffer(61, 3, "You have 1min left! ", 10);
     }
-
-    //Timer
-    gotoXY(51,1);
-    cout << "Timer:";
-    gotoXY(51,2);
-    cout << g_dElapsedTime;
 }
     
 
 //Lives
 void lives( player & user, Console &g_Console )
 {
-	g_Console.writeToBuffer(51, 3, "Lives: ", 0xf1);
+	g_Console.writeToBuffer(61, 4, "Lives: ", 10);
 
-    for (int count = 1; count <= user.lives; ++count)
+    for (int count = 0; count < user.lives; ++count)
     {
-		g_Console.writeToBuffer(51, 4, 'L', 0xf1);
+		g_Console.writeToBuffer(57 + count*3, 5, "|HP|", 43);
     }
-
 }
 
-
-////Damage Taken
-//void damagetaken(bool damage, player user)
-//{
-//    if (damage == 1)
-//    {
-//        user.lives -= 1;
-//    }
-//}
-
-
 //Render Inventory
-void renderInventory( player & user )
+void renderInventory( player & user , Console & g_Console )
 {
-    gotoXY(51,5);
-    cout << "Inventory: ";
-    
-    gotoXY(51,6);
+    g_Console.writeToBuffer(59 , 7, "Inventory: ", 10);
 
     for (int i = 0; i < user.inventoryitems.size(); ++i)
     {
-        if (user.inventory[0] == 't')
+        if (user.inventory[i] == 't')
         {
-            cout << i+1 << ". " << user.inventoryitems[i] << " ";
-            gotoXY(51,6+i);
+            g_Console.writeToBuffer(59, 8 + i , user.inventoryitems[i] , 10);
         }
-        /*if (user.inventory[1] == 't')
-        {
-            cout << "2. " << user.inventory1 << " ";
-            gotoXY(51,8);
-        }
-        if (user.inventory[2] == 't')
-        {
-            cout << "3. " << user.inventory2 << " ";
-            gotoXY(51,9);
-        }
-        if (user.inventory[3] == 't')
-        {
-            cout << "4. " << user.inventory3 << " ";
-            gotoXY(51,10);
-        }
-        if (user.inventory[4] == 't')
-        {
-            cout << "5. " << user.inventory4 << " ";
-            gotoXY(51,11);
-        }
-        if (user.inventory[5] == 't')
-        {
-            cout << "6. " << user.inventory5 << " ";
-            gotoXY(51,12);
-        }*/
     }
     
 }
 
-void point( player & user )
+//Points
+void point( player & user , Console & g_Console )
 {
-    gotoXY(51,15);
-    
-    cout << "Points: " << user.points;
+    g_Console.writeToBuffer(61, 15 , "Points:" , 10);
+
+    if (user.TTaken == 1)
+    {
+        if (user.points == 1)
+        {
+            g_Console.writeToBuffer(61, 16 , "1" , 10);
+        }
+        if (user.points == 2)
+        {
+            g_Console.writeToBuffer(61, 16 , "2" , 10);
+        }
+        if (user.points == 3)
+        {
+            g_Console.writeToBuffer(61, 16 , "3" , 10);
+        }
+        if (user.points == 4)
+        {
+            g_Console.writeToBuffer(61, 16 , "4" , 10);
+        }
+    }
+    else
+    {
+        g_Console.writeToBuffer(61, 16 , "0" , 10);
+    }
 }
 
-void selector( player & user )
+//Selector
+void selector( player & user , Console & g_Console )
 {
-    gotoXY(51, 13);
-    cout << "Item " << user.select << " selected.";
+    g_Console.writeToBuffer(59, 12 , "Item selected: ", 10);
+
+    if (user.inventory[user.select] == 't')
+    {
+        g_Console.writeToBuffer(59, 13 , user.inventoryitems[user.select] , 10);
+    }
+    else
+    {
+        g_Console.writeToBuffer(59, 13 , "No item" , 10);
+    }
 }
 
     
