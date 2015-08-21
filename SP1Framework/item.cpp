@@ -15,6 +15,10 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user)
 			stop = 1;
 			break;
 		}
+		if (MapCollision->data[charLocation.Y - count][charLocation.X] == 'D')
+		{
+			user.lives -= 1;
+		}
 		if (user.switch1 == 0)
 		{
 			if(MapCollision->data[charLocation.Y - count][charLocation.X] == 'X')
@@ -54,6 +58,10 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user)
 		{
 			stop = 1;
 			break;
+		}
+		if (MapCollision->data[charLocation.Y][charLocation.X - count] == 'D')
+		{
+			user.lives -= 1;
 		}
 		if (user.switch1 == 0)
 		{
@@ -95,6 +103,10 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user)
 			stop = 1;
 			break;
 		}
+		if (MapCollision->data[charLocation.Y + count][charLocation.X] == 'D')
+		{
+			user.lives -= 1;
+		}
 		if (user.switch1 == 0)
 		{
 			if(MapCollision->data[charLocation.Y + count][charLocation.X] == 'X')
@@ -134,6 +146,11 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user)
 		{
 			stop = 1;
 			break;
+		}
+		if (MapCollision->data[charLocation.Y][charLocation.X + count] == 'D')
+		{
+			user.lives--;
+
 		}
 		if (user.switch1 == 0)
 		{
