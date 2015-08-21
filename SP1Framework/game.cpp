@@ -404,19 +404,19 @@ void moveCharacter()
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 		{
-			item1up(MapCollision, g_sChar.m_cLocation);
+			item1up(MapCollision, g_sChar.m_cLocation, user);
 		}
 		else if(g_abKeyPressed[K_LEFT] && g_abKeyPressed[K_USE])
 		{
-			item1left(MapCollision, g_sChar.m_cLocation);
+			item1left(MapCollision, g_sChar.m_cLocation, user);
 		}
 		else if(g_abKeyPressed[K_DOWN] && g_abKeyPressed[K_USE])
 		{
-			item1down(MapCollision, g_sChar.m_cLocation);
+			item1down(MapCollision, g_sChar.m_cLocation, user);
 		}
 		else if(g_abKeyPressed[K_RIGHT] && g_abKeyPressed[K_USE])
 		{
-			item1right(MapCollision, g_sChar.m_cLocation);
+			item1right(MapCollision, g_sChar.m_cLocation,user);
 		}
 	}
 }
