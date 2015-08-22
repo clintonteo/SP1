@@ -347,7 +347,7 @@ void moveCharacter()
 			{
 				if(user.Cexplode == 1)
 				{
-					g_sChar.m_cLocation.Y--;
+					g_sChar.m_cLocation.X--;
 				}
 			}
 			else
@@ -389,7 +389,7 @@ void moveCharacter()
 			{
 				if(user.Cexplode == 1)
 				{
-					g_sChar.m_cLocation.Y--;
+					g_sChar.m_cLocation.Y++;
 				}
 			}
 			else
@@ -432,7 +432,7 @@ void moveCharacter()
 			{
 				if(user.Cexplode == 1)
 				{
-					g_sChar.m_cLocation.Y--;
+					g_sChar.m_cLocation.X++;
 				}
 			}
 			else
