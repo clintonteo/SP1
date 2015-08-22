@@ -613,6 +613,12 @@ void renderGame()
 		user.switch2 = 1;
 		g_Console.writeToBuffer(51, 12, "You activated Y Switch!", 0xf1);
 	}
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '3')
+	{
+		user.switch3 = 1;
+		g_Console.writeToBuffer(51, 12, "You activated Z Switch!", 0xf1);
+	}
+
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.ITaken == 0)
 	{
 		user.boost = 1;

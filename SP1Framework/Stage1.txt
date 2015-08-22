@@ -1,21 +1,21 @@
 20 50
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-W        S        WWWWWWWWWWWWWWW        H       W
-W                 WWWWWWWWWWWWWWW                W
-W                 WWWWWWWWWWWWWWW        F       W
-W        D        WWWWWWWWWWWWWWW                W
-W                 WWWWWWWWWWWWWWW                W
-W                 WWWWWWWWWWWWWWW        D       W
-W  D           D  WWWWWWWWWWWWWWW================W
-W                 WWWWWWWWWWWWWWW================W
-W                 WWWWWWWWWWWWWWW================W
+W        S        WW   D   =  D        ===D      W
+W              D  WW       =D    D     ===   DH  W
+W                 WW  DWWWWWWWWWWWWWWWWWWWWWWWWWWW
+W  D     D        WWD  =   WW        D ===      DW
+W                 WW  DW   WW  D       ===D     3W
+W      D          WW   WD  WW  WWWWWWWWWWWWWWWWWWW
+W    D    D       WWD  W   WW  WW     D===       W
+W                 WW              D    === D     W
+W  D  D  D    D   WWF          WW================W
 WWWWWWW     WWWWWWWWWWWWWWWWWWWWWWWWWWYYYYYWWWWWWW
-WWWWWWw         D              DW                W
-WWWWWWW               WW        W                W
-WWWWWWW    DWWWWWW    WW   WWW  W    D  W        W
-WWWWWWW     WD        WW  DWWW          W        W
-WWWWWWWYYYWWWWWWWWWWWWWW   WWW          W        W
-W       D W            W   WWW  WWWWWXXXWWWW     W
-W  T      W    1    D           W          W    DW
-W         W                     W   I      W    2W
+WWWWWWW         D               W                W
+WTD WWW               WW     D  W                W
+W   WWW    DWWWWWWD   WW   WWW  W    D  WWWWD    W
+W  DWWW     W         WW  DWWW          WWWW     W
+WZZZWWW   WWWWWWWWWWWWWW   WWW          WWWW     W
+W     D   W            W   WWW  WWWWWXXXWWWW     W
+WD        W    1    D           W   D   WWWW    DW
+W         W                   D W  I    WWWW    2W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
