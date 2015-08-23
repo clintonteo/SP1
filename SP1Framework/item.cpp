@@ -8,7 +8,8 @@
 void item1up(PMAP MapCollision, COORD &charLocation, player&user)
 {
 	bool stop = 0;
-	for(int count = 0; count <= 3; ++count)
+	int count = 0;
+	for(; count <= 3; ++count)
 	{
 		if (MapCollision->data[charLocation.Y - count][charLocation.X] == 'W')
 		{
@@ -56,12 +57,19 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user)
 	if (stop == 0)
 	{
 		charLocation.Y -= 3;
+		user.bcd = 11;
+	}
+	else
+	{
+		charLocation.Y -= count - 1;
+		user.bcd = 11;
 	}
 }
 void item1left(PMAP MapCollision, COORD &charLocation,player&user)
 {
 	bool stop = 0;
-	for(int count = 0; count <= 3; ++count)
+	int count = 0;
+	for(; count <= 3; ++count)
 	{
 		if (MapCollision->data[charLocation.Y][charLocation.X - count] == 'W')
 		{
@@ -109,12 +117,19 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user)
 	if (stop == 0)
 	{
 		charLocation.X -= 3;
+		user.bcd = 11;
+	}
+	else
+	{
+		charLocation.X -= count - 1;
+		user.bcd = 11;
 	}
 }
 void item1down(PMAP MapCollision, COORD &charLocation,player&user)
 {
 	bool stop = 0;
-	for(int count = 0; count <= 3; ++count)
+	int count = 0;
+	for(; count <= 3; ++count)
 	{
 		if (MapCollision->data[charLocation.Y + count][charLocation.X] == 'W')
 		{
@@ -161,12 +176,19 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user)
 	if (stop == 0)
 	{
 		charLocation.Y += 3;
+		user.bcd = 11;
+	}
+	else
+	{
+		charLocation.Y += count - 1;
+		user.bcd = 11;
 	}
 }
 void item1right(PMAP MapCollision, COORD &charLocation,player&user)
 {
 	bool stop = 0;
-	for(int count = 0; count <= 3; ++count)
+	int count = 0;
+	for(; count <= 3; ++count)
 	{
 		if (MapCollision->data[charLocation.Y][charLocation.X + count] == 'W')
 		{
@@ -214,6 +236,12 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user)
 	if (stop == 0)
 	{
 		charLocation.X += 3;
+		user.bcd = 11;
+	}
+	else
+	{
+		charLocation.X += count - 1;
+		user.bcd = 11;
 	}
 }
 
