@@ -35,7 +35,6 @@ int lastY = 0;
 
 player user;
 
-
 // Game specific variables here
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
@@ -71,6 +70,9 @@ void init( void )
 	user.MTaken = 0;
 	lastknown.X = 0;
 	lastknown.Y = 0;
+    std::ofstream log;
+    log.open("log.txt", std::fstream::trunc);
+    log.close();
 }
 //--------------------------------------------------------------
 // Purpose  : Reset before exiting the program
@@ -171,6 +173,7 @@ void update(double dt)
 				}
 				user.inventoryitems.clear();
 				init2 = 1;
+
 			}
 			gameplay();
 			break;
@@ -429,6 +432,7 @@ void moveCharacter()
         ++count;
 		user.boost = 1;
     }
+
     if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 229) && (user.bomb == 0)) // Bomb
     {
         user.inventory[count] = 't';
@@ -460,8 +464,10 @@ void moveCharacter()
 		user.TTaken = 1; 
     }
 
+    //Use Items
     //Boost
-	if (user.boost == 1)
+
+    if (user.boost == 1 && user.bcd == 0 && user.inventory[user.select] == 't')
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 		{
@@ -481,7 +487,7 @@ void moveCharacter()
 		}
 	}
 	//Bomb
-	if(user.bomb >= 1)
+    if(user.bomb >= 1 && /*user.inventoryitems[user.select] == "Bomb"*/user.inventory[user.select] == 't')
 	{
 		int amt = user.bomb;
 		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
@@ -513,6 +519,7 @@ void moveCharacter()
 			}
 		}
 	}
+    
 }
 void processUserInput()
 {
@@ -569,32 +576,39 @@ void renderStage2()
 void renderGame()
 {
     renderCharacter();  // renders the character into the buffer
-    // Creating Map
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1')
+    // Write Log
+    if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1)
 	{
 		user.switch1 = 1;
-		g_Console.writeToBuffer(51, 12, "You activated X Switch!", 0xf1);
+		//g_Console.writeToBuffer(51, 12, "You activated X Switch!", 0xf1);
+        writeLog("You activated X switch!", g_dElapsedTime);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '2')
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '2'  && user.switch2 != 1)
 	{
 		user.switch2 = 1;
-		g_Console.writeToBuffer(51, 12, "You activated Y Switch!", 0xf1);
+		//g_Console.writeToBuffer(51, 12, "You activated Y Switch!", 0xf1);
+        writeLog("You actvated Y switch!", g_dElapsedTime);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '3')
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '3'  && user.switch3 != 1)
 	{
 		user.switch3 = 1;
-		g_Console.writeToBuffer(51, 12, "You activated Z Switch!", 0xf1);
+		//g_Console.writeToBuffer(51, 12, "You activated Z Switch!", 0xf1);
+        writeLog("You activated Z switch!", g_dElapsedTime);
 	}
 
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.boost == 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.ITaken != 1)
 	{
 		user.boost = 1;
-		g_Console.writeToBuffer(51, 12, "You can now Boost!", 0xf1);
+		user.ITaken = 1;
+		//g_Console.writeToBuffer(51, 12, "You can now Boost!", 0xf1);
+        writeLog("You can now boost!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
 	{
 		user.bomb++;
-		g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
+		user.JTaken = 1;
+		//g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
+        writeLog("You now have a bomb!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5)
 	{
@@ -612,16 +626,19 @@ void renderGame()
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.lives > 0)
 	{
-		g_Console.writeToBuffer(51, 12, "You have been hurt!", 0xf1);
+		//g_Console.writeToBuffer(51, 12, "You have been hurt!", 0xf1);
+        //writeLog("You have been hurt!", g_dElapsedTime);
 		if(lastX != g_sChar.m_cLocation.X)
 		{
 		    user.lives--;
 		    lastX = g_sChar.m_cLocation.X;
+            writeLog("You have been hurt!", g_dElapsedTime);
 		}
         else if(lastY != g_sChar.m_cLocation.Y)
 		{
 		    user.lives--;
 		    lastY = g_sChar.m_cLocation.Y;
+            writeLog("You have been hurt!", g_dElapsedTime);
 		}
 	}
     else if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.lives > 0)
@@ -639,7 +656,8 @@ void renderGame()
 	if (user.lives <= 0)
 	{
 		colour(BACKGROUND_RED);
-		g_Console.writeToBuffer(51, 13, "YOU DIED", 0xf1);
+		//g_Console.writeToBuffer(51, 13, "YOU DIED", 0xf1);
+        writeLog("You died!", g_dElapsedTime);
 		Beep(2000, 1000);
 	} 
    
@@ -651,7 +669,7 @@ void renderGame()
     renderInventory ( user , g_Console);
     point( user , g_Console);
     selector ( user , g_Console);
-
+    readLog ( g_Console );
 }
 
 void renderMap()

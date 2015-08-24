@@ -2,10 +2,12 @@
 
 #include "UI.h"
 #include "game.h"
+#include "map.h"
 #include "Framework\console.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <fstream>
 
 
 using std::cout;
@@ -131,4 +133,49 @@ void selector( player & user , Console & g_Console )
     }
 }
 
-    
+//Read Log
+void readLog ( Console & g_Console )
+{
+    std::fstream log ("log.txt");
+
+    string line;
+    int first_line = 0;
+    int last_line = 5;
+
+    /*int i = 0;
+    if (log.is_open())
+    {
+        while ( getline (log,line) )
+        {
+            g_Console.writeToBuffer(51, 18 + i , line , 10);
+            ++i;
+            if(i == 5)
+            {
+                i = 0;
+            }
+        }
+        log.close();
+    }*/
+
+    for (int i = 0; i <= last_line && i >= first_line; ++i)
+    {
+        getline (log, line);
+        g_Console.writeToBuffer(51, 18 + i , line , 10);
+
+        if (i == 5)
+        {
+            i = 0;
+            ++first_line;
+            ++last_line;
+        }
+    }
+}
+
+//Write Log
+void writeLog ( string line , double time) 
+{
+    std::fstream log ("log.txt", std::fstream::app);
+
+    log << line << "@" << time << "\n";
+    log.close();
+}
