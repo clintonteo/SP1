@@ -271,7 +271,6 @@ void moveCharacter()
     //    // set the bounce time to some time in the future to prevent accidental triggers
     //    g_dBounceTime = g_dElapsedTime + 0.125; // 125ms should be enough
     //}
-    
    	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 /* && user.lives > 0*/)
     	{
 		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] != 'W')
