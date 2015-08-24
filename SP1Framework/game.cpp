@@ -68,6 +68,7 @@ void init( void )
     user.select = 0;
 	user.boost = 0;
 	user.MTaken = 0;
+	user.timelimit = 180;
 	lastknown.X = 0;
 	lastknown.Y = 0;
     std::ofstream log;
@@ -167,6 +168,7 @@ void update(double dt)
 				user.invis = 0;
 				user.TTaken = 0;
 				user.strength = 0;
+				user.timelimit += 180;
 				for(int i=0; i < 6; ++i)
 				{
 					user.inventory[i] = 'f';
@@ -467,7 +469,7 @@ void moveCharacter()
     //Use Items
     //Boost
 
-    if (user.boost == 1 && user.bcd == 0 && user.inventory[user.select] == 't')
+    if (user.boost == 1 && user.inventory[user.select] == 't')
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 		{
@@ -596,17 +598,15 @@ void renderGame()
         writeLog("You activated Z switch!", g_dElapsedTime);
 	}
 
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.ITaken != 1)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.boost == 0)
 	{
 		user.boost = 1;
-		user.ITaken = 1;
 		//g_Console.writeToBuffer(51, 12, "You can now Boost!", 0xf1);
         writeLog("You can now boost!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
 	{
-		user.bomb++;
-		user.JTaken = 1;
+		user.bomb = 1;
 		//g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
         writeLog("You now have a bomb!", g_dElapsedTime);
 	}
@@ -652,6 +652,10 @@ void renderGame()
 	{
 		lastX = g_sChar.m_cLocation.X;
 		lastY = g_sChar.m_cLocation.Y;
+	}
+	if (g_dElapsedTime >= user.timelimit)
+	{
+		user.lives -= user.lives;
 	}
 	if (user.lives <= 0)
 	{
