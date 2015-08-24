@@ -364,11 +364,11 @@ void createMap2(COORD charLocation, bool blind, int range, player &user, Console
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, ladder, 0xfc);
 				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == 'C')
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'C' && user.Cexplode == 0)
 				{
-					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, ladder, 0xfc);
+					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, crack, 0xfc);
 				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == 'J')
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'J' && user.JTaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, bomb, 0xfc);
 				}
@@ -439,11 +439,11 @@ void createMap2(COORD charLocation, bool blind, int range, player &user, Console
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, ladder, 0xfc);
 				}
-				else if(line[charLocation.X+k] == 'C')
+				else if(line[charLocation.X+k] == 'C' && user.Cexplode == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, crack, 0xfc);
 				}
-				else if(line[charLocation.X+k] == 'J')
+				else if(line[charLocation.X+k] == 'J' && user.JTaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, bomb, 0xfc);
 				}
