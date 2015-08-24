@@ -721,7 +721,7 @@ void renderGame()
 		user.JTaken = 1;
 		g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5) //medkit
 	{
 		if (user.lives < 4)
 		{

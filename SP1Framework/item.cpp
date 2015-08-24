@@ -4,6 +4,7 @@
 #include "game.h"
 #include "Framework\console.h"
 
+// item1 is boost, item2 is explosive
 
 void item1up(PMAP MapCollision, COORD &charLocation, player&user)
 {
