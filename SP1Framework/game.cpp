@@ -69,6 +69,7 @@ void init( void )
     user.select = 0;
 	user.boost = 0;
 	user.ITaken = 0;
+    user.JTaken = 0;
 	lastknown.X = 0;
 	lastknown.Y = 0;
 }
@@ -602,7 +603,7 @@ void moveCharacter()
 			item1right(MapCollision, g_sChar.m_cLocation,user);
 		}
 	}
-	//explode
+	//Bomb
 	if(user.bomb >= 1)
 	{
 		int amt = user.bomb;
