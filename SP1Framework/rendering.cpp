@@ -120,7 +120,7 @@ void createMap1(COORD charLocation, bool blind, int range, player &user, Console
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, treasure, 0xf6);
 				}
-				else if (line[charLocation.X-temprange+Xoffset+j] == 'I' && user.ITaken == 0)
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'I' && user.boost == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, boost, 0xf2);
 				}
@@ -191,7 +191,7 @@ void createMap1(COORD charLocation, bool blind, int range, player &user, Console
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i,treasure, 0xf6);
 				}
-				else if (line[charLocation.X+k] == 'I' && user.ITaken == 0)
+				else if (line[charLocation.X+k] == 'I' && user.boost == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, boost, 0xf2);
 				}
@@ -377,7 +377,7 @@ void createMap2(COORD charLocation, bool blind, int range, player &user, Console
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, crack, 0xfc);
 				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == 'J' && user.JTaken == 0)
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'J' && user.bomb == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, bomb, 0xfc);
 				}
@@ -385,7 +385,7 @@ void createMap2(COORD charLocation, bool blind, int range, player &user, Console
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, treasure, 0xf6);
 				}
-				else if (line[charLocation.X-temprange+Xoffset+j] == 'I' && user.ITaken == 0)
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'I' && user.boost == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, boost, 0xf2);
 				}
@@ -456,7 +456,7 @@ void createMap2(COORD charLocation, bool blind, int range, player &user, Console
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, crack, 0xfc);
 				}
-				else if(line[charLocation.X+k] == 'J' && user.JTaken == 0)
+				else if(line[charLocation.X+k] == 'J' && user.bomb == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, bomb, 0xfc);
 				}
@@ -464,7 +464,7 @@ void createMap2(COORD charLocation, bool blind, int range, player &user, Console
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i,treasure, 0xf6);
 				}
-				else if (line[charLocation.X+k] == 'I' && user.ITaken == 0)
+				else if (line[charLocation.X+k] == 'I' && user.boost == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, boost, 0xf2);
 				}

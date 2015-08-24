@@ -271,7 +271,7 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 void item2(player&user)
 {
 	user.Cexplode = 1;
-	user.bomb--;
+	user.bomb = 0;
 }
 
 void item3()

@@ -68,8 +68,6 @@ void init( void )
     user.points = 0;
     user.select = 0;
 	user.boost = 0;
-	user.ITaken = 0;
-    user.JTaken = 0;
 	user.MTaken = 0;
 	lastknown.X = 0;
 	lastknown.Y = 0;
@@ -166,7 +164,6 @@ void update(double dt)
 				user.bomb = 0;
 				user.invis = 0;
 				user.TTaken = 0;
-				user.ITaken = 0;
 				user.strength = 0;
 				for(int i=0; i < 6; ++i)
 				{
@@ -235,45 +232,7 @@ void moveCharacter()
     bool bSomethingHappened = false;
     if (g_dBounceTime > g_dElapsedTime)
         return;
-
-    //// Updating the location of the character based on the key press
-    //// providing a beep sound whenver we shift the character
-    //if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0)
-    //{
-    //    //Beep(1440, 30);
-    //    g_sChar.m_cLocation.Y--;
-    //    bSomethingHappened = true;
-    //}
-    //if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0)
-    //{
-    //    //Beep(1440, 30);
-    //    g_sChar.m_cLocation.X--;
-    //    bSomethingHappened = true;
-    //}
-    //if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
-    //{
-    //    //Beep(1440, 30);
-    //    g_sChar.m_cLocation.Y++;
-    //    bSomethingHappened = true;
-    //}
-    //if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
-    //{
-    //    //Beep(1440, 30);
-    //    g_sChar.m_cLocation.X++;
-    //    bSomethingHappened = true;
-    //}
-    //if (g_abKeyPressed[K_SPACE])
-    //{
-    //    g_sChar.m_bActive = !g_sChar.m_bActive;
-    //    bSomethingHappened = true;
-    //}
-
-    //if (bSomethingHappened)
-    //{
-    //    // set the bounce time to some time in the future to prevent accidental triggers
-    //    g_dBounceTime = g_dElapsedTime + 0.125; // 125ms should be enough
-    //}
-   	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 /* && user.lives > 0*/)
+   	if (g_abKeyPressed[K_UP])
     	{
 		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] != 'W')
 		{
@@ -315,7 +274,7 @@ void moveCharacter()
 			}
 		}		
     }
-    if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && user.lives > 0)
+    if (g_abKeyPressed[K_LEFT])
     {
         Beep(1440, 30);
 		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] != 'W')
@@ -358,7 +317,7 @@ void moveCharacter()
 			}
 		}
     }
-	if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+	if (g_abKeyPressed[K_DOWN])
     {
 		if(MapCollision->data[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X] != 'W')
 		{
@@ -401,7 +360,7 @@ void moveCharacter()
 		}
 
 	}
-    if (g_abKeyPressed[K_RIGHT] /*&& g_sChar.m_cLocation.X < consoleSize.X - 1*/)
+    if (g_abKeyPressed[K_RIGHT])
     {
 		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] != 'W')
 		{
@@ -463,21 +422,19 @@ void moveCharacter()
 
     // INVENTORY
     int count = 0;
-    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.ITaken == 0)) // Boost
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.boost == 0)) // Boost
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Boost");
         ++count;
-        user.ITaken = 1;
 		user.boost = 1;
     }
-    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 229) && (user.JTaken == 0)) // Bomb
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 229) && (user.bomb == 0)) // Bomb
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Bomb");
         ++count;
-        user.JTaken = 1;
-		user.boost = 1;
+		user.bomb = 1;
     }
 
 
@@ -629,16 +586,14 @@ void renderGame()
 		g_Console.writeToBuffer(51, 12, "You activated Z Switch!", 0xf1);
 	}
 
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.ITaken == 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.boost == 0)
 	{
 		user.boost = 1;
-		user.ITaken = 1;
 		g_Console.writeToBuffer(51, 12, "You can now Boost!", 0xf1);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.JTaken == 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
 	{
 		user.bomb++;
-		user.JTaken = 1;
 		g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5)
