@@ -26,6 +26,7 @@ struct player
 	bool KTaken;
 	bool invis;
 	bool LTaken;
+	bool MTaken;
 	COORD block;
     int timer;
 };

@@ -24,6 +24,7 @@ const char Z = 90;
 const char ladder = 35;
 const char crack = 178;
 const char bomb = 229;
+const char medkit = 43;
 char arr[12][12];
 
 void createMap1(COORD charLocation, bool blind, int range, player &user, Console &g_Console)
@@ -123,6 +124,10 @@ void createMap1(COORD charLocation, bool blind, int range, player &user, Console
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, boost, 0xf2);
 				}
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'M' && user.MTaken == 0)
+				{
+					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, medkit, 0xf2);
+				}
 				else{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, grass, 0xf1);
 				}
@@ -189,6 +194,10 @@ void createMap1(COORD charLocation, bool blind, int range, player &user, Console
 				else if (line[charLocation.X+k] == 'I' && user.ITaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, boost, 0xf2);
+				}
+				else if (line[charLocation.X+k] == 'M' && user.MTaken == 0)
+				{
+					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, medkit, 0xf2);
 				}
 				else if(charLocation.X+k < 51){
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i,grass, 0xf1);

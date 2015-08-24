@@ -70,6 +70,7 @@ void init( void )
 	user.boost = 0;
 	user.ITaken = 0;
     user.JTaken = 0;
+	user.MTaken = 0;
 	lastknown.X = 0;
 	lastknown.Y = 0;
 }
@@ -550,7 +551,7 @@ void moveCharacter()
         user.ITaken = 1;
 		user.boost = 1;
     }
-    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 229) && (user.ITaken == 0)) // Bomb
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 229) && (user.JTaken == 0)) // Bomb
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Bomb");
@@ -720,7 +721,20 @@ void renderGame()
 		user.JTaken = 1;
 		g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
 	}
-
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5)
+	{
+		if (user.lives < 4)
+		{
+			user.lives += 2;
+			user.MTaken = 1;
+		}
+		else if (user.lives == 4)
+		{
+			user.lives += 1;
+			user.MTaken = 1;
+		}
+		g_Console.writeToBuffer(51, 12, "You are now healed!", 0xf1);
+	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.lives > 0)
 	{
 		g_Console.writeToBuffer(51, 12, "You have been hurt!", 0xf1);

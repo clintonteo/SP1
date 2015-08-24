@@ -253,5 +253,5 @@ void item2(player&user)
 
 void item3()
 {
-	//blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+	
 }
