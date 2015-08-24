@@ -283,10 +283,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'Y')
@@ -295,10 +291,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'Z')
@@ -307,10 +299,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
@@ -318,20 +306,12 @@ void moveCharacter()
 				if(user.Cexplode == 1)
 				{
 					g_sChar.m_cLocation.Y--;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else 
 			{ 
 				        Beep(1440, 30);
 				g_sChar.m_cLocation.Y--;
-				if(user.bcd > 0)
-				{
-					user.bcd--;
-				}
 			}
 		}		
     }
@@ -346,10 +326,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'Y')
@@ -358,10 +334,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'Z')
@@ -370,10 +342,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'C')
@@ -381,20 +349,12 @@ void moveCharacter()
 				if(user.Cexplode == 1)
 				{
 					g_sChar.m_cLocation.X--;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else
 			{
 				        Beep(1440, 30);
 				g_sChar.m_cLocation.X--;
-				if(user.bcd > 0)
-				{
-					user.bcd--;
-				}
 			}
 		}
     }
@@ -408,10 +368,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y++;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'Y')
@@ -420,10 +376,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y++;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'Z')
@@ -432,10 +384,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y++;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'C')
@@ -443,20 +391,12 @@ void moveCharacter()
 				if(user.Cexplode == 1)
 				{
 					g_sChar.m_cLocation.Y++;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else
 			{
 				        Beep(1440, 30);
 				g_sChar.m_cLocation.Y++;
-				if(user.bcd > 0)
-				{
-					user.bcd--;
-				}
 			}
 		}
 
@@ -471,10 +411,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X++;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'Y')
@@ -483,10 +419,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X++;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'Z')
@@ -495,10 +427,6 @@ void moveCharacter()
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X++;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'C')
@@ -506,20 +434,12 @@ void moveCharacter()
 				if(user.Cexplode == 1)
 				{
 					g_sChar.m_cLocation.X++;
-					if(user.bcd > 0)
-					{
-						user.bcd--;
-					}
 				}
 			}
 			else
 			{
 				        Beep(1440, 30);
 				g_sChar.m_cLocation.X++;
-				if(user.bcd > 0)
-				{
-					user.bcd--;
-				}
 			}
 		}
     }
@@ -584,23 +504,23 @@ void moveCharacter()
     }
 
     //Boost
-	if (user.boost == 1 && user.bcd == 0)
+	if (user.boost == 1)
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 		{
-			item1up(MapCollision, g_sChar.m_cLocation, user);
+			item1up(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime);
 		}
 		else if(g_abKeyPressed[K_LEFT] && g_abKeyPressed[K_USE])
 		{
-			item1left(MapCollision, g_sChar.m_cLocation, user);
+			item1left(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime);
 		}
 		else if(g_abKeyPressed[K_DOWN] && g_abKeyPressed[K_USE])
 		{
-			item1down(MapCollision, g_sChar.m_cLocation, user);
+			item1down(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime);
 		}
 		else if(g_abKeyPressed[K_RIGHT] && g_abKeyPressed[K_USE])
 		{
-			item1right(MapCollision, g_sChar.m_cLocation,user);
+			item1right(MapCollision, g_sChar.m_cLocation,user, g_dElapsedTime);
 		}
 	}
 	//Bomb
@@ -721,7 +641,7 @@ void renderGame()
 		user.JTaken = 1;
 		g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5) //medkit
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5)
 	{
 		if (user.lives < 4)
 		{

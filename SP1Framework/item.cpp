@@ -6,8 +6,12 @@
 
 // item1 is boost, item2 is explosive
 
-void item1up(PMAP MapCollision, COORD &charLocation, player&user)
+double boostcd;
+
+void item1up(PMAP MapCollision, COORD &charLocation, player&user, double currentTime)
 {
+	if(currentTime >= boostcd)
+	{
 	bool stop = 0;
 	int count = 0;
 	for(; count <= 3; ++count)
@@ -58,16 +62,21 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user)
 	if (stop == 0)
 	{
 		charLocation.Y -= 3;
-		user.bcd = 11;
+		//user.bcd = 11;
+		boostcd = currentTime + 3;
 	}
 	else
 	{
 		charLocation.Y -= count - 1;
-		user.bcd = 11;
+		//user.bcd = 11;
+		boostcd = currentTime + 3;
+	}
 	}
 }
-void item1left(PMAP MapCollision, COORD &charLocation,player&user)
+void item1left(PMAP MapCollision, COORD &charLocation,player&user,double currentTime)
 {
+	if(currentTime >= boostcd)
+	{
 	bool stop = 0;
 	int count = 0;
 	for(; count <= 3; ++count)
@@ -118,16 +127,21 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user)
 	if (stop == 0)
 	{
 		charLocation.X -= 3;
-		user.bcd = 11;
+		//user.bcd = 11;
+		boostcd = currentTime + 3;
 	}
 	else
 	{
 		charLocation.X -= count - 1;
-		user.bcd = 11;
+		//user.bcd = 11;
+		boostcd = currentTime + 3;
+	}
 	}
 }
-void item1down(PMAP MapCollision, COORD &charLocation,player&user)
+void item1down(PMAP MapCollision, COORD &charLocation,player&user, double currentTime)
 {
+	if(currentTime >= boostcd)
+	{
 	bool stop = 0;
 	int count = 0;
 	for(; count <= 3; ++count)
@@ -177,16 +191,21 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user)
 	if (stop == 0)
 	{
 		charLocation.Y += 3;
-		user.bcd = 11;
+		//user.bcd = 11;
+		boostcd = currentTime + 3;
 	}
 	else
 	{
 		charLocation.Y += count - 1;
-		user.bcd = 11;
+		//user.bcd = 11;
+		boostcd = currentTime + 3;
+	}
 	}
 }
-void item1right(PMAP MapCollision, COORD &charLocation,player&user)
+void item1right(PMAP MapCollision, COORD &charLocation,player&user, double currentTime)
 {
+	if(currentTime >= boostcd)
+	{
 	bool stop = 0;
 	int count = 0;
 	for(; count <= 3; ++count)
@@ -237,12 +256,15 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user)
 	if (stop == 0)
 	{
 		charLocation.X += 3;
-		user.bcd = 11;
+		//user.bcd = 11;
+		boostcd = currentTime + 3;
 	}
 	else
 	{
 		charLocation.X += count - 1;
-		user.bcd = 11;
+		//user.bcd = 11;
+		boostcd = currentTime + 3;
+	}
 	}
 }
 
