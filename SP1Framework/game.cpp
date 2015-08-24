@@ -62,16 +62,17 @@ void init( void )
 
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
-    g_Console.setConsoleFont(0, 40, L"Consolas");
+    g_Console.setConsoleFont(0, 25, L"Consolas");
     
     user.lives = 5;
     user.points = 0;
     user.select = 0;
 	user.boost = 0;
 	user.ITaken = 0;
+    user.JTaken = 0;
 	lastknown.X = 0;
-	lastknown.Y = 0;}
-
+	lastknown.Y = 0;
+}
 //--------------------------------------------------------------
 // Purpose  : Reset before exiting the program
 //            Do your clean up of memory here
@@ -271,7 +272,6 @@ void moveCharacter()
     //    // set the bounce time to some time in the future to prevent accidental triggers
     //    g_dBounceTime = g_dElapsedTime + 0.125; // 125ms should be enough
     //}
-    
    	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 /* && user.lives > 0*/)
     	{
 		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] != 'W')
@@ -542,7 +542,7 @@ void moveCharacter()
 
     // INVENTORY
     int count = 0;
-    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.ITaken == 0))
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.ITaken == 0)) // Boost
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Boost");
@@ -550,6 +550,15 @@ void moveCharacter()
         user.ITaken = 1;
 		user.boost = 1;
     }
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 229) && (user.ITaken == 0)) // Bomb
+    {
+        user.inventory[count] = 't';
+        user.inventoryitems.push_back("Bomb");
+        ++count;
+        user.JTaken = 1;
+		user.boost = 1;
+    }
+
 
     // quits the game if player hits the escape key
     if (g_abKeyPressed[K_ESCAPE])
@@ -593,7 +602,7 @@ void moveCharacter()
 			item1right(MapCollision, g_sChar.m_cLocation,user);
 		}
 	}
-	//explode
+	//Bomb
 	if(user.bomb >= 1)
 	{
 		int amt = user.bomb;

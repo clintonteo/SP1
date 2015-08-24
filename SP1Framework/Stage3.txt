@@ -1,13 +1,13 @@
 20 50
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 W                WWWWW      WWWWWWWWWWWWWWWWWWWWWW
-W S              XXXXX                       ZZ  W
+W S              XXXXX  D                    ZZ  W
 W           D1   XXXXX      WWWWWWWWWW  D  WWWWD W
 W                WWWWWWWWD  WWWWWWWWWW     WWWW  W
 WWWWWWWWYYYWWWWWWWWWWWWWW   W       2W     WWWW  W
 WWWWWWWWYYYWWWWWWWWWWWL       P      W     WWWW IW
 WWWWWWWWYYYWWWWWWWWWWWWWWWWWWWWWWWWWWWCCCCCWWWWWWW
-W=======   ======WWWWWWWWWW======================W
+W=======  D======WWWWWWWWWW======================W
 W=======   ======WWWWWWWWWW======================W
 W=======   ======WWWWWWWWWW======================W
 W                D   JWWWWWWWWWWWWWWWW  W  WWWWWWW

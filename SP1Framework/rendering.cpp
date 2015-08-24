@@ -23,7 +23,7 @@ const char Y = 89;
 const char Z = 90;
 const char ladder = 35;
 const char crack = 178;
-const char bomb = 230;
+const char bomb = 229;
 char arr[12][12];
 
 void createMap1(COORD charLocation, bool blind, int range, player &user, Console &g_Console)
