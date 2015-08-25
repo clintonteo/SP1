@@ -27,6 +27,7 @@ PMAP MapCollision;
 
 bool init1 = 0;
 bool init2 = 0;
+bool init3 = 0;
 int range;
 bool lostlives = 0;
 
@@ -71,7 +72,7 @@ void init( void )
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 25, L"Consolas");
-	user.difficulty = insane;
+	user.difficulty = normal;
 	if(user.difficulty == normal)
 	{
 		range = 6;
@@ -211,7 +212,6 @@ void update(double dt)
 				user.bomb = 0;
 				user.invis = 0;
 				user.TTaken = 0;
-				user.strength = 0;
 				user.MTaken = 0;
 				for(int i=0; i < 6; ++i)
 				{
@@ -219,7 +219,50 @@ void update(double dt)
 				}
 				user.inventoryitems.clear();
 				init2 = 1;
+			}
+				gameplay();
+				if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
+				{
+					Endtime = g_dElapsedTime;
+					g_eGameState = S_SPLASHSCREEN3;
+				}
+				break;
 
+			case S_SPLASHSCREEN3: splashStage3Wait();
+				break;
+
+			case S_GAME3:
+			if(init3 == 0)
+			{
+				if(user.difficulty == normal)
+				{
+					user.timelimit += 150;
+				}
+				else if(user.difficulty == hard)
+				{
+					user.timelimit += 120;
+				}
+				else if(user.difficulty == insane)
+				{
+					user.timelimit += 90;
+				}
+				g_sChar.m_cLocation.X = 3;
+				g_sChar.m_cLocation.Y = 3;
+				user.boost = 0;
+				user.switch1 = 0;
+				user.switch2 = 0;
+				user.switch3 = 0;
+				user.bomb = 0;
+				user.Cexplode = 0;
+				user.invis = 0;
+				user.TTaken = 0;
+				user.MTaken = 0;
+				for(int i=0; i < 6; ++i)
+				{
+					user.inventory[i] = 'f';
+				}
+				user.inventoryitems.clear();
+				init3 = 1;
 			}
 			gameplay();
 			break;
@@ -257,8 +300,16 @@ void render()
 			renderGame();
 			g_Console.writeToBuffer(51, 0, "STAGE 2", 10);
 			break;
+		case S_SPLASHSCREEN3: renderSplashStage3();
+			break;
+		case S_GAME3:
+			renderStage3();
+			renderGame();
+			g_Console.writeToBuffer(51, 0, "STAGE 3", 10);
+			break;
         case S_GAMEOVER:
             renderGameover();
+			break;
     }
     //renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
@@ -271,9 +322,15 @@ void splashScreenWait()    // waits for time to pass in splash screen
 }
 void splashStage2Wait()    // waits for time to pass in splash screen
 {
-    if (g_dElapsedTime > Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
+    if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
         g_eGameState = S_GAME2;
 }
+void splashStage3Wait()    // waits for time to pass in splash screen
+{
+    if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
+        g_eGameState = S_GAME3;
+}
+
 void splashGameoverWait()
 {
     if (g_dElapsedTime > Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
@@ -517,7 +574,7 @@ void moveCharacter()
 	//RESET
 	if(g_abKeyPressed[K_RESET])
 	{
-		g_eGameState = S_SPLASHSCREEN2;
+		g_eGameState = S_GAME2;
 	}
 
     //POINTS
@@ -618,7 +675,21 @@ void renderSplashStage2()  // renders the splash screen
     g_Console.writeToBuffer(c, "STAGE 2", 0xf3);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X  / 2 - 20;
-    g_Console.writeToBuffer(c, "Hint: You can move diagonally", 0xf9);
+    g_Console.writeToBuffer(c, "Hint: you can move diagonally skrub", 0xf9);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 9;
+    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
+}
+
+void renderSplashStage3()  // renders the splash screen
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 3;
+    c.X = c.X  / 2 - 9;
+    g_Console.writeToBuffer(c, "STAGE 3", 0xf3);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X  / 2 - 20;
+    g_Console.writeToBuffer(c, "Hint: Arunning pls", 0xf9);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
@@ -648,6 +719,11 @@ void renderStage2()
 	MapCollision = load_map("stage2.txt");
 	createMap2(g_sChar.m_cLocation, 1, range, user, g_Console);
 	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+}
+void renderStage3()
+{
+	MapCollision = load_map("stage3.txt");
+	createMap3(g_sChar.m_cLocation, 1, range, user, g_Console);
 }
 void renderGame()
 {
@@ -688,7 +764,7 @@ void renderGame()
         writeLog("You got a bomb!", g_dElapsedTime);
 	}
 	// medpack
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.health != 5)
 	{
 		if(user.difficulty == normal || user.difficulty == hard)
 		{

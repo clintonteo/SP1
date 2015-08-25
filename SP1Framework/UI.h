@@ -21,8 +21,6 @@ struct player
 	bool boost;
 	bool bomb;
 	bool Cexplode;
-	bool strength;
-	bool KTaken;
 	bool invis;
 	bool LTaken;
 	bool MTaken;
