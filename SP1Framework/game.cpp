@@ -491,7 +491,7 @@ void moveCharacter()
 		}
 	}
 	//Bomb
-    if(user.bomb >= 1 && /*user.inventoryitems[user.select] == "Bomb"*/user.inventory[user.select] == 't')
+    if(user.bomb == 1 && /*user.inventoryitems[user.select] == "Bomb"*/user.inventory[user.select] == 't')
 	{
 		int amt = user.bomb;
 		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
@@ -609,7 +609,6 @@ void renderGame()
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
 	{
 		user.bomb = 1;
->>>>>>> origin/master
 		//g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
         writeLog("You now have a bomb!", g_dElapsedTime);
 	}
@@ -725,7 +724,6 @@ void renderFramerate()
     c.X = 72;
     c.Y = 0;
     g_Console.writeToBuffer(c, ss.str());
-	n
     // displays the elapsed time
     ss.str("");
     ss << g_dElapsedTime << "secs";
