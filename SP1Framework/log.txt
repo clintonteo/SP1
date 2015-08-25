@@ -1,18 +1,1 @@
-You have been hurt!@7.83972
-You actvated Y switch!@20.7046
-You activated X switch!@29.147
-You can now boost!@37.7906
-Boost is ready!@37.7906
-Boost is ready!@44.0223
-Boost is ready!@54.475
-Boost is ready!@58.8973
-You now have a bomb!@78.195
-You can now boost!@82.2152
-Boost is ready!@89.2507
-Boost is ready!@94.879
-Boost is ready!@108.146
-You activated X switch!@109.352
-Boost is ready!@116.789
-Boost is ready!@122.016
-Boost is ready!@128.046
-Boost is ready!@137.494
+testline

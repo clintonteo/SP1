@@ -26,13 +26,12 @@ struct player
 	bool LTaken;
 	bool MTaken;
 	COORD block;
-    //int timer;
     int timer;
 	double timelimit;
 	int difficulty;
 };
 
-void timer (double g_dElapsedTime, Console & g_Console);
+void timer (double g_dElapsedTime, Console & g_Console, player & user);
 void lives (player & user, Console & g_Console);
 void divider(Console & g_Console);
 //void damagetaken ( player user, bool damage );
