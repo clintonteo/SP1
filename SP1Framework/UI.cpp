@@ -47,7 +47,6 @@ void timer(double g_dElapsedTime, Console & g_Console)
 
     renderFramerate();
 
-<<<<<<< Updated upstream
     //g_Console.writeToBuffer(61, 3, "Cooldown: ", 10);
 
     /*if ((g_dElapsedTime >= 120) && (g_dElapsedTime <= 130))
