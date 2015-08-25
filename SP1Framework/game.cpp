@@ -203,8 +203,7 @@ void update(double dt)
 				}
 				g_sChar.m_cLocation.X = 46;
 				g_sChar.m_cLocation.Y = 3;
-				blocks.X = 41;
-				blocks.Y = 4;
+				spawnblock(blocks);
 				user.boost = 0;
 				user.switch1 = 0;
 				user.switch2 = 0;

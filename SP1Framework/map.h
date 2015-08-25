@@ -56,6 +56,7 @@ void createMap1(COORD charLocation, bool blind, int range, player &user, Console
 void createMap2(COORD charLocation, bool blind, int range, player &user, Console &g_Console); //Creates Map for Output
 
 void blockp(COORD &charLocation, COORD &blocks, COORD &lastknown, int range, Console &g_Console);
+void spawnblock(COORD &blocks);
 
 
 

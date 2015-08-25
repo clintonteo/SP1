@@ -671,3 +671,22 @@ void blockp(COORD &charLocation, COORD &blocks, COORD &lastknown, int range, Con
 	//gotoXY(51, 18);
 	//cout << "CharCoord: " << charLocation.X << " " << charLocation.Y;
 }
+void spawnblock(COORD &blocks)
+{
+	for(int i = 0;i< MapRender->nrow;++i)
+	{
+		for(int j = 0; j < MapRender->ncol; ++j)
+		{
+			if(MapRender->data[i][j] == 'B')
+			{
+				blocks.X = j;
+				blocks.Y = i;
+				string line;
+
+				std::ofstream logger;
+				logger.open("log.txt");
+				logger << "Block spawned at" << blocks.X << " and " << blocks.Y;
+			}
+		}
+	}
+}
