@@ -1,7 +1,4 @@
-You have been hurt!@5.02592
-You have been hurt!@6.03099
-You have been hurt!@12.2625
-You have been hurt!@13.6696
-You have been hurt!@37.7917
-You died!@37.7917
-You died!@38.8397
+You have been hurt!@43.8202
+You actvated Y switch!@45.6294
+You died!@49.4485
+You died!@50.5458

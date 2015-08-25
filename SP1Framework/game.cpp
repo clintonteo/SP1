@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "AI.h"
 using std::cout;
 using std::endl;
 
@@ -20,6 +21,7 @@ bool    g_abKeyPressed[K_COUNT];
 
 COORD consoleSize;
 COORD blocks;
+COORD mob;
 COORD lastknown;
 PMAP MapCollision;
 
@@ -63,7 +65,8 @@ void init( void )
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 25, L"Consolas");
-    
+    mob.X = 1;
+	mob.Y = 2;
     user.lives = 5;
     user.points = 0;
     user.select = 0;
@@ -579,9 +582,13 @@ void renderStage2()
 }
 void renderGame()
 {
+    background ( g_Console );
     renderCharacter();  // renders the character into the buffer
+
     // Write Log
     if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1)
+	mobmove(g_sChar.m_cLocation,mob,g_dElapsedTime,g_Console, MapCollision);
+    // Creating Map
 	{
 		user.switch1 = 1;
 		//g_Console.writeToBuffer(51, 12, "You activated X Switch!", 0xf1);
@@ -609,7 +616,6 @@ void renderGame()
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
 	{
 		user.bomb = 1;
->>>>>>> origin/master
 		//g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
         writeLog("You now have a bomb!", g_dElapsedTime);
 	}
@@ -676,7 +682,6 @@ void renderGame()
     }
    
     //UI functions
-    background ( g_Console );
     divider(g_Console);
     timer(g_dElapsedTime, g_Console);
     lives( user , g_Console);
@@ -725,7 +730,6 @@ void renderFramerate()
     c.X = 72;
     c.Y = 0;
     g_Console.writeToBuffer(c, ss.str());
-	n
     // displays the elapsed time
     ss.str("");
     ss << g_dElapsedTime << "secs";
