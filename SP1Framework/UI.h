@@ -26,7 +26,7 @@ struct player
 	bool LTaken;
 	bool MTaken;
 	COORD block;
-    int timer;
+    //int timer;
 };
 
 void timer (double g_dElapsedTime, Console & g_Console);

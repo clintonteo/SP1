@@ -28,6 +28,7 @@ bool init2 = 0;
 
 int range = 6;
 double Endtime;
+double boostcd = 0;
 
 //Last known Coordinates
 int lastX = 0;
@@ -73,6 +74,7 @@ void init( void )
     std::ofstream log;
     log.open("log.txt", std::fstream::trunc);
     log.close();
+
 }
 //--------------------------------------------------------------
 // Purpose  : Reset before exiting the program
@@ -199,14 +201,14 @@ void render()
         case S_GAME1: 
 			renderStage1();
 			renderGame();
-			g_Console.writeToBuffer(51, 10, "STAGE 1", 0xf0);
+			g_Console.writeToBuffer(51, 0, "STAGE 1", 10);
             break;
 		case S_SPLASHSCREEN2: renderSplashStage2();
 			break;
 		case S_GAME2:
 			renderStage2();
 			renderGame();
-			g_Console.writeToBuffer(51, 10, "STAGE 2", 0xf0);
+			g_Console.writeToBuffer(51, 0, "STAGE 2", 10);
 			break;
     }
     //renderFramerate();  // renders debug information, frame rate, elapsed time, etc
@@ -430,7 +432,7 @@ void moveCharacter()
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Boost");
         ++count;
-		user.boost = 1;
+		//user.boost = 1;
     }
 
     if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 229) && (user.bomb == 0)) // Bomb
@@ -438,7 +440,7 @@ void moveCharacter()
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Bomb");
         ++count;
-		user.bomb = 1;
+		//user.bomb = 1;
     }
 
 
@@ -466,24 +468,23 @@ void moveCharacter()
 
     //Use Items
     //Boost
-
-    if (user.boost == 1 && user.bcd == 0 && user.inventory[user.select] == 't')
+    if (user.boost == 1 && user.inventory[user.select] == 't')
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 		{
-			item1up(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime);
+			item1up(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime, g_Console, boostcd);
 		}
 		else if(g_abKeyPressed[K_LEFT] && g_abKeyPressed[K_USE])
 		{
-			item1left(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime);
+			item1left(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime, g_Console, boostcd);
 		}
 		else if(g_abKeyPressed[K_DOWN] && g_abKeyPressed[K_USE])
 		{
-			item1down(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime);
+			item1down(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime, g_Console, boostcd);
 		}
 		else if(g_abKeyPressed[K_RIGHT] && g_abKeyPressed[K_USE])
 		{
-			item1right(MapCollision, g_sChar.m_cLocation,user, g_dElapsedTime);
+			item1right(MapCollision, g_sChar.m_cLocation,user, g_dElapsedTime, g_Console, boostcd);
 		}
 	}
 	//Bomb
@@ -539,7 +540,7 @@ void renderSplashScreen()  // renders the splash screen
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
     c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "A game in 3 seconds", 0xf3);
+    g_Console.writeToBuffer(c, "Tower Of Maz STAGE 1", 0xf3);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 20;
     g_Console.writeToBuffer(c, "Hint: You can use boost over lava!!", 0xf9);
@@ -596,17 +597,15 @@ void renderGame()
         writeLog("You activated Z switch!", g_dElapsedTime);
 	}
 
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.ITaken != 1)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.boost == 0)
 	{
 		user.boost = 1;
-		user.ITaken = 1;
 		//g_Console.writeToBuffer(51, 12, "You can now Boost!", 0xf1);
         writeLog("You can now boost!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
 	{
 		user.bomb++;
-		user.JTaken = 1;
 		//g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
         writeLog("You now have a bomb!", g_dElapsedTime);
 	}
@@ -660,6 +659,13 @@ void renderGame()
         writeLog("You died!", g_dElapsedTime);
 		Beep(2000, 1000);
 	} 
+
+    //Check for cooldown
+    if (g_dElapsedTime >= boostcd && user.boost == 1 && boostcd != -1)
+    {
+        writeLog("Boost is ready!", g_dElapsedTime);
+        boostcd = -1;
+    }
    
     //UI functions
     background ( g_Console );

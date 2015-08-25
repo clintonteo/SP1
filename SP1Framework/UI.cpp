@@ -47,7 +47,9 @@ void timer(double g_dElapsedTime, Console & g_Console)
 
     renderFramerate();
 
-    if ((g_dElapsedTime >= 120) && (g_dElapsedTime <= 130))
+    //g_Console.writeToBuffer(61, 3, "Cooldown: ", 10);
+
+    /*if ((g_dElapsedTime >= 120) && (g_dElapsedTime <= 130))
     {
         g_Console.writeToBuffer(56, 3, "You have 7mins left! ", 10);
     }
@@ -58,18 +60,18 @@ void timer(double g_dElapsedTime, Console & g_Console)
     if ((g_dElapsedTime >= 480) && (g_dElapsedTime <= 490))
     {
         g_Console.writeToBuffer(56, 3, "You have 1min left! ", 10);
-    }
+    }*/
 }
     
 
 //Lives
 void lives( player & user, Console &g_Console )
 {
-	g_Console.writeToBuffer(61, 4, "Lives: ", 10);
+	g_Console.writeToBuffer(61, 5, "Lives: ", 10);
 
     for (int count = 0; count < user.lives; ++count)
     {
-		g_Console.writeToBuffer(57 + count*3, 5, "|HP|", 43);
+		g_Console.writeToBuffer(57 + count*3, 6, "|HP|", 43);
     }
 }
 
@@ -139,15 +141,15 @@ void readLog ( Console & g_Console )
     std::fstream log ("log.txt");
 
     string line;
-    int first_line = 0;
-    int last_line = 5;
 
-    /*int i = 0;
+    g_Console.writeToBuffer(58, 17 , "Notifications:" , 10);
+
+    int i = 0;
     if (log.is_open())
     {
-        while ( getline (log,line) )
+        while (getline (log,line))
         {
-            g_Console.writeToBuffer(51, 18 + i , line , 10);
+            g_Console.writeToBuffer(51, 25 - i , line , 10);
             ++i;
             if(i == 5)
             {
@@ -155,9 +157,9 @@ void readLog ( Console & g_Console )
             }
         }
         log.close();
-    }*/
+    }
 
-    for (int i = 0; i <= last_line && i >= first_line; ++i)
+    /*for (int i = 0; i <= 5; ++i)
     {
         getline (log, line);
         g_Console.writeToBuffer(51, 18 + i , line , 10);
@@ -165,10 +167,8 @@ void readLog ( Console & g_Console )
         if (i == 5)
         {
             i = 0;
-            ++first_line;
-            ++last_line;
         }
-    }
+    }*/
 }
 
 //Write Log
