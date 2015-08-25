@@ -505,7 +505,7 @@ void moveCharacter()
         g_bQuitGame = true;
 
     // quits if player lives at 0
-    if (user.health == 0)
+    if (user.health <= 0)
     {
         //g_bQuitGame = true;
         //g_eGameState = S_SPLASHSCREEN;
@@ -748,13 +748,13 @@ void renderGame()
 		{
 			if(lastX != g_sChar.m_cLocation.X)
 			{
-				user.lives -= 2;
+				user.health -= 2;
 				lastX = g_sChar.m_cLocation.X;
 				writeLog("You have been hurt!", g_dElapsedTime);
 			}
 			else if(lastY != g_sChar.m_cLocation.Y)
 			{
-				user.lives -= 2;
+				user.health -= 2;
 				lastY = g_sChar.m_cLocation.Y;
 				writeLog("You have been hurt!", g_dElapsedTime);
 			}
