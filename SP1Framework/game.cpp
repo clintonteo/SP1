@@ -586,10 +586,9 @@ void renderGame()
     renderCharacter();  // renders the character into the buffer
 
     // Write Log
-    if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1)
 	mobmove(g_sChar.m_cLocation,mob,g_dElapsedTime,g_Console, MapCollision);
     // Creating Map
-	{
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1){
 		user.switch1 = 1;
 		//g_Console.writeToBuffer(51, 12, "You activated X Switch!", 0xf1);
         writeLog("You activated X switch!", g_dElapsedTime);
