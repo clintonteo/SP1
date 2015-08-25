@@ -27,6 +27,8 @@ struct player
 	bool MTaken;
 	COORD block;
     //int timer;
+    int timer;
+	double timelimit;
 };
 
 void timer (double g_dElapsedTime, Console & g_Console);

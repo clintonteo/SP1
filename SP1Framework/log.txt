@@ -1,10 +1,2 @@
-You activated X switch!@16.4829
-You have been hurt!@24.7266
-You can now boost!@25.5306
-Boost is ready!@25.5306
-Boost is ready!@30.1539
-You actvated Y switch!@31.159
-You have been hurt!@32.365
-You have been hurt!@34.3754
-You died!@37.7929
-You died!@38.8604
+You died!@10.0517
+You died!@11.0609
