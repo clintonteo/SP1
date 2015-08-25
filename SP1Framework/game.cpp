@@ -711,7 +711,7 @@ void renderCharacter()
     if (g_sChar.m_bActive)
     {
         charColor = 0xfA;
-    }
+    } 
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
 }
 
@@ -725,7 +725,7 @@ void renderFramerate()
     c.X = 72;
     c.Y = 0;
     g_Console.writeToBuffer(c, ss.str());
-
+	n
     // displays the elapsed time
     ss.str("");
     ss << g_dElapsedTime << "secs";

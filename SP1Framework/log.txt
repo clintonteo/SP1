@@ -1,2 +1,7 @@
-You died!@10.0517
-You died!@11.0609
+You have been hurt!@5.02592
+You have been hurt!@6.03099
+You have been hurt!@12.2625
+You have been hurt!@13.6696
+You have been hurt!@37.7917
+You died!@37.7917
+You died!@38.8397
