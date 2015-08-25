@@ -142,6 +142,7 @@ void update(double dt)
     {
         case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
             break;
+        
         case S_GAME1:
 			if(init1 == 0)
 			{
@@ -156,9 +157,11 @@ void update(double dt)
 				g_eGameState = S_SPLASHSCREEN2;
 			}
             break;
-		case S_SPLASHSCREEN2: splashStage2Wait();
+		
+        case S_SPLASHSCREEN2: splashStage2Wait();
 			break;
-		case S_GAME2:
+		
+        case S_GAME2:
 			if(init2 == 0)
 			{
 				g_sChar.m_cLocation.X = 46;
@@ -184,6 +187,9 @@ void update(double dt)
 			}
 			gameplay();
 			break;
+        
+        case S_GAMEOVER:
+            break;
     }
 }
 
@@ -215,6 +221,8 @@ void render()
 			renderGame();
 			g_Console.writeToBuffer(51, 0, "STAGE 2", 10);
 			break;
+        case S_GAMEOVER:
+            renderGameover();
     }
     //renderFramerate();  // renders debug information, frame rate, elapsed time, etc
     renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
@@ -230,6 +238,12 @@ void splashStage2Wait()    // waits for time to pass in splash screen
     if (g_dElapsedTime > Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
         g_eGameState = S_GAME2;
 }
+void splashGameoverWait()
+{
+    if (g_dElapsedTime > Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
+        g_eGameState = S_SPLASHSCREEN;
+}
+
 void gameplay()            // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
@@ -569,6 +583,20 @@ void renderSplashStage2()  // renders the splash screen
     g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
 }
 
+void renderGameover()  // renders the splash screen
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 3;
+    c.X = c.X  / 2 - 9;
+    g_Console.writeToBuffer(c, "GAME OVER", 0xf3);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X  / 2 - 20;
+    g_Console.writeToBuffer(c, "TRY AGAIN NEXT TIME. COME BACK.", 0xf9);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 9;
+    g_Console.writeToBuffer(c, "Your points are: ", 0xf9);
+}
+
 void renderStage1()
 {
 	MapCollision = load_map("stage1.txt");
@@ -591,32 +619,32 @@ void renderGame()
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1){
 		user.switch1 = 1;
 		//g_Console.writeToBuffer(51, 12, "You activated X Switch!", 0xf1);
-        writeLog("You activated X switch!", g_dElapsedTime);
+        writeLog("X Switch Activated!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '2'  && user.switch2 != 1)
 	{
 		user.switch2 = 1;
 		//g_Console.writeToBuffer(51, 12, "You activated Y Switch!", 0xf1);
-        writeLog("You actvated Y switch!", g_dElapsedTime);
+        writeLog("Y Switch Activated!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '3'  && user.switch3 != 1)
 	{
 		user.switch3 = 1;
 		//g_Console.writeToBuffer(51, 12, "You activated Z Switch!", 0xf1);
-        writeLog("You activated Z switch!", g_dElapsedTime);
+        writeLog("Z Switch Activated!", g_dElapsedTime);
 	}
 
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.boost == 0)
 	{
 		user.boost = 1;
 		//g_Console.writeToBuffer(51, 12, "You can now Boost!", 0xf1);
-        writeLog("You can now boost!", g_dElapsedTime);
+        //writeLog("You can now boost!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
 	{
 		user.bomb = 1;
 		//g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
-        writeLog("You now have a bomb!", g_dElapsedTime);
+        writeLog("You got a bomb!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5)
 	{
@@ -630,7 +658,8 @@ void renderGame()
 			user.lives += 1;
 			user.MTaken = 1;
 		}
-		g_Console.writeToBuffer(51, 12, "You are now healed!", 0xf1);
+		//g_Console.writeToBuffer(51, 12, "You are now healed!", 0xf1);
+        writeLog("You have been healed!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.lives > 0)
 	{
@@ -670,6 +699,7 @@ void renderGame()
 		colour(BACKGROUND_RED);
 		//g_Console.writeToBuffer(51, 13, "YOU DIED", 0xf1);
         writeLog("You died!", g_dElapsedTime);
+        g_eGameState = S_GAMEOVER;
 		Beep(2000, 1000);
 	} 
 
@@ -681,8 +711,9 @@ void renderGame()
     }
    
     //UI functions
-    divider(g_Console);
-    timer(g_dElapsedTime, g_Console);
+    background ( g_Console );
+    divider( g_Console) ;
+    timer( g_dElapsedTime , g_Console , user);
     lives( user , g_Console);
     renderInventory ( user , g_Console);
     point( user , g_Console);

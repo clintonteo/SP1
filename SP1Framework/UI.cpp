@@ -40,7 +40,7 @@ void divider(Console & g_Console)
 
 
 //Timer Notification
-void timer(double g_dElapsedTime, Console & g_Console)
+void timer(double g_dElapsedTime, Console & g_Console, player & user)
 {
     //Timer
     g_Console.writeToBuffer(61, 1, "Timer: ", 10);
@@ -61,6 +61,11 @@ void timer(double g_dElapsedTime, Console & g_Console)
     {
         g_Console.writeToBuffer(56, 3, "You have 1min left! ", 10);
     }*/
+
+    if (user.timelimit - g_dElapsedTime <= 60 && user.timelimit - g_dElapsedTime >= 59.8)
+    {
+        writeLog("You have a minute left!", g_dElapsedTime);
+    }
 }
     
 
@@ -143,17 +148,22 @@ void readLog ( Console & g_Console )
     string line;
 
     g_Console.writeToBuffer(58, 17 , "Notifications:" , 10);
+    g_Console.writeToBuffer(51, 18 , "-----------------------------" , 10);
 
     int i = 0;
     if (log.is_open())
     {
         while (getline (log,line))
         {
-            g_Console.writeToBuffer(51, 25 - i , line , 10);
+            g_Console.writeToBuffer(52, 23 - i , line , 10);
             ++i;
             if(i == 5)
             {
                 i = 0;
+                //g_Console.writeToBuffer(51, 23 - i ,  "----------------" , 10);
+                /*std::fstream log ("log.txt", std::fstream::app);
+                log << "\n";
+                log.close();*/
             }
         }
         log.close();
@@ -177,5 +187,23 @@ void writeLog ( string line , double time)
     std::fstream log ("log.txt", std::fstream::app);
 
     log << line << "@" << time << "\n";
+
     log.close();
-}
+
+    //Check for 5th line
+    /*std::fstream checklog ("log.txt");
+    string last_line;
+    int num = 0;
+    while (getline (checklog,last_line))
+    {
+        ++num; 
+        if (num == 5)
+        {
+            std::fstream log ("log.txt", std::fstream::app);
+
+            log << "-----------------------------";
+
+            log.close();
+        }
+    }*/
+}   
