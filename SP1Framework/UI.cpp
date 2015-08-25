@@ -47,21 +47,11 @@ void timer(double g_dElapsedTime, Console & g_Console, player & user)
 
     renderFramerate();
 
-    //g_Console.writeToBuffer(61, 3, "Cooldown: ", 10);
+    //Time Limit
+    g_Console.writeToBuffer(52, 3, "Time Limit: ", 10);
+    g_Console.writeToBuffer(64, 3, user.timelimit, 10);
 
-    /*if ((g_dElapsedTime >= 120) && (g_dElapsedTime <= 130))
-    {
-        g_Console.writeToBuffer(56, 3, "You have 7mins left! ", 10);
-    }
-    if ((g_dElapsedTime >= 500) && (g_dElapsedTime <= 510))
-    {
-        g_Console.writeToBuffer(56, 3, "You have 4mins left! ", 10);
-    }
-    if ((g_dElapsedTime >= 480) && (g_dElapsedTime <= 490))
-    {
-        g_Console.writeToBuffer(56, 3, "You have 1min left! ", 10);
-    }*/
-
+    //Timer Notification
     if (user.timelimit - g_dElapsedTime <= 60 && user.timelimit - g_dElapsedTime >= 59.8)
     {
         writeLog("You have a minute left!", g_dElapsedTime);
@@ -69,27 +59,39 @@ void timer(double g_dElapsedTime, Console & g_Console, player & user)
 }
     
 
-//Lives
+//Lives & Health
 void lives( player & user, Console &g_Console )
 {
 	g_Console.writeToBuffer(61, 5, "Lives: ", 10);
 
     for (int count = 0; count < user.lives; ++count)
     {
-		g_Console.writeToBuffer(57 + count*3, 6, "|HP|", 43);
+		g_Console.writeToBuffer(55 + count*4, 6, "|<3|", 43);
+    }
+
+    g_Console.writeToBuffer(61, 7, "Health: ", 10);
+    for (int count = 0; count < user.health; ++count)
+    {
+		g_Console.writeToBuffer(55 + count*4, 8, "|HP|", 43);
     }
 }
 
 //Render Inventory
-void renderInventory( player & user , Console & g_Console )
+void renderInventory( player & user , Console & g_Console , double &boostcd , double g_dElapsedTime )
 {
-    g_Console.writeToBuffer(59 , 7, "Inventory: ", 10);
+    g_Console.writeToBuffer(59 , 9, "Inventory: ", 10);
 
     for (int i = 0; i < user.inventoryitems.size(); ++i)
     {
         if (user.inventory[i] == 't')
         {
-            g_Console.writeToBuffer(59, 8 + i , user.inventoryitems[i] , 10);
+            g_Console.writeToBuffer(57, 10 + i , user.inventoryitems[i] , 10);
+        }
+
+        if (g_dElapsedTime >= boostcd && user.boost == 1 /*&& boostcd != -1*/)
+        {
+            g_Console.writeToBuffer(62, 10 + i , "(R)" , 10);
+            //boostcd = -1;
         }
     }
     
