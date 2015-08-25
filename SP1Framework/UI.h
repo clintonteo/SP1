@@ -9,6 +9,7 @@ using std::vector;
 struct player
 {
     int lives;
+    int health;
     char inventory[6];
     vector<string>inventoryitems;
 	bool switch1;
@@ -34,7 +35,7 @@ void timer (double g_dElapsedTime, Console & g_Console, player & user);
 void lives (player & user, Console & g_Console);
 void divider(Console & g_Console);
 //void damagetaken ( player user, bool damage );
-void renderInventory ( player & user , Console & g_Console );
+void renderInventory ( player & user , Console & g_Console , double &boostcd , double g_dElapsedTime );
 void point( player & user , Console & g_Console );
 void selector( player & user , Console & g_Console);
 void background( Console & g_Console );

@@ -27,6 +27,7 @@ PMAP MapCollision;
 
 bool init1 = 0;
 bool init2 = 0;
+bool lostlives = 0;
 
 int range = 6;
 double Endtime;
@@ -67,7 +68,11 @@ void init( void )
     g_Console.setConsoleFont(0, 25, L"Consolas");
     mob.X = 1;
 	mob.Y = 2;
-    user.lives = 5;
+    if (lostlives == 0)
+    {
+        user.lives = 3;
+    }
+    user.health = 5;
     user.points = 0;
     user.select = 0;
 	user.boost = 0;
@@ -468,9 +473,15 @@ void moveCharacter()
         g_bQuitGame = true;
 
     // quits if player lives at 0
-    if (user.lives == 0)
+    if (user.health == 0)
     {
-        g_bQuitGame = true;    
+        //g_bQuitGame = true;
+        //g_eGameState = S_SPLASHSCREEN;
+        --user.lives;
+        user.health = 5;
+        init1 = 0;
+        lostlives = 1;
+        writeLog("You lost a live!", g_dElapsedTime);
 	}
 	//RESET
 	if(g_abKeyPressed[K_RESET])
@@ -487,7 +498,6 @@ void moveCharacter()
 
     //Use Items
     //Boost
-
     if (user.boost == 1 && user.inventory[user.select] == 't')
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
@@ -646,43 +656,43 @@ void renderGame()
 		//g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
         writeLog("You got a bomb!", g_dElapsedTime);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.health != 5)
 	{
-		if (user.lives < 4)
+		if (user.health < 4)
 		{
-			user.lives += 2;
+			user.health += 2;
 			user.MTaken = 1;
 		}
-		else if (user.lives == 4)
+		else if (user.health == 4)
 		{
-			user.lives += 1;
+			user.health += 1;
 			user.MTaken = 1;
 		}
 		//g_Console.writeToBuffer(51, 12, "You are now healed!", 0xf1);
         writeLog("You have been healed!", g_dElapsedTime);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.lives > 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0)
 	{
 		//g_Console.writeToBuffer(51, 12, "You have been hurt!", 0xf1);
         //writeLog("You have been hurt!", g_dElapsedTime);
 		if(lastX != g_sChar.m_cLocation.X)
 		{
-		    user.lives--;
+		    user.health--;
 		    lastX = g_sChar.m_cLocation.X;
             writeLog("You have been hurt!", g_dElapsedTime);
 		}
         else if(lastY != g_sChar.m_cLocation.Y)
 		{
-		    user.lives--;
+		    user.health--;
 		    lastY = g_sChar.m_cLocation.Y;
             writeLog("You have been hurt!", g_dElapsedTime);
 		}
 	}
-    else if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.lives > 0)
+    else if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0)
 	{
 		if(g_sChar.m_cLocation.X != blocks.X || g_sChar.m_cLocation.Y != blocks.Y)
 		{
-			user.lives -= user.lives;
+			user.health -= user.health;
 		}
 	}
     else
@@ -704,18 +714,18 @@ void renderGame()
 	} 
 
     //Check for cooldown
-    if (g_dElapsedTime >= boostcd && user.boost == 1 && boostcd != -1)
+    /*if (g_dElapsedTime >= boostcd && user.boost == 1 && boostcd != -1)
     {
         writeLog("Boost is ready!", g_dElapsedTime);
         boostcd = -1;
-    }
+    }*/
    
     //UI functions
     background ( g_Console );
     divider( g_Console) ;
     timer( g_dElapsedTime , g_Console , user);
     lives( user , g_Console);
-    renderInventory ( user , g_Console);
+    renderInventory ( user , g_Console , boostcd , g_dElapsedTime);
     point( user , g_Console);
     selector ( user , g_Console);
     readLog ( g_Console );

@@ -1,6 +1,6 @@
-You have been hurt!@4.02013
-You have been hurt!@5.42731
-You have been hurt!@7.23635
-You have been hurt!@7.83943
-You have been hurt!@8.64345
-You died!@8.64345
+You have been hurt!@4.42224
+You have been hurt!@5.02525
+You have been hurt!@5.62835
+You have been hurt!@6.23137
+You have been hurt!@6.83438
+You lost a live!@7.03538
