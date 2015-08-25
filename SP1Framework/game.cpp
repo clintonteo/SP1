@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "AI.h"
 using std::cout;
 using std::endl;
 
@@ -20,15 +21,20 @@ bool    g_abKeyPressed[K_COUNT];
 
 COORD consoleSize;
 COORD blocks;
+COORD mob;
 COORD lastknown;
 PMAP MapCollision;
 
 bool init1 = 0;
 bool init2 = 0;
-
-int range = 6;
+int range;
 double Endtime;
 double boostcd = 0;
+
+//diffculty
+const int normal = 0;
+const int hard = 1;
+const int insane = 2;
 
 //Last known Coordinates
 int lastX = 0;
@@ -63,13 +69,29 @@ void init( void )
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 25, L"Consolas");
-    
+	user.difficulty = insane;
+	if(user.difficulty == normal)
+	{
+		range = 6;
+		user.timelimit = 180;
+	}
+	else if(user.difficulty == hard)
+	{
+		range = 5;
+		user.timelimit = 150;
+	}
+	else if(user.difficulty == insane)
+	{
+		range = 4;
+		user.timelimit = 120;
+	}
+    mob.X = 1;
+	mob.Y = 2;
     user.lives = 5;
     user.points = 0;
     user.select = 0;
 	user.boost = 0;
 	user.MTaken = 0;
-	user.timelimit = 180;
 	lastknown.X = 0;
 	lastknown.Y = 0;
     std::ofstream log;
@@ -158,6 +180,18 @@ void update(double dt)
 		case S_GAME2:
 			if(init2 == 0)
 			{
+				if(user.difficulty == normal)
+				{
+					user.timelimit += 150;
+				}
+				else if(user.difficulty == hard)
+				{
+					user.timelimit += 120;
+				}
+				else if(user.difficulty == insane)
+				{
+					user.timelimit += 90;
+				}
 				g_sChar.m_cLocation.X = 46;
 				g_sChar.m_cLocation.Y = 3;
 				blocks.X = 41;
@@ -170,7 +204,7 @@ void update(double dt)
 				user.invis = 0;
 				user.TTaken = 0;
 				user.strength = 0;
-				user.timelimit += 180;
+				user.MTaken = 0;
 				for(int i=0; i < 6; ++i)
 				{
 					user.inventory[i] = 'f';
@@ -451,7 +485,7 @@ void moveCharacter()
         g_bQuitGame = true;
 
     // quits if player lives at 0
-    if (user.lives == 0)
+    if (user.lives <= 0)
     {
         g_bQuitGame = true;    
 	}
@@ -579,10 +613,13 @@ void renderStage2()
 }
 void renderGame()
 {
+    background ( g_Console );
     renderCharacter();  // renders the character into the buffer
+
     // Write Log
-    if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1)
-	{
+	mobmove(g_sChar.m_cLocation,mob,g_dElapsedTime,g_Console, MapCollision);
+    // Creating Map
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1){
 		user.switch1 = 1;
 		//g_Console.writeToBuffer(51, 12, "You activated X Switch!", 0xf1);
         writeLog("You activated X switch!", g_dElapsedTime);
@@ -612,17 +649,39 @@ void renderGame()
 		//g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
         writeLog("You now have a bomb!", g_dElapsedTime);
 	}
+	// medpack
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.lives != 5)
 	{
-		if (user.lives < 4)
+		if(user.difficulty == normal || user.difficulty == hard)
 		{
-			user.lives += 2;
-			user.MTaken = 1;
+			if (user.lives < 4)
+			{
+				user.lives += 2;
+				user.MTaken = 1;
+			}
+			else if (user.lives == 4)
+			{
+				user.lives += 1;
+				user.MTaken = 1;
+			}
 		}
-		else if (user.lives == 4)
+		else if(user.difficulty == insane)
 		{
-			user.lives += 1;
-			user.MTaken = 1;
+			if (user.lives < 3)
+			{
+				user.lives += 3;
+				user.MTaken = 1;
+			}
+			else if (user.lives == 3)
+			{
+				user.lives += 2;
+				user.MTaken = 1;
+			}
+			else if (user.lives == 4)
+			{
+				user.lives += 1;
+				user.MTaken = 1;
+			}
 		}
 		g_Console.writeToBuffer(51, 12, "You are now healed!", 0xf1);
 	}
@@ -630,17 +689,35 @@ void renderGame()
 	{
 		//g_Console.writeToBuffer(51, 12, "You have been hurt!", 0xf1);
         //writeLog("You have been hurt!", g_dElapsedTime);
-		if(lastX != g_sChar.m_cLocation.X)
+		if(user.difficulty == hard || user.difficulty == normal)
 		{
-		    user.lives--;
-		    lastX = g_sChar.m_cLocation.X;
-            writeLog("You have been hurt!", g_dElapsedTime);
+			if(lastX != g_sChar.m_cLocation.X)
+			{
+				user.lives--;
+				lastX = g_sChar.m_cLocation.X;
+				writeLog("You have been hurt!", g_dElapsedTime);
+			}
+			else if(lastY != g_sChar.m_cLocation.Y)
+			{
+				user.lives--;
+				lastY = g_sChar.m_cLocation.Y;
+				writeLog("You have been hurt!", g_dElapsedTime);
+			}
 		}
-        else if(lastY != g_sChar.m_cLocation.Y)
+		else if(user.difficulty == insane)
 		{
-		    user.lives--;
-		    lastY = g_sChar.m_cLocation.Y;
-            writeLog("You have been hurt!", g_dElapsedTime);
+			if(lastX != g_sChar.m_cLocation.X)
+			{
+				user.lives -= 2;
+				lastX = g_sChar.m_cLocation.X;
+				writeLog("You have been hurt!", g_dElapsedTime);
+			}
+			else if(lastY != g_sChar.m_cLocation.Y)
+			{
+				user.lives -= 2;
+				lastY = g_sChar.m_cLocation.Y;
+				writeLog("You have been hurt!", g_dElapsedTime);
+			}
 		}
 	}
     else if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.lives > 0)
@@ -655,6 +732,7 @@ void renderGame()
 		lastX = g_sChar.m_cLocation.X;
 		lastY = g_sChar.m_cLocation.Y;
 	}
+	// time limit
 	if (g_dElapsedTime >= user.timelimit)
 	{
 		user.lives -= user.lives;
@@ -675,7 +753,6 @@ void renderGame()
     }
    
     //UI functions
-    background ( g_Console );
     divider(g_Console);
     timer(g_dElapsedTime, g_Console);
     lives( user , g_Console);

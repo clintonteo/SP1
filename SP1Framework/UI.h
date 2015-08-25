@@ -29,6 +29,7 @@ struct player
     //int timer;
     int timer;
 	double timelimit;
+	int difficulty;
 };
 
 void timer (double g_dElapsedTime, Console & g_Console);

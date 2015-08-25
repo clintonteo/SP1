@@ -2,20 +2,20 @@
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 WT                            W                 KW
 W             W          H    W    F         S   W
-W    D                        W                  W
+W    D                        W          D       W
 W                             W          B       W
 W               E      WM     W==================W
 W                             W                  W
 W       LW                    W     D            W
-W                     D       W           WWW    W
+W                     D       W           WWW   DW
 W                             W           WWW    W
-WCCCWWWWWWWWWWWWWWWWWWWWWWWWWWW     WWW   WWW    W
+WCCCWWWWWWWWWWWWWWWWWWWWWWWWWWW    DWWW   WWW    W
 W   WW                  =D          WWW   WWW    W
-W   WW    1          D  =           WWW   WWWD   W
-WD  WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW   WWW    W
-W                  X                      WWW    W
+W  DWW    1          D  =           WWWD  WWWD   W
+W   WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW   WWW    W
+WD                 X                      WWW    W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW    W
-WD   D DDDJDDDDDDDD D    D    D   D              W
-W  D    DD DD   D    D P   D DD D                W
+WD   D DDDJDDDDDDDD D    D    D   D          D   W
+W  D    DD DD   D    D P   D DD D  D             W
 WI  D        DD    D     DD D    D               W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
