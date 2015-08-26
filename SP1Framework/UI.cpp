@@ -147,37 +147,37 @@ void point( player & user , Console & g_Console )
 //Final Score
 void finalscore( Console & g_Console , player & user , COORD c , double Endtime)
 {
-    int finalscore = 0;
+    user.final_score = 0;
     if (user.stage1 == 1)
     {
-        finalscore += 1000;
+        user.final_score += 1000;
         for (int time_score = 1; time_score <= (user.timelimit - Endtime); time_score += 10)
         {
-            finalscore += time_score;
+            user.final_score += 50;
         }
 
         if (user.stage2 == 1)
         {
-            finalscore += 1000;
+            user.final_score += 1000;
             for (int time_score = 1; time_score <= (user.timelimit - Endtime); time_score += 10)
             {
-                finalscore += time_score;
+                user.final_score += time_score;
             }
             if (user.stage3 == 1)
             {
-                finalscore += 1000;
+                user.final_score += 1000;
                 for (int time_score = 1; time_score <= (user.timelimit - Endtime); time_score += 10)
                 {
-                    finalscore += time_score;
+                    user.final_score += time_score;
                 }
             }
         }
     }
 
-    finalscore += (user.points*500);
+    user.final_score += (user.points*500);
 
     std::ostringstream strs;
-    strs << finalscore; 
+    strs << user.final_score; 
     string final = strs.str();
 
     g_Console.writeToBuffer(c, final, 0xf9);
@@ -264,4 +264,41 @@ void writeLog ( string line , double time)
             log.close();
         }
     }*/
-}   
+}
+
+//Write Scoreboard
+void highscoreWrite ( player & user )
+{
+    std::fstream highscore ("highscore.txt", std::fstream::app);
+
+    std::ostringstream strs;
+    strs << user.final_score; 
+    string final = strs.str();
+    highscore << final << "\n";
+
+    highscore.close();
+}
+
+void highscoreRead ( player & user , Console & g_Console )
+{
+    std::fstream highscore ("highscore.txt");
+
+    string line;
+
+    int i = 0;
+    if (highscore.is_open())
+    {
+        while (getline (highscore,line))
+        {
+            //g_Console.writeToBuffer(c.X, c.Y - 1 , "LEADERBOARDS" , 0xf9);
+            //g_Console.writeToBuffer(c.X, c.Y - 1, final, 0xf9);
+            /*g_Console.writeToBuffer(c.X, c.Y - 1 , line , 0xf9);*/
+            ++i;
+            if(i == 5)
+            {
+                break;
+            }
+        }
+        highscore.close();
+    }
+}

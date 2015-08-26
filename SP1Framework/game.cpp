@@ -867,7 +867,12 @@ void renderGameover()  // renders the splash screen
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Your points are: ", 0xf9);
     c.X += 16;
-    finalscore( g_Console , user , c , Endtime);
+    finalscore( g_Console , user , c , Endtime); //Final Score
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 9;
+    g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);
+    highscoreWrite( user );
+    highscoreRead ( user , g_Console );
 }
 
 void renderStage1()
@@ -1007,8 +1012,11 @@ void renderGame()
 	}
     if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0)
 	{
+		if(g_sChar.m_cLocation.X != blocks.X && g_sChar.m_cLocation.Y != blocks.Y)
+		{
 			user.health -= user.health;
 			lavadamage = 1;
+		}
 	}
     else
 	{
@@ -1075,12 +1083,15 @@ void renderCharacter(player&user)
     WORD charColor = 0x0C;
     if (g_sChar.m_bActive && user.invis == 1)
     {
+<<<<<<< HEAD
         charColor = 0;
     }
 	else if (g_sChar.m_bActive)
 	{
 		charColor = 0xfC;
 	}
+        charColor = /*0xfA*/10;
+    }
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
 }
 
