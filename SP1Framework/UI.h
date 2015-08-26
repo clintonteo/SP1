@@ -25,9 +25,12 @@ struct player
 	bool LTaken;
 	bool MTaken;
 	COORD block;
-    int timer;
 	double timelimit;
 	int difficulty;
+    bool stage1;
+    bool stage2;
+    bool stage3;
+    bool stage4;
 };
 
 void timer (double g_dElapsedTime, Console & g_Console, player & user);

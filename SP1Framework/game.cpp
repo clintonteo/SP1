@@ -44,6 +44,7 @@ int lastX = 0;
 int lastY = 0;
 
 player user;
+int count = 0;
 
 // Game specific variables here
 SGameChar   g_sChar;
@@ -98,13 +99,18 @@ void init( void )
     user.points = 0;
     user.select = 0;
 	user.boost = 0;
+    user.bomb = 0;
 	user.MTaken = 0;
+	user.timelimit = 180;
+    user.stage1 = 0;
+    user.stage2 = 0;
+    user.stage3 = 0;
+    user.stage4 = 0;
 	lastknown.X = 0;
 	lastknown.Y = 0;
     std::ofstream log;
     log.open("log.txt", std::fstream::trunc);
     log.close();
-
 }
 //--------------------------------------------------------------
 // Purpose  : Reset before exiting the program
@@ -174,12 +180,19 @@ void update(double dt)
 			{
 				g_sChar.m_cLocation.X = 1;
 				g_sChar.m_cLocation.Y = 1;
+                user.boost = 0;
+                user.inventoryitems.clear();
+                for(int i=0; i < 6; ++i)
+				{
+					user.inventory[i] = 'f';
+				}
 				init1 = 1;
 			}
 			gameplay(); // gameplay logic when we are in the game
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 			{
 				Endtime = g_dElapsedTime;
+                user.stage1 = 1;
 				g_eGameState = S_SPLASHSCREEN2;
 			}
             break;
@@ -528,17 +541,16 @@ void moveCharacter()
     }
 
     // SELECTON
-    if ((g_abKeyPressed[K_SELECT]) && (user.inventory[0] == 't'))
+    if ((g_abKeyPressed[K_SELECT]) && (user.inventory[0] == 't') && (user.select < user.inventoryitems.size()))
     {
         user.select += 1;
-        if (user.select == user.inventoryitems.size()+1)
+        if (user.select >= user.inventoryitems.size()/*+1*/)
         {
             user.select = 0;
         }
     }
 
     // INVENTORY
-    int count = 0;
     if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.boost == 0)) // Boost
     {
         user.inventory[count] = 't';
@@ -547,7 +559,7 @@ void moveCharacter()
 		//user.boost = 1;
     }
 
-    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 229) && (user.bomb == 0)) // Bomb
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J') && (user.bomb == 0)) // Bomb
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Bomb");
@@ -567,14 +579,22 @@ void moveCharacter()
         //g_eGameState = S_SPLASHSCREEN;
         --user.lives;
         user.health = 5;
-        init1 = 0;
+        if (g_eGameState == S_GAME1)
+        {
+            init1 = 0;
+        }
+        else if (g_eGameState == S_GAME2)
+        {
+            init2 = 0;
+        }
         lostlives = 1;
         writeLog("You lost a live!", g_dElapsedTime);
 	}
 	//RESET
 	if(g_abKeyPressed[K_RESET])
 	{
-		g_eGameState = S_GAME2;
+		//g_eGameState = S_SPLASHSCREEN2;
+        g_eGameState = static_cast<EGAMESTATES>(g_eGameState + 1);
 	}
 
     //POINTS
@@ -586,7 +606,7 @@ void moveCharacter()
 
     //Use Items
     //Boost
-    if (user.boost == 1 && user.inventory[user.select] == 't')
+    if (user.boost == 1 && /*user.inventory[user.select] == 't'*/ user.inventoryitems[user.select] == "Boost")
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 		{
@@ -606,7 +626,7 @@ void moveCharacter()
 		}
 	}
 	//Bomb
-    if(user.bomb == 1 && /*user.inventoryitems[user.select] == "Bomb"*/user.inventory[user.select] == 't')
+    if(user.bomb >= 1 && user.inventoryitems[user.select] == "Bomb"/*user.inventory[user.select] == 't'*/)
 	{
 		int amt = user.bomb;
 		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
@@ -862,11 +882,11 @@ void renderGame()
 	} 
 
     //Check for cooldown
-    /*if (g_dElapsedTime >= boostcd && user.boost == 1 && boostcd != -1)
+    if (g_dElapsedTime >= boostcd && user.boost == 1 && boostcd != -1)
     {
         writeLog("Boost is ready!", g_dElapsedTime);
         boostcd = -1;
-    }*/
+    }
    
     //UI functions
     background ( g_Console );

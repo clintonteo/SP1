@@ -86,13 +86,23 @@ void renderInventory( player & user , Console & g_Console , double &boostcd , do
         if (user.inventory[i] == 't')
         {
             g_Console.writeToBuffer(57, 10 + i , user.inventoryitems[i] , 10);
+
+            if (g_dElapsedTime >= boostcd && user.boost == 1 && user.inventoryitems[user.select] == "Boost")
+            {
+                for (int find_boost = 0; find_boost <  user.inventoryitems.size(); ++find_boost)
+                {
+                    if (user.inventoryitems[find_boost] == "Boost")
+                    {
+                        g_Console.writeToBuffer(62, 10 + find_boost , "(R)" , 10);
+                    }
+                }
+            }
         }
 
-        if (g_dElapsedTime >= boostcd && user.boost == 1 /*&& boostcd != -1*/)
+        /*if (g_dElapsedTime >= boostcd && user.boost == 1 && user.inventoryitems[user.select] == "Boost")
         {
             g_Console.writeToBuffer(62, 10 + i , "(R)" , 10);
-            //boostcd = -1;
-        }
+        }*/
     }
     
 }
