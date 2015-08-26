@@ -703,6 +703,14 @@ void moveCharacter()
         {
             init2 = 0;
         }
+		else if (g_eGameState == S_GAME3)
+        {
+            init3 = 0;
+        }
+		else if (g_eGameState == S_GAME4)
+        {
+            init4 = 0;
+        }
         lostlives = 1;
         writeLog("You lost a live!", g_dElapsedTime);
 	}
@@ -1083,15 +1091,12 @@ void renderCharacter(player&user)
     WORD charColor = 0x0C;
     if (g_sChar.m_bActive && user.invis == 1)
     {
-<<<<<<< HEAD
         charColor = 0;
     }
 	else if (g_sChar.m_bActive)
 	{
 		charColor = 0xfC;
 	}
-        charColor = /*0xfA*/10;
-    }
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
 }
 
