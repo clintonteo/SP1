@@ -43,5 +43,6 @@ void selector( player & user , Console & g_Console);
 void background( Console & g_Console );
 void readLog ( Console & g_Console );
 void writeLog ( string line , double time);
+void finalscore ( Console & g_Console , player & user , COORD c, double Endtime);
 
 #endif // _UI_H

@@ -193,6 +193,17 @@ void update(double dt)
 				//{
 				//	user.inventory[i] = 'f';
 				//}
+                user.switch1 = 0;
+				user.switch2 = 0;
+				user.switch3 = 0;
+                user.TTaken = 0;
+				user.MTaken = 0;
+                user.boost = 0;
+                user.inventoryitems.clear();
+                for(int i=0; i < 6; ++i)
+				{
+					user.inventory[i] = 'f';
+				}
 				init1 = 1;
 			}
 			gameplay(); // gameplay logic when we are in the game
@@ -246,6 +257,7 @@ void update(double dt)
 				if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 				{
 					Endtime = g_dElapsedTime;
+                    user.stage2 = 1;
 					g_eGameState = S_SPLASHSCREEN3;
 				}
 				break;
@@ -335,6 +347,12 @@ void update(double dt)
 				g_dElapsedTime -= 3;
 			}
 			gameplay();
+            if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
+			{
+				Endtime = g_dElapsedTime;
+                user.stage3 = 1;
+				//g_eGameState = S_SPLASHSCREEN4;
+			}
 			break;
         case S_GAMEOVER:
             break;
@@ -826,6 +844,8 @@ void renderGameover()  // renders the splash screen
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Your points are: ", 0xf9);
+    c.X += 16;
+    finalscore( g_Console , user , c , Endtime);
 }
 
 void renderStage1()
@@ -855,8 +875,8 @@ void renderGame()
     background ( g_Console );
     renderCharacter();  // renders the character into the buffer
 
+    // Write Log
 	//mobmove(g_sChar.m_cLocation,mob,g_dElapsedTime,g_Console, MapCollision);
-
     // Creating Map
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1){
 		user.switch1 = 1;
@@ -876,7 +896,6 @@ void renderGame()
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.boost == 0)
 	{
 		user.boost = 1;
-
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
 	{
@@ -977,6 +996,7 @@ void renderGame()
 		colour(BACKGROUND_RED);
 		//g_Console.writeToBuffer(51, 13, "YOU DIED", 0xf1);
         writeLog("You died!", g_dElapsedTime);
+        Endtime = g_dElapsedTime;
         g_eGameState = S_GAMEOVER;
 		Beep(2000, 1000);
 	} 

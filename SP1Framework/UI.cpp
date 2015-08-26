@@ -8,11 +8,13 @@
 #include <iomanip>
 #include <string>
 #include <fstream>
+#include <sstream>
 
 
 using std::cout;
 using std::endl;
 using std::string;
+using std::to_string;
 // UI THINGY
 
 //Background
@@ -48,8 +50,13 @@ void timer(double g_dElapsedTime, Console & g_Console, player & user)
     renderFramerate();
 
     //Time Limit
-    g_Console.writeToBuffer(52, 3, "Time Limit: ", 10);
-    g_Console.writeToBuffer(64, 3, user.timelimit, 10);
+    g_Console.writeToBuffer(54, 3, "Time Limit: ", 10);
+
+    std::ostringstream strs;
+    strs << user.timelimit; 
+    string timelimit = strs.str();
+    timelimit += " secs";
+    g_Console.writeToBuffer(66, 3, timelimit, 10);
 
     //Timer Notification
     if (user.timelimit - g_dElapsedTime <= 60 && user.timelimit - g_dElapsedTime >= 59.8)
@@ -135,6 +142,45 @@ void point( player & user , Console & g_Console )
     {
         g_Console.writeToBuffer(61, 16 , "0" , 10);
     }
+}
+
+//Final Score
+void finalscore( Console & g_Console , player & user , COORD c , double Endtime)
+{
+    int finalscore = 0;
+    if (user.stage1 == 1)
+    {
+        finalscore += 1000;
+        for (int time_score = 1; time_score <= (user.timelimit - Endtime); time_score += 10)
+        {
+            finalscore += time_score;
+        }
+
+        if (user.stage2 == 1)
+        {
+            finalscore += 1000;
+            for (int time_score = 1; time_score <= (user.timelimit - Endtime); time_score += 10)
+            {
+                finalscore += time_score;
+            }
+            if (user.stage3 == 1)
+            {
+                finalscore += 1000;
+                for (int time_score = 1; time_score <= (user.timelimit - Endtime); time_score += 10)
+                {
+                    finalscore += time_score;
+                }
+            }
+        }
+    }
+
+    finalscore += (user.points*500);
+
+    std::ostringstream strs;
+    strs << finalscore; 
+    string final = strs.str();
+
+    g_Console.writeToBuffer(c, final, 0xf9);
 }
 
 //Selector
