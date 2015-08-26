@@ -48,6 +48,10 @@ int lastY = 0;
 player user;
 int count = 0;
 
+//Damage Trackers
+bool lavadamage = 0;
+bool trapdamage = 0;
+
 // Game specific variables here
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
@@ -182,12 +186,13 @@ void update(double dt)
 			{
 				g_sChar.m_cLocation.X = 1;
 				g_sChar.m_cLocation.Y = 1;
-                user.boost = 0;
-                user.inventoryitems.clear();
-                for(int i=0; i < 6; ++i)
-				{
-					user.inventory[i] = 'f';
-				}
+				reset();
+    //            user.boost = 0;
+    //            user.inventoryitems.clear();
+    //            for(int i=0; i < 6; ++i)
+				//{
+				//	user.inventory[i] = 'f';
+				//}
 				init1 = 1;
 			}
 			gameplay(); // gameplay logic when we are in the game
@@ -220,19 +225,20 @@ void update(double dt)
 				g_sChar.m_cLocation.X = 46;
 				g_sChar.m_cLocation.Y = 3;
 				spawnblock(blocks);
-				user.boost = 0;
-				user.switch1 = 0;
-				user.switch2 = 0;
-				user.switch3 = 0;
-				user.bomb = 0;
-				user.invis = 0;
-				user.TTaken = 0;
-				user.MTaken = 0;
-				for(int i=0; i < 6; ++i)
-				{
-					user.inventory[i] = 'f';
-				}
-				user.inventoryitems.clear();
+				reset();
+				//user.boost = 0;
+				//user.switch1 = 0;
+				//user.switch2 = 0;
+				//user.switch3 = 0;
+				//user.bomb = 0;
+				//user.invis = 0;
+				//user.TTaken = 0;
+				//user.MTaken = 0;
+				//for(int i=0; i < 6; ++i)
+				//{
+				//	user.inventory[i] = 'f';
+				//}
+				//user.inventoryitems.clear();
 				init2 = 1;
 				g_dElapsedTime -= 3;
 			}
@@ -264,20 +270,21 @@ void update(double dt)
 				}
 				g_sChar.m_cLocation.X = 3;
 				g_sChar.m_cLocation.Y = 3;
-				user.boost = 0;
-				user.switch1 = 0;
-				user.switch2 = 0;
-				user.switch3 = 0;
-				user.bomb = 0;
-				user.Cexplode = 0;
-				user.invis = 0;
-				user.TTaken = 0;
-				user.MTaken = 0;
-				for(int i=0; i < 6; ++i)
-				{
-					user.inventory[i] = 'f';
-				}
-				user.inventoryitems.clear();
+				reset();
+				//user.boost = 0;
+				//user.switch1 = 0;
+				//user.switch2 = 0;
+				//user.switch3 = 0;
+				//user.bomb = 0;
+				//user.Cexplode = 0;
+				//user.invis = 0;
+				//user.TTaken = 0;
+				//user.MTaken = 0;
+				//for(int i=0; i < 6; ++i)
+				//{
+				//	user.inventory[i] = 'f';
+				//}
+				//user.inventoryitems.clear();
 				init3 = 1;
 				g_dElapsedTime -= 3;
 			}
@@ -309,7 +316,7 @@ void update(double dt)
 				}
 				g_sChar.m_cLocation.X = 45;
 				g_sChar.m_cLocation.Y = 18;
-				user.boost = 0;
+				/*user.boost = 0;
 				user.switch1 = 0;
 				user.switch2 = 0;
 				user.switch3 = 0;
@@ -317,12 +324,13 @@ void update(double dt)
 				user.Cexplode = 0;
 				user.invis = 0;
 				user.TTaken = 0;
-				user.MTaken = 0;
-				for(int i=0; i < 6; ++i)
-				{
-					user.inventory[i] = 'f';
-				}
-				user.inventoryitems.clear();
+				user.MTaken = 0;*/
+				reset();
+				//for(int i=0; i < 6; ++i)
+				//{
+				//	user.inventory[i] = 'f';
+				//}
+				//user.inventoryitems.clear();
 				init4 = 1;
 				g_dElapsedTime -= 3;
 			}
@@ -333,6 +341,24 @@ void update(double dt)
     }
 }
 
+void reset()
+{
+	user.select = 0;
+	for(int i=0; i < 6; ++i)
+	{
+		user.inventory[i] = 'f';
+	}
+	user.inventoryitems.clear();
+	user.boost = 0;
+	user.switch1 = 0;
+	user.switch2 = 0;
+	user.switch3 = 0;
+	user.bomb = 0;
+	user.Cexplode = 0;
+	user.invis = 0;
+	user.TTaken = 0;
+	user.MTaken = 0;
+}
 
 //--------------------------------------------------------------
 // Purpose  : Render function is to update the console screen
@@ -685,7 +711,7 @@ void moveCharacter()
 		}
 	}
 	//Bomb
-    if(user.bomb >= 1 && user.inventoryitems[user.select] == "Bomb"/*user.inventory[user.select] == 't'*/)
+    if(user.bomb == 1 && user.inventoryitems[user.select] == "Bomb"/*user.inventory[user.select] == 't'*/)
 	{
 		int amt = user.bomb;
 		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
@@ -829,37 +855,32 @@ void renderGame()
     background ( g_Console );
     renderCharacter();  // renders the character into the buffer
 
-    // Write Log
 	//mobmove(g_sChar.m_cLocation,mob,g_dElapsedTime,g_Console, MapCollision);
+
     // Creating Map
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1){
 		user.switch1 = 1;
-		//g_Console.writeToBuffer(51, 12, "You activated X Switch!", 0xf1);
         writeLog("X Switch Activated!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '2'  && user.switch2 != 1)
 	{
 		user.switch2 = 1;
-		//g_Console.writeToBuffer(51, 12, "You activated Y Switch!", 0xf1);
         writeLog("Y Switch Activated!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '3'  && user.switch3 != 1)
 	{
 		user.switch3 = 1;
-		//g_Console.writeToBuffer(51, 12, "You activated Z Switch!", 0xf1);
         writeLog("Z Switch Activated!", g_dElapsedTime);
 	}
 
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.boost == 0)
 	{
 		user.boost = 1;
-		//g_Console.writeToBuffer(51, 12, "You can now Boost!", 0xf1);
-        //writeLog("You can now boost!", g_dElapsedTime);
+
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
 	{
 		user.bomb = 1;
-		//g_Console.writeToBuffer(51, 12, "You now have a bomb!", 0xf1);
         writeLog("You got a bomb!", g_dElapsedTime);
 	}
 	// medpack
@@ -896,55 +917,55 @@ void renderGame()
 				user.MTaken = 1;
 			}
 		}
-		//g_Console.writeToBuffer(51, 12, "You are now healed!", 0xf1);
         writeLog("You have been healed!", g_dElapsedTime);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0 && trapdamage == 0)
 	{
-		//g_Console.writeToBuffer(51, 12, "You have been hurt!", 0xf1);
         //writeLog("You have been hurt!", g_dElapsedTime);
 		if(user.difficulty == hard || user.difficulty == normal)
 		{
-			if(lastX != g_sChar.m_cLocation.X)
-			{
 				user.health--;
-				lastX = g_sChar.m_cLocation.X;
 				writeLog("You have been hurt!", g_dElapsedTime);
-			}
-			else if(lastY != g_sChar.m_cLocation.Y)
-			{
-				user.health--;
-				lastY = g_sChar.m_cLocation.Y;
-				writeLog("You have been hurt!", g_dElapsedTime);
-			}
+				trapdamage = 1;
 		}
 		else if(user.difficulty == insane)
 		{
-			if(lastX != g_sChar.m_cLocation.X)
-			{
 				user.health -= 2;
-				lastX = g_sChar.m_cLocation.X;
 				writeLog("You have been hurt!", g_dElapsedTime);
-			}
-			else if(lastY != g_sChar.m_cLocation.Y)
-			{
-				user.health -= 2;
-				lastY = g_sChar.m_cLocation.Y;
-				writeLog("You have been hurt!", g_dElapsedTime);
-			}
+				trapdamage = 1;
 		}
-	}
-    else if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0)
+	}else if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] != 'D' )
 	{
-		if(g_sChar.m_cLocation.X != blocks.X || g_sChar.m_cLocation.Y != blocks.Y)
+		trapdamage = 0;
+	}
+	// pitfall
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'P' && user.health > 0)
+	{
+		if (init4 == 1)
 		{
-			user.health -= user.health;
+			init4 = 0;
+			init3 = 0;
 		}
+		else if(init3 == 1)
+		{
+			init3 = 0;
+			init2 = 0;
+		}
+		else if(init2 == 1)
+		{
+			init2 = 0;
+			init1 = 0;
+		}
+		g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 2);
+	}
+    if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0)
+	{
+			user.health -= user.health;
+			lavadamage = 1;
 	}
     else
 	{
-		lastX = g_sChar.m_cLocation.X;
-		lastY = g_sChar.m_cLocation.Y;
+		lavadamage = 0;
 	}
 	// time limit
 	if (g_dElapsedTime >= user.timelimit)

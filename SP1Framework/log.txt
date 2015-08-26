@@ -1,14 +1,7 @@
-X Switch Activated!@2.44318
-Y Switch Activated!@7.2676
-You have been hurt!@9.67979
-You got a bomb!@16.9164
-Z Switch Activated!@18.5245
-You have been hurt!@42.245
-You have been hurt!@43.0491
-You have been hurt!@53.1156
-X Switch Activated!@69.5989
-You have been hurt!@73.8203
-You lost a live!@74.0213
-You have been hurt!@84.2731
-Y Switch Activated!@88.4944
-You have been hurt!@90.3036
+X Switch Activated!@10.2671
+Boost is ready!@15.6944
+Y Switch Activated!@20.3177
+Boost is ready!@21.3228
+You lost a live!@24.74
+X Switch Activated!@40.0175
+Boost is ready!@60.3199

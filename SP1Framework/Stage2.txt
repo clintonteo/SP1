@@ -1,7 +1,7 @@
 20 50
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-WT                            W                  W
-W             W          H    W    F         S   W
+WT                            W         PJ       W
+W             W          H    W    F     I   S   W
 W    D                        W          D       W
 W                             W          B       W
 W               E      WM     W==================W

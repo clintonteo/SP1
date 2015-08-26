@@ -4,17 +4,17 @@ W                WWWWW      WWWWWWWWWWWWWWWWWWWWWW
 W S              XXXXX  D                    ZZ  W
 W           D1   XXXXX      WWWWWWWWWW  D  WWWWD W
 W               MWWWWWWWWD  WWWWWWWWWW     WWWW  W
-WWWWWWWWYYYWWWWWWWWWWWWWW   W       2W     WWWW  W
-WWWWWWWWYYYWWWWWWWWWWWL       P      W     WWWW IW
+WWWWWWWWYYYWWWWWWWWWWWWWW   W   D   2W D   WWWW  W
+WWWWWWWWYYYWWWWWWWWWWWL       P      W    DWWWW IW
 WWWWWWWWYYYWWWWWWWWWWWWWWWWWWWWWWWWWWWCCCCCWWWWWWW
 W=======  D======WWWWWWWWWW======================W
 W=======   ======WWWWWWWWWW======================W
 W=======   ======WWWWWWWWWW======================W
 W                D   JWWWWWWWWWWWWWWWW  W  WWWWWWW
-W     WWD       WW    WWWWW             W        W
+W     WWD       WW    WWWWW          D  W        W
 W     WW        WW    WWWWW   D         WDDDDDD  W
 W                     WWWWW       E     W   DDDD W
-W          E          WWWWW             W        W
+W          E          WWWWW          D  W        W
 W    DWW        WW  D WWWWW    WWWWWWWWWWDDD  DDDW
 W  F  WW        WW    WWWWW H    DDD     DDDD  DDW
 WT     P             3WWWWW          DDD       DDW
