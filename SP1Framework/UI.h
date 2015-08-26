@@ -17,6 +17,7 @@ struct player
 	bool switch3;
 	bool TTaken;
     int points;
+    int final_score;
     int select;
 	bool boost;
 	bool bomb;
@@ -44,5 +45,7 @@ void background( Console & g_Console );
 void readLog ( Console & g_Console );
 void writeLog ( string line , double time);
 void finalscore ( Console & g_Console , player & user , COORD c, double Endtime);
+void highscoreWrite ( player & user );
+void highscoreRead ( player & user , Console & g_Console );
 
 #endif // _UI_H

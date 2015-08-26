@@ -846,7 +846,12 @@ void renderGameover()  // renders the splash screen
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Your points are: ", 0xf9);
     c.X += 16;
-    finalscore( g_Console , user , c , Endtime);
+    finalscore( g_Console , user , c , Endtime); //Final Score
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 9;
+    g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);
+    highscoreWrite( user );
+    highscoreRead ( user , g_Console );
 }
 
 void renderStage1()
@@ -1047,7 +1052,7 @@ void renderCharacter()
     WORD charColor = 0x0C;
     if (g_sChar.m_bActive)
     {
-        charColor = 0xfA;
+        charColor = /*0xfA*/10;
     } 
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
 }
