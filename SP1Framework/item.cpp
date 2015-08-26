@@ -279,7 +279,9 @@ void item2(player&user)
 	user.bomb = 0;
 }
 
-void item3()
+void item3(player&user,SGameChar icon, double currentTime, double &invisExp)
 {
-	
+	invisExp = currentTime + 5;
+	user.invispot = 0;
+	user.invis = 1;
 }

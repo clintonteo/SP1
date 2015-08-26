@@ -35,6 +35,7 @@ bool lostlives = 0;
 
 double Endtime;
 double boostcd = 0;
+double invisExp = 0;
 
 //diffculty
 const int normal = 0;
@@ -53,7 +54,7 @@ bool lavadamage = 0;
 bool trapdamage = 0;
 
 // Game specific variables here
-SGameChar   g_sChar;
+SGameChar g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
 
@@ -106,7 +107,10 @@ void init( void )
     user.select = 0;
 	user.boost = 0;
     user.bomb = 0;
-	user.MTaken = 0;
+	user.invistaken = 0;
+	user.invis = 0;
+	user.invispot = 0;
+	user.MedsTaken = 0;
 	user.timelimit = 180;
     user.stage1 = 0;
     user.stage2 = 0;
@@ -197,7 +201,7 @@ void update(double dt)
 				user.switch2 = 0;
 				user.switch3 = 0;
                 user.TTaken = 0;
-				user.MTaken = 0;
+				user.MedsTaken = 0;
                 user.boost = 0;
                 user.inventoryitems.clear();
                 for(int i=0; i < 6; ++i)
@@ -244,7 +248,7 @@ void update(double dt)
 				//user.bomb = 0;
 				//user.invis = 0;
 				//user.TTaken = 0;
-				//user.MTaken = 0;
+				//user.MedsTaken = 0;
 				//for(int i=0; i < 6; ++i)
 				//{
 				//	user.inventory[i] = 'f';
@@ -291,7 +295,7 @@ void update(double dt)
 				//user.Cexplode = 0;
 				//user.invis = 0;
 				//user.TTaken = 0;
-				//user.MTaken = 0;
+				//user.MedsTaken = 0;
 				//for(int i=0; i < 6; ++i)
 				//{
 				//	user.inventory[i] = 'f';
@@ -336,7 +340,7 @@ void update(double dt)
 				user.Cexplode = 0;
 				user.invis = 0;
 				user.TTaken = 0;
-				user.MTaken = 0;*/
+				user.MedsTaken = 0;*/
 				reset();
 				//for(int i=0; i < 6; ++i)
 				//{
@@ -374,9 +378,11 @@ void reset()
 	user.switch3 = 0;
 	user.bomb = 0;
 	user.Cexplode = 0;
+	user.invispot = 0;
 	user.invis = 0;
+	user.invistaken = 0;
 	user.TTaken = 0;
-	user.MTaken = 0;
+	user.MedsTaken = 0;
 }
 
 //--------------------------------------------------------------
@@ -670,6 +676,12 @@ void moveCharacter()
         ++count;
 		//user.bomb = 1;
     }
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && user.invistaken == 0)
+	{
+		user.inventory[count] = 't';
+        user.inventoryitems.push_back("Invis Pot");
+        ++count;
+	}
 
 
     // quits the game if player hits the escape key
@@ -762,7 +774,16 @@ void moveCharacter()
 			}
 		}
 	}
-    
+	
+	//Invis
+	if(user.invispot == 1)
+	{
+		if (g_abKeyPressed[K_USE])
+		{
+			item3(user,g_sChar, g_dElapsedTime, invisExp);
+			writeLog("You are invis!", g_dElapsedTime);
+		}
+	}
 }
 void processUserInput()
 {
@@ -874,7 +895,7 @@ void renderStage4()
 void renderGame()
 {
     background ( g_Console );
-    renderCharacter();  // renders the character into the buffer
+    renderCharacter(user);  // renders the character into the buffer
 
     // Write Log
 	//mobmove(g_sChar.m_cLocation,mob,g_dElapsedTime,g_Console, MapCollision);
@@ -903,20 +924,26 @@ void renderGame()
 		user.bomb = 1;
         writeLog("You got a bomb!", g_dElapsedTime);
 	}
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && user.invistaken == 0)
+	{
+		user.invispot = 1;
+		user.invistaken = 1;
+        writeLog("You got an invis potion!", g_dElapsedTime);
+	}
 	// medpack
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MTaken == 0 && user.health != 5)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MedsTaken == 0 && user.health != 5)
 	{
 		if(user.difficulty == normal || user.difficulty == hard)
 		{
 			if (user.health < 4)
 			{
 				user.health += 2;
-				user.MTaken = 1;
+				user.MedsTaken = 1;
 			}
 			else if (user.health == 4)
 			{
 				user.health += 1;
-				user.MTaken = 1;
+				user.MedsTaken = 1;
 			}
 		}
 		else if(user.difficulty == insane)
@@ -924,17 +951,17 @@ void renderGame()
 			if (user.health < 3)
 			{
 				user.health += 3;
-				user.MTaken = 1;
+				user.MedsTaken = 1;
 			}
 			else if (user.lives == 3)
 			{
 				user.health += 2;
-				user.MTaken = 1;
+				user.MedsTaken = 1;
 			}
 			else if (user.lives == 4)
 			{
 				user.health += 1;
-				user.MTaken = 1;
+				user.MedsTaken = 1;
 			}
 		}
         writeLog("You have been healed!", g_dElapsedTime);
@@ -1008,6 +1035,10 @@ void renderGame()
         writeLog("Boost is ready!", g_dElapsedTime);
         boostcd = -1;
     }
+	if(g_dElapsedTime >= invisExp && user.invis == 1)
+	{
+		user.invis = 0;
+	}
    
     //UI functions
     background ( g_Console );
@@ -1038,14 +1069,18 @@ void renderMap()
     }
 }
 
-void renderCharacter()
+void renderCharacter(player&user)
 {
     // Draw the location of the character
     WORD charColor = 0x0C;
-    if (g_sChar.m_bActive)
+    if (g_sChar.m_bActive && user.invis == 1)
     {
-        charColor = 0xfA;
-    } 
+        charColor = 0;
+    }
+	else if (g_sChar.m_bActive)
+	{
+		charColor = 0xfC;
+	}
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
 }
 

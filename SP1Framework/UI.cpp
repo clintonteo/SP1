@@ -117,30 +117,30 @@ void renderInventory( player & user , Console & g_Console , double &boostcd , do
 //Points
 void point( player & user , Console & g_Console )
 {
-    g_Console.writeToBuffer(61, 15 , "Points:" , 10);
+    g_Console.writeToBuffer(61, 16 , "Points:" , 10);
 
     if (user.TTaken == 1)
     {
         if (user.points == 1)
         {
-            g_Console.writeToBuffer(61, 16 , "1" , 10);
+            g_Console.writeToBuffer(70, 16 , "1" , 10);
         }
         if (user.points == 2)
         {
-            g_Console.writeToBuffer(61, 16 , "2" , 10);
+            g_Console.writeToBuffer(70, 16 , "2" , 10);
         }
         if (user.points == 3)
         {
-            g_Console.writeToBuffer(61, 16 , "3" , 10);
+            g_Console.writeToBuffer(70, 16 , "3" , 10);
         }
         if (user.points == 4)
         {
-            g_Console.writeToBuffer(61, 16 , "4" , 10);
+            g_Console.writeToBuffer(70, 16 , "4" , 10);
         }
     }
     else
     {
-        g_Console.writeToBuffer(61, 16 , "0" , 10);
+        g_Console.writeToBuffer(70, 16 , "0" , 10);
     }
 }
 

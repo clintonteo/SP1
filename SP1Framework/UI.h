@@ -21,9 +21,10 @@ struct player
 	bool boost;
 	bool bomb;
 	bool Cexplode;
+	bool invispot;
 	bool invis;
-	bool LTaken;
-	bool MTaken;
+	bool invistaken;
+	bool MedsTaken;
 	COORD block;
 	double timelimit;
 	int difficulty;

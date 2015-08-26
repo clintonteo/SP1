@@ -2,6 +2,8 @@
 #define _GAME_H
 
 #include "Framework\timer.h"
+#include "UI.h"
+
 
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
@@ -75,7 +77,7 @@ void renderStage3();
 void renderStage4();
 
 void renderMap();           // renders the map to the buffer first
-void renderCharacter();     // renders the character into the buffer
+void renderCharacter(player&user);     // renders the character into the buffer
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 
