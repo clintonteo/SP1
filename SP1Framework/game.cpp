@@ -187,12 +187,12 @@ void update(double dt)
 				g_sChar.m_cLocation.X = 1;
 				g_sChar.m_cLocation.Y = 1;
 				reset();
-    //            user.boost = 0;
-    //            user.inventoryitems.clear();
-    //            for(int i=0; i < 6; ++i)
-				//{
-				//	user.inventory[i] = 'f';
-				//}
+                /*user.boost = 0;
+                user.inventoryitems.clear();
+                for(int i=0; i < 6; ++i)
+				{
+					user.inventory[i] = 'f';
+				}
                 user.switch1 = 0;
 				user.switch2 = 0;
 				user.switch3 = 0;
@@ -203,7 +203,7 @@ void update(double dt)
                 for(int i=0; i < 6; ++i)
 				{
 					user.inventory[i] = 'f';
-				}
+				}*/
 				init1 = 1;
 			}
 			gameplay(); // gameplay logic when we are in the game
@@ -367,6 +367,7 @@ void reset()
 		user.inventory[i] = 'f';
 	}
 	user.inventoryitems.clear();
+    count = 0;
 	user.boost = 0;
 	user.switch1 = 0;
 	user.switch2 = 0;
