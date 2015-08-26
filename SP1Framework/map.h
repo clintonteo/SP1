@@ -55,6 +55,7 @@ void free_map(PMAP pmap);
 void createMap1(COORD charLocation, bool blind, int range, player &user, Console &g_Console); //Creates Map for Output
 void createMap2(COORD charLocation, bool blind, int range, player &user, Console &g_Console); //Creates Map for Output
 void createMap3(COORD charLocation, bool blind, int range, player &user, Console &g_Console);
+void createMap4(COORD charLocation, bool blind, int range, player &user, Console &g_Console);
 void blockp(COORD &charLocation, COORD &blocks, COORD &lastknown, int range, Console &g_Console);
 void spawnblock(COORD &blocks);
 

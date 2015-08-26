@@ -24,10 +24,12 @@ COORD blocks;
 COORD mob;
 COORD lastknown;
 PMAP MapCollision;
-
+// stage clear checker
 bool init1 = 0;
 bool init2 = 0;
 bool init3 = 0;
+bool init4 = 0;
+
 int range;
 bool lostlives = 0;
 
@@ -64,7 +66,7 @@ Console g_Console(80, 28, "SP1 Framework");
 void init( void )
 {
     // Set precision for floating point output
-    g_dElapsedTime = 0.0;
+    g_dElapsedTime = -3.0;
     g_dBounceTime = 0.0;
 
     // sets the initial state for the game
@@ -232,6 +234,7 @@ void update(double dt)
 				}
 				user.inventoryitems.clear();
 				init2 = 1;
+				g_dElapsedTime -= 3;
 			}
 				gameplay();
 				if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
@@ -276,10 +279,55 @@ void update(double dt)
 				}
 				user.inventoryitems.clear();
 				init3 = 1;
+				g_dElapsedTime -= 3;
+			}
+			gameplay();
+			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
+				{
+					Endtime = g_dElapsedTime;
+					g_eGameState = S_SPLASHSCREEN4;
+				}
+			break;
+        
+			case S_SPLASHSCREEN4: splashStage4Wait();
+				break;
+
+			case S_GAME4:
+			if(init4 == 0)
+			{
+				if(user.difficulty == normal)
+				{
+					user.timelimit += 150;
+				}
+				else if(user.difficulty == hard)
+				{
+					user.timelimit += 120;
+				}
+				else if(user.difficulty == insane)
+				{
+					user.timelimit += 90;
+				}
+				g_sChar.m_cLocation.X = 45;
+				g_sChar.m_cLocation.Y = 18;
+				user.boost = 0;
+				user.switch1 = 0;
+				user.switch2 = 0;
+				user.switch3 = 0;
+				user.bomb = 0;
+				user.Cexplode = 0;
+				user.invis = 0;
+				user.TTaken = 0;
+				user.MTaken = 0;
+				for(int i=0; i < 6; ++i)
+				{
+					user.inventory[i] = 'f';
+				}
+				user.inventoryitems.clear();
+				init4 = 1;
+				g_dElapsedTime -= 3;
 			}
 			gameplay();
 			break;
-        
         case S_GAMEOVER:
             break;
     }
@@ -320,6 +368,13 @@ void render()
 			renderGame();
 			g_Console.writeToBuffer(51, 0, "STAGE 3", 10);
 			break;
+		case S_SPLASHSCREEN4: renderSplashStage4();
+			break;
+		case S_GAME4:
+			renderStage4();
+			renderGame();
+			g_Console.writeToBuffer(51, 0, "STAGE 4", 10);
+			break;
         case S_GAMEOVER:
             renderGameover();
 			break;
@@ -330,7 +385,7 @@ void render()
 
 void splashScreenWait()    // waits for time to pass in splash screen
 {
-    if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
+    if (g_dElapsedTime > 0.0) // wait for 3 seconds to switch to game mode, else do nothing
         g_eGameState = S_GAME1;
 }
 void splashStage2Wait()    // waits for time to pass in splash screen
@@ -343,7 +398,11 @@ void splashStage3Wait()    // waits for time to pass in splash screen
     if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
         g_eGameState = S_GAME3;
 }
-
+void splashStage4Wait()    // waits for time to pass in splash screen
+{
+    if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
+        g_eGameState = S_GAME4;
+}
 void splashGameoverWait()
 {
     if (g_dElapsedTime > Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
@@ -715,6 +774,20 @@ void renderSplashStage3()  // renders the splash screen
     g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
 }
 
+void renderSplashStage4()  // renders the splash screen
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 3;
+    c.X = c.X  / 2 - 9;
+    g_Console.writeToBuffer(c, "STAGE 4", 0xf3);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X  / 2 - 20;
+    g_Console.writeToBuffer(c, "This will make you ragequit, a helpful hint is below.", 0xf9);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 9;
+    g_Console.writeToBuffer(c, "Hint: Press 'Esc' to quit", 0xf9);
+}
+
 void renderGameover()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
@@ -745,13 +818,19 @@ void renderStage3()
 	MapCollision = load_map("stage3.txt");
 	createMap3(g_sChar.m_cLocation, 1, range, user, g_Console);
 }
+void renderStage4()
+{
+	MapCollision = load_map("stage4.txt");
+	createMap4(g_sChar.m_cLocation, 1, range, user, g_Console);
+	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+}
 void renderGame()
 {
     background ( g_Console );
     renderCharacter();  // renders the character into the buffer
 
     // Write Log
-	mobmove(g_sChar.m_cLocation,mob,g_dElapsedTime,g_Console, MapCollision);
+	//mobmove(g_sChar.m_cLocation,mob,g_dElapsedTime,g_Console, MapCollision);
     // Creating Map
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1){
 		user.switch1 = 1;

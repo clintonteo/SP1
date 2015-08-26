@@ -30,6 +30,8 @@ enum EGAMESTATES
 	S_GAME2,
 	S_SPLASHSCREEN3,
 	S_GAME3,
+	S_SPLASHSCREEN4,
+	S_GAME4,
     S_GAMEOVER,
     S_COUNT
 };
@@ -50,6 +52,7 @@ void shutdown    ( void );      // do clean up, free memory
 void splashScreenWait();    // waits for time to pass in splash screen
 void splashStage2Wait();    // waits for time to pass in splash screen
 void splashStage3Wait();
+void splashStage4Wait();
 void splashGameoverWait();
 
 void gameplay();            // gameplay logic
@@ -60,6 +63,7 @@ void clearScreen();         // clears the current screen and draw from scratch
 void renderSplashScreen();  // renders the splash screen
 void renderSplashStage2();  // renders the splash screen
 void renderSplashStage3();
+void renderSplashStage4();
 
 void renderGameover();
 void renderGame();// renders the game stuff
@@ -67,6 +71,7 @@ void renderGame();// renders the game stuff
 void renderStage1();
 void renderStage2();
 void renderStage3();
+void renderStage4();
 
 void renderMap();           // renders the map to the buffer first
 void renderCharacter();     // renders the character into the buffer
