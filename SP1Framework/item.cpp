@@ -5,7 +5,7 @@
 #include "Framework\console.h"
 #include <sstream>
 
-// item1 is boost, item2 is explosive
+// item1 is boost, item2 is explosive, item3 is invisible potion
 
 void item1up(PMAP MapCollision, COORD &charLocation, player&user, double currentTime, Console & g_Console, double &boostcd)
 {
@@ -20,11 +20,6 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user, double current
 			    stop = 1;
 			    break;
 		    }
-		    /*
-		    if (MapCollision->data[charLocation.Y - count][charLocation.X] == 'D')
-		    {
-			    user.lives -= 1;
-		    }*/
 		    if (user.switch1 == 0)
 		    {
 			    if(MapCollision->data[charLocation.Y - count][charLocation.X] == 'X')
@@ -61,19 +56,11 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user, double current
 	    if (stop == 0)
 	    {
 		    charLocation.Y -= 3;
-		    //user.bcd = 11;
 		    boostcd = currentTime + 3;
-
-            /*string cooldown;
-            std::ostringstream convert;
-            convert << static_cast<int>(boostcd);
-            cooldown = convert.str();
-            g_Console.writeToBuffer(56, 3, cooldown, 10);*/
 	    }
 	    else
 	    {
 		    charLocation.Y -= count - 1;
-		    //user.bcd = 11;
 		    boostcd = currentTime + 3;
 	    }
 	}
@@ -91,11 +78,6 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
 			stop = 1;
 			break;
 		}
-		/*
-		if (MapCollision->data[charLocation.Y][charLocation.X - count] == 'D')
-		{
-			user.lives -= 1;
-		}*/
 		if (user.switch1 == 0)
 		{
 			if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'X')
@@ -132,13 +114,11 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
 	if (stop == 0)
 	{
 		charLocation.X -= 3;
-		//user.bcd = 11;
 		boostcd = currentTime + 3;
 	}
 	else
 	{
 		charLocation.X -= count - 1;
-		//user.bcd = 11;
 		boostcd = currentTime + 3;
     }
 	}
@@ -156,10 +136,6 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user, double curren
 			stop = 1;
 			break;
 		}
-		/*if (MapCollision->data[charLocation.Y + count][charLocation.X] == 'D')
-		{
-			user.lives -= 1;
-		}*/
 		if (user.switch1 == 0)
 		{
 			if(MapCollision->data[charLocation.Y + count][charLocation.X] == 'X')
@@ -196,13 +172,11 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user, double curren
 	if (stop == 0)
 	{
 		charLocation.Y += 3;
-		//user.bcd = 11;
 		boostcd = currentTime + 3;
 	}
 	else
 	{
 		charLocation.Y += count - 1;
-		//user.bcd = 11;
 		boostcd = currentTime + 3;
 	}
 	}
@@ -220,11 +194,6 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 			stop = 1;
 			break;
 		}
-		/*
-		if (MapCollision->data[charLocation.Y][charLocation.X + count] == 'D')
-		{
-			user.lives -= 1;
-		}*/
 		if (user.switch1 == 0)
 		{
 			if(MapCollision->data[charLocation.Y][charLocation.X + count] == 'X')
@@ -261,13 +230,11 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 	if (stop == 0)
 	{
 		charLocation.X += 3;
-		//user.bcd = 11;
 		boostcd = currentTime + 3;
     }
 	else
 	{
 		charLocation.X += count - 1;
-		//user.bcd = 11;
 		boostcd = currentTime + 3;
 	}
 	}
