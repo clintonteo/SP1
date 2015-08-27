@@ -1005,7 +1005,7 @@ void renderGame()
 	// medpack
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MedsTaken == 0 && user.health != 5)
 	{
-		if(user.difficulty == normal || user.difficulty == hard)
+		if(user.difficulty == normal || user.difficulty == hard || user.difficulty == ez)
 		{
 			if (user.health < 4)
 			{
@@ -1041,7 +1041,7 @@ void renderGame()
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0 && trapdamage == 0)
 	{
         //writeLog("You have been hurt!", g_dElapsedTime);
-		if(user.difficulty == hard || user.difficulty == normal)
+		if(user.difficulty == hard || user.difficulty == normal || user.difficulty == ez)
 		{
 				user.health--;
 				writeLog("You have been hurt!", g_dElapsedTime);

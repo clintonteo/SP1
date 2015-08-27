@@ -19,7 +19,7 @@ const int ez = 3;
 
 void mainMenu(Console &console, player&user)
 {
-	string Menu[8] = {"start game","", "difficulty","", "help","", "exit",""};
+	string Menu[8] = {"Play","", "Difficulty","", "Tutorial","", "Exit",""};
 
 	console.writeToBuffer(30, 5, "Tower Of PuzzMaz", 0xf7);
 
@@ -90,7 +90,7 @@ void mainMenu(Console &console, player&user)
 
 void options(Console &console, player&user)
 {
-	string Options[8] = {"normal","", "hard","", "insane","", "Scrub",""};
+	string Options[8] = {"Scrub","","Normal","", "Hard","", "Insane","" };
 
 	console.writeToBuffer(30, 5, "Difficulty", 0xf7);
 
@@ -131,7 +131,7 @@ void options(Console &console, player&user)
 		{
 			case 0:
 				{
-					user.difficulty = normal;
+					user.difficulty = ez;
 					g_eGameState = S_MENU;
 				}
 				break;
@@ -139,7 +139,7 @@ void options(Console &console, player&user)
 				break;
 			case 2:
 				{
-					user.difficulty = hard;
+					user.difficulty = normal;
 					g_eGameState = S_MENU;
 				}
 				break;
@@ -147,7 +147,7 @@ void options(Console &console, player&user)
 				break;
 			case 4:
 				{
-					user.difficulty = insane;
+					user.difficulty = hard;
 					g_eGameState = S_MENU;
 				}
 				break;
@@ -155,7 +155,7 @@ void options(Console &console, player&user)
 				break;
 			case 6:
 				{
-					user.difficulty = ez;
+					user.difficulty = insane;
 					g_eGameState = S_MENU;
 				}
 			case 7:
