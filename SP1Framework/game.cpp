@@ -984,7 +984,11 @@ void renderGame()
 	}
     if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0)
 	{
-		if(g_sChar.m_cLocation.X != blocks.X && g_sChar.m_cLocation.Y != blocks.Y)
+		if(g_sChar.m_cLocation.X == blocks.X && g_sChar.m_cLocation.Y == blocks.Y)
+		{
+			lavadamage = 1;
+		}
+		else
 		{
 			user.health -= user.health;
 			lavadamage = 1;
