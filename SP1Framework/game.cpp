@@ -74,7 +74,7 @@ Console g_Console(80, 28, "SP1 Framework");
 void init( void )
 {
     // Set precision for floating point output
-    g_dElapsedTime = -3.0;
+    g_dElapsedTime = 0.0;
     g_dBounceTime = 0.0;
 
     // sets the initial state for the game
@@ -193,23 +193,6 @@ void update(double dt)
 				g_sChar.m_cLocation.X = 3;
 				g_sChar.m_cLocation.Y = 3;
 				reset();
-                /*user.boost = 0;
-                user.inventoryitems.clear();
-                for(int i=0; i < 6; ++i)
-				{
-					user.inventory[i] = 'f';
-				}
-                user.switch1 = 0;
-				user.switch2 = 0;
-				user.switch3 = 0;
-                user.TTaken = 0;
-				user.MedsTaken = 0;
-                user.boost = 0;
-                user.inventoryitems.clear();
-                for(int i=0; i < 6; ++i)
-				{
-					user.inventory[i] = 'f';
-				}*/
 				init1 = 1;
 			}
 			gameplay(); // gameplay logic when we are in the game
@@ -246,21 +229,7 @@ void update(double dt)
 				g_sChar.m_cLocation.X = 46;
 				g_sChar.m_cLocation.Y = 3;
 				reset();
-				//user.boost = 0;
-				//user.switch1 = 0;
-				//user.switch2 = 0;
-				//user.switch3 = 0;
-				//user.bomb = 0;
-				//user.invis = 0;
-				//user.TTaken = 0;
-				//user.MedsTaken = 0;
-				//for(int i=0; i < 6; ++i)
-				//{
-				//	user.inventory[i] = 'f';
-				//}
-				//user.inventoryitems.clear();
 				init2 = 1;
-				g_dElapsedTime -= 3;
 			}
 				gameplay();
 				if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
@@ -296,22 +265,7 @@ void update(double dt)
 				g_sChar.m_cLocation.X = 3;
 				g_sChar.m_cLocation.Y = 3;
 				reset();
-				//user.boost = 0;
-				//user.switch1 = 0;
-				//user.switch2 = 0;
-				//user.switch3 = 0;
-				//user.bomb = 0;
-				//user.Cexplode = 0;
-				//user.invis = 0;
-				//user.TTaken = 0;
-				//user.MedsTaken = 0;
-				//for(int i=0; i < 6; ++i)
-				//{
-				//	user.inventory[i] = 'f';
-				//}
-				//user.inventoryitems.clear();
 				init3 = 1;
-				g_dElapsedTime -= 3;
 			}
 			gameplay();
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
@@ -345,23 +299,8 @@ void update(double dt)
 				}
 				g_sChar.m_cLocation.X = 45;
 				g_sChar.m_cLocation.Y = 18;
-				/*user.boost = 0;
-				user.switch1 = 0;
-				user.switch2 = 0;
-				user.switch3 = 0;
-				user.bomb = 0;
-				user.Cexplode = 0;
-				user.invis = 0;
-				user.TTaken = 0;
-				user.MedsTaken = 0;*/
 				reset();
-				//for(int i=0; i < 6; ++i)
-				//{
-				//	user.inventory[i] = 'f';
-				//}
-				//user.inventoryitems.clear();
 				init4 = 1;
-				g_dElapsedTime -= 3;
 			}
 			gameplay();
             if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
@@ -449,23 +388,35 @@ void render()
 
 void splashScreenWait()    // waits for time to pass in splash screen
 {
-    if (g_dElapsedTime > 0.0) // wait for 3 seconds to switch to game mode, else do nothing
-        g_eGameState = S_GAME1;
+    if (g_dElapsedTime > 3.0)// wait for 3 seconds to switch to game mode, else do nothing
+	{
+		g_eGameState = S_GAME1;
+		g_dElapsedTime -= 3;
+	}
 }
 void splashStage2Wait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
-        g_eGameState = S_GAME2;
+    {
+		g_eGameState = S_GAME2;
+		g_dElapsedTime -= 3;
+	}
 }
 void splashStage3Wait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
+	{
         g_eGameState = S_GAME3;
+		g_dElapsedTime -= 3;
+	}
 }
 void splashStage4Wait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
+	{
         g_eGameState = S_GAME4;
+		g_dElapsedTime -= 3;
+	}
 }
 void splashGameoverWait()
 {
