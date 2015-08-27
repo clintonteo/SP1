@@ -84,21 +84,21 @@ void init( void )
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 25, L"Consolas");
 	//user.difficulty = normal;
-	if(user.difficulty == normal)
-	{
-		range = 6;
-		user.timelimit = 180;
-	}
-	if(user.difficulty == hard)
-	{
-		range = 5;
-		user.timelimit = 150;
-	}
-	if(user.difficulty == insane)
-	{
-		range = 4;
-		user.timelimit = 120;
-	}
+	//if(user.difficulty == normal)
+	//{
+	//	range = 6;
+	//	user.timelimit = 10;
+	//}
+	//if(user.difficulty == hard)
+	//{
+	//	range = 5;
+	//	user.timelimit = 150;
+	//}
+	//if(user.difficulty == insane)
+	//{
+	//	range = 4;
+	//	user.timelimit = 120;
+	//}
     mob.X = 1;
 	mob.Y = 2;
     if (lostlives == 0)
@@ -123,6 +123,7 @@ void init( void )
     std::ofstream log;
     log.open("log.txt", std::fstream::trunc);
     log.close();
+	user.timelimit = 99999;
 }
 //--------------------------------------------------------------
 // Purpose  : Reset before exiting the program

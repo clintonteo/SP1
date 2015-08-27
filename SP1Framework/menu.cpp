@@ -59,6 +59,7 @@ void mainMenu(Console &console)
 			case 0:
 				{
 					g_eGameState = S_SPLASHSCREEN;
+					g_dElapsedTime = 0;
 				}
 				break;
 			case 1:
