@@ -198,8 +198,9 @@ void help(Console &console)
 	console.writeToBuffer(25, 13, "/ is lever to open XYZ walls.", 0xf0);
 	console.writeToBuffer(25, 14, "0 is a pitfall trap.", 0xf0);
 	console.writeToBuffer(25, 15, "$ is a treasure.", 0xf0);
-	console.writeToBuffer(25, 16, "M is a monster. Avoid him!.", 0xf0);
-	console.writeToBuffer(25, 17, "# to escape.", 0xf0);
+	console.writeToBuffer(25, 16, "+ is a health pack, Heal up!.", 0xf0);
+	console.writeToBuffer(25, 17, "M is a monster. Avoid him!.", 0xf0);
+	console.writeToBuffer(25, 18, "# to escape.", 0xf0);
 	console.writeToBuffer(25, 20, "Press Enter to return to main menu.", 0xf0);
 	if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
 	{
