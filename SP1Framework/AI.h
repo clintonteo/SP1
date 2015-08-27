@@ -4,6 +4,16 @@
 #include "Framework\console.h"
 #include "map.h"
 
-void mobmove(COORD charLocation, COORD &mob, double time, Console &console, PMAP map);
+struct mobData
+{
+	COORD MC;
+	COORD lastMC;
+	int xqueue;
+	int yqueue;
+	bool first;
+};
+
+void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, PMAP map, player user, bool blind, int range);
+void spawnmob(std::vector<mobData> &mob);
 
 #endif // _AI_H

@@ -34,6 +34,7 @@ bool init4 = 0;
 bool extime4 = 0;
 
 int range;
+bool blind = 0;
 bool lostlives = 0;
 
 double Endtime;
@@ -55,6 +56,9 @@ int count = 0;
 //Damage Trackers
 bool lavadamage = 0;
 bool trapdamage = 0;
+
+//Mob Storage [Vector]
+std::vector<mobData> allMobs;
 
 // Game specific variables here
 SGameChar g_sChar;
@@ -201,6 +205,8 @@ void update(double dt)
 				g_sChar.m_cLocation.X = 3;
 				g_sChar.m_cLocation.Y = 3;
 				reset();
+				spawnblock(blocks);
+				spawnmob(allMobs);
 				init1 = 1;
 			}
 			
@@ -208,16 +214,19 @@ void update(double dt)
 			{
 				range = 6;
 				user.timelimit = 180;
+				blind = 1;
 			}
 			if(user.difficulty == hard)
 			{
 				range = 5;
 				user.timelimit = 150;
+				blind = 1;
 			}
 			if(user.difficulty == insane)
 			{
 				range = 4;
 				user.timelimit = 120;
+				blind = 1;
 			}
 			user.start = 1;
 			gameplay(); // gameplay logic when we are in the game
@@ -240,20 +249,25 @@ void update(double dt)
 					if(user.difficulty == normal)
 					{
 						user.timelimit += 150;
+						blind = 1;
 					}
 					else if(user.difficulty == hard)
 					{
 						user.timelimit += 120;
+						blind = 1;
 					}
 					else if(user.difficulty == insane)
 					{
 						user.timelimit += 90;
+						blind = 1;
 					}
 					extime2 = 1;
 				}
 				g_sChar.m_cLocation.X = 46;
 				g_sChar.m_cLocation.Y = 3;
 				reset();
+				spawnblock(blocks);
+				spawnmob(allMobs);
 				init2 = 1;
 			}
 				gameplay();
@@ -276,20 +290,25 @@ void update(double dt)
 					if(user.difficulty == normal)
 					{
 						user.timelimit += 150;
+						blind = 1;
 					}
 					else if(user.difficulty == hard)
 					{
 						user.timelimit += 120;
+						blind = 1;
 					}
 					else if(user.difficulty == insane)
 					{
 						user.timelimit += 90;
+						blind = 1;
 					}
 					extime3 = 1;
 				}
 				g_sChar.m_cLocation.X = 3;
 				g_sChar.m_cLocation.Y = 3;
 				reset();
+				spawnblock(blocks);
+				spawnmob(allMobs);
 				init3 = 1;
 			}
 			gameplay();
@@ -311,20 +330,25 @@ void update(double dt)
 					if(user.difficulty == normal)
 					{
 						user.timelimit += 150;
+						blind = 1;
 					}
 					else if(user.difficulty == hard)
 					{
 						user.timelimit += 120;
+						blind = 1;
 					}
 					else if(user.difficulty == insane)
 					{
 						user.timelimit += 90;
+						blind = 1;
 					}
 					extime4 = 1;
 				}
 				g_sChar.m_cLocation.X = 45;
 				g_sChar.m_cLocation.Y = 18;
 				reset();
+				spawnblock(blocks);
+				spawnmob(allMobs);
 				init4 = 1;
 			}
 			gameplay();
@@ -886,24 +910,40 @@ void renderGameover()  // renders the splash screen
 void renderStage1()
 {
 	MapCollision = load_map("stage1.txt");
-	createMap1(g_sChar.m_cLocation, 1, range, user, g_Console);
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage1.txt");
+	for(unsigned int i = 0; i < allMobs.size(); ++i)
+	{
+		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
+	}
 }
 void renderStage2()
 {
 	MapCollision = load_map("stage2.txt");
-	createMap2(g_sChar.m_cLocation, 1, range, user, g_Console);
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage2.txt");
 	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+	for(unsigned int i = 0; i < allMobs.size(); ++i)
+	{
+		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
+	}
 }
 void renderStage3()
 {
 	MapCollision = load_map("stage3.txt");
-	createMap3(g_sChar.m_cLocation, 1, range, user, g_Console);
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage3.txt");
+	for(unsigned int i = 0; i < allMobs.size(); ++i)
+	{
+		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
+	}
 }
 void renderStage4()
 {
 	MapCollision = load_map("stage4.txt");
-	createMap4(g_sChar.m_cLocation, 1, range, user, g_Console);
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage4.txt");
 	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+	for(unsigned int i = 0; i < allMobs.size(); ++i)
+	{
+		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
+	}
 }
 void renderGame()
 {
