@@ -47,7 +47,8 @@ void background( Console & g_Console );
 void readLog ( Console & g_Console );
 void writeLog ( string line , double time);
 void finalscore ( Console & g_Console , player & user , COORD c, double Endtime);
-void highscoreWrite ( player & user );
-void highscoreRead ( player & user , Console & g_Console );
+void highscoreWrite ( player & user , Console & g_Console , COORD c , string name);
+void highscoreRead ( player & user , Console & g_Console , COORD c );
+//void highscore ( vector<int>highscorePoints , vector<string>highscoreNames , player & user );
 
 #endif // _UI_H
