@@ -188,12 +188,17 @@ void exit()
 void help(Console &console)
 {
 	console.writeToBuffer(25, 5, "Tutorial", 0xf7);
-	console.writeToBuffer(25, 7, ": is empty space.", 0xf7);
-	console.writeToBuffer(25, 8, "; is a damaging trap.", 0xf7);
-	console.writeToBuffer(25, 9, "= is lava.", 0xf7);
-	console.writeToBuffer(25, 10, "/ is lever to open XYZ walls.", 0xf7);
-	console.writeToBuffer(25, 11, "0 is a pitfall trap.", 0xf7);
-	console.writeToBuffer(25, 18, "Press enter to return to main menu.", 0xf7);
+	console.writeToBuffer(25, 7, "Arrow keys to move.", 0xf7);
+	console.writeToBuffer(25, 8, "Z to select item.", 0xf7);
+	console.writeToBuffer(25, 9, "Space to use item.", 0xf7);
+	console.writeToBuffer(25, 10, ": is empty space.", 0xf7);
+	console.writeToBuffer(25, 11, "; is a damaging trap.", 0xf7);
+	console.writeToBuffer(25, 12, "= is lava.", 0xf7);
+	console.writeToBuffer(25, 13, "/ is lever to open XYZ walls.", 0xf7);
+	console.writeToBuffer(25, 14, "0 is a pitfall trap.", 0xf7);
+	console.writeToBuffer(25, 15, "$ is a treasure.", 0xf7);
+	console.writeToBuffer(25, 16, "# to escape.", 0xf7);
+	console.writeToBuffer(25, 18, "Press Enter to return to main menu.", 0xf7);
 	if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
 	{
 		stop = g_dElapsedTime + 0.2;
