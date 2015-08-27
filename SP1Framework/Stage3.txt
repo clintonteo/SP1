@@ -16,7 +16,7 @@ W     WW        WW    WWWWW   D         WDDDDDD  W
 W                     WWWWW       E     W   DDDD W
 W          E          WWWWW          D  W        W
 W    DWW        WW  D WWWWW    WWWWWWWWWWDDD  DDDW
-W  F  WW        WW    WWWWW H    DDD     DDDD  DDW
+W D   WW        WW    WWWWW H    DDD     DDDD  DDW
 WT     P             3WWWWW          DDD       DDW
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
