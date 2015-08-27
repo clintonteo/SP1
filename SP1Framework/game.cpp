@@ -45,6 +45,7 @@ double invisExp = 0;
 const int normal = 0;
 const int hard = 1;
 const int insane = 2;
+const int ez = 3;
 
 //Last known Coordinates
 int lastX = 0;
@@ -206,7 +207,8 @@ void update(double dt)
 				g_sChar.m_cLocation.Y = 3;
 				reset();
 				spawnblock(blocks);
-				spawnmob(allMobs);
+				allMobs.clear();
+				//spawnmob(allMobs);
 				init1 = 1;
 			}
 			
@@ -227,6 +229,10 @@ void update(double dt)
 				range = 4;
 				user.timelimit = 120;
 				blind = 1;
+			}
+			if(user.difficulty == ez)
+			{
+				user.timelimit = 180;
 			}
 			user.start = 1;
 			gameplay(); // gameplay logic when we are in the game
@@ -260,6 +266,10 @@ void update(double dt)
 					{
 						user.timelimit += 90;
 						blind = 1;
+					}
+					else if(user.difficulty == ez)
+					{
+						user.timelimit += 150;
 					}
 					extime2 = 1;
 				}
@@ -302,6 +312,10 @@ void update(double dt)
 						user.timelimit += 90;
 						blind = 1;
 					}
+					else if(user.difficulty == ez)
+					{
+						user.timelimit += 150;
+					}
 					extime3 = 1;
 				}
 				g_sChar.m_cLocation.X = 3;
@@ -341,6 +355,10 @@ void update(double dt)
 					{
 						user.timelimit += 90;
 						blind = 1;
+					}
+					if(user.difficulty == ez)
+					{
+						user.timelimit += 150;
 					}
 					extime4 = 1;
 				}
@@ -383,6 +401,7 @@ void reset()
 	user.invistaken = 0;
 	user.TTaken = 0;
 	user.MedsTaken = 0;
+	allMobs.clear();
 	spawnblock(blocks);
 }
 
@@ -920,7 +939,7 @@ void renderStage2()
 {
 	MapCollision = load_map("stage2.txt");
 	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage2.txt");
-	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console, blind);
 	for(unsigned int i = 0; i < allMobs.size(); ++i)
 	{
 		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
@@ -939,7 +958,7 @@ void renderStage4()
 {
 	MapCollision = load_map("stage4.txt");
 	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage4.txt");
-	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console);
+	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console, blind);
 	for(unsigned int i = 0; i < allMobs.size(); ++i)
 	{
 		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);

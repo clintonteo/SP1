@@ -27,6 +27,7 @@ const char crack = 178;
 const char bomb = 229;
 const char medkit = 43;
 const char pit = 48;
+const char invispot = 154;
 char arr[12][12];
 
 void createMap(COORD charLocation, bool blind, int range, player &user, Console &g_Console, char* mapname)
@@ -110,6 +111,10 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 					//colour(0xf8);
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, switches, 0xf8);
 				}
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'C' && user.Cexplode == 0)
+				{
+					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, crack, 0xfc);
+				}
 				else if(line[charLocation.X-temprange+Xoffset+j] == '=')
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, lava, 0xfc);
@@ -136,6 +141,10 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 				}else if (line[charLocation.X-temprange+Xoffset+j] == 'J')
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, bomb, 0xf1);
+				}
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'L' && user.invispot == 0 && user.invistaken == 0)
+				{
+					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, invispot, 0xf2);
 				}
 				else{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, grass, 0xf1);
@@ -188,6 +197,10 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 					//colour(0xf1);
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, Z, 0xf1);
 				}
+				else if(line[charLocation.X+k] == 'C' && user.Cexplode == 0)
+				{
+					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, crack, 0xfc);
+				}
 				else if(line[charLocation.X+k] == '=')
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, lava, 0xfc);
@@ -214,6 +227,10 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 				}else if (line[charLocation.X+k] == 'J')
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, bomb, 0xf1);
+				}
+				else if (line[charLocation.X+k] == 'L' && user.invispot == 0 && user.invistaken == 0)
+				{
+					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, invispot, 0xf2);
 				}
 				else if(charLocation.X+k < 51){
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i,grass, 0xf1);
@@ -308,6 +325,10 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 				{
 					g_Console.writeToBuffer(j, i, boost, 0xf2);
 				}
+				else if (MapRender->data[i][j] == 'L' && user.invispot == 0 && user.invistaken == 0)
+				{
+					g_Console.writeToBuffer(j, i, invispot, 0xf2);
+				}
 				else if (MapRender->data[i][j] == 'M' && user.MedsTaken == 0)
 				{
 					g_Console.writeToBuffer(j, i, medkit, 0xf2);
@@ -323,10 +344,16 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 		}
 	}
 }
-void blockp(COORD &charLocation, COORD &blocks, COORD &lastknown, int range, Console &g_Console)
+void blockp(COORD &charLocation, COORD &blocks, COORD &lastknown, int range, Console &g_Console, bool blind)
 {
 	//COUT BLOCK IF IN RANGE
-	if((charLocation.X - range-1 < blocks.X && charLocation.X + range+1 > blocks.X) && (charLocation.Y - range-1 < blocks.Y && charLocation.Y + range+1 > blocks.Y))
+	if(blind == 1)
+	{
+		if((charLocation.X - range-1 < blocks.X && charLocation.X + range+1 > blocks.X) && (charLocation.Y - range-1 < blocks.Y && charLocation.Y + range+1 > blocks.Y))
+		{
+			g_Console.writeToBuffer(blocks.X, blocks.Y, pblock, 0xf1);
+		}
+	}else
 	{
 		g_Console.writeToBuffer(blocks.X, blocks.Y, pblock, 0xf1);
 	}

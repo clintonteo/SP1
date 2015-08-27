@@ -15,6 +15,7 @@ double stop;
 const int normal = 0;
 const int hard = 1;
 const int insane = 2;
+const int ez = 3;
 
 void mainMenu(Console &console, player&user)
 {
@@ -89,7 +90,7 @@ void mainMenu(Console &console, player&user)
 
 void options(Console &console, player&user)
 {
-	string Options[8] = {"normal","", "hard","", "insane","", "back",""};
+	string Options[8] = {"normal","", "hard","", "insane","", "Scrub",""};
 
 	console.writeToBuffer(30, 5, "Difficulty", 0xf7);
 
@@ -154,6 +155,7 @@ void options(Console &console, player&user)
 				break;
 			case 6:
 				{
+					user.difficulty = ez;
 					g_eGameState = S_MENU;
 				}
 			case 7:
