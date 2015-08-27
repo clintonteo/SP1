@@ -83,18 +83,18 @@ void init( void )
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 25, L"Consolas");
-	user.difficulty = normal;
+	//user.difficulty = normal;
 	if(user.difficulty == normal)
 	{
 		range = 6;
 		user.timelimit = 180;
 	}
-	else if(user.difficulty == hard)
+	if(user.difficulty == hard)
 	{
 		range = 5;
 		user.timelimit = 150;
 	}
-	else if(user.difficulty == insane)
+	if(user.difficulty == insane)
 	{
 		range = 4;
 		user.timelimit = 120;
@@ -187,7 +187,7 @@ void update(double dt)
     {
 		case S_MENU: mainMenu(g_Console);
 			break;
-		case S_OPTIONS: options(g_Console);
+		case S_OPTIONS: options(g_Console, user);
 			break;
 		case S_HELP: help(g_Console);
 			break;
@@ -202,6 +202,23 @@ void update(double dt)
 				reset();
 				init1 = 1;
 			}
+			
+			if(user.difficulty == normal)
+			{
+				range = 6;
+				user.timelimit = 180;
+			}
+			if(user.difficulty == hard)
+			{
+				range = 5;
+				user.timelimit = 150;
+			}
+			if(user.difficulty == insane)
+			{
+				range = 4;
+				user.timelimit = 120;
+			}
+
 			gameplay(); // gameplay logic when we are in the game
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 			{
@@ -359,7 +376,7 @@ void render()
     {
 		case S_HELP: help(g_Console);
 			break;
-		case S_OPTIONS: options(g_Console);
+		case S_OPTIONS: options(g_Console, user);
 			break;
 		case S_MENU: mainMenu(g_Console);
 			break;

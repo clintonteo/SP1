@@ -87,7 +87,7 @@ void renderToScreen();      // dump the contents of the buffer to the screen, on
 
 void mainMenu(Console&Console);
 void exit();
-void options(Console&Console);
+void options(Console&Console, player&user);
 void help(Console&Console);
 
 #endif // _GAME_H
