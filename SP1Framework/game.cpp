@@ -131,6 +131,7 @@ void init( void )
     log.open("log.txt", std::fstream::trunc);
     log.close();
 	//user.timelimit = 99999;
+    user.gameover = 0;
 }
 //--------------------------------------------------------------
 // Purpose  : Reset before exiting the program
@@ -383,6 +384,7 @@ void update(double dt)
         case S_NAME:
             if (g_abKeyPressed[K_ENTER])
             {
+                user.gameover = 1;
                 g_eGameState = S_GAMEOVER;
             }
             break;
@@ -856,6 +858,12 @@ void moveCharacter()
 			writeLog("You are invis!", g_dElapsedTime);
 		}
 	}
+
+    //Runs Highscore
+    /*if (user.gameover == 1)
+    {
+        highscoreWrite( user , g_Console , name);
+    }*/
 }
 void processUserInput()
 {
@@ -939,17 +947,17 @@ void renderGameover()  // renders the splash screen
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Your points are: ", 0xf9);
     c.X += 16;
-    finalscore( g_Console , user , c , Endtime); //Final Score
+    finalscore( g_Console , user , Endtime , c); //Final Score
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     
     /*c.X = 30;
     c.Y = 13;
     g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);*/
-    cin >> name;
+    //cin >> name;
 
-    highscoreWrite( user , g_Console , c , name);
-    highscoreRead ( user , g_Console , c );
+    //highscoreWrite( user , g_Console , c , name);
+    highscoreRead ( user , g_Console );
 
     //highscore( highscorePoints , highscoreNames , user );
 }
@@ -1142,9 +1150,14 @@ void renderGame()
 	{
 		colour(BACKGROUND_RED);
 		//g_Console.writeToBuffer(51, 13, "YOU DIED", 0xf1);
+        user.gameover = 1;
         writeLog("You died!", g_dElapsedTime);
         Endtime = g_dElapsedTime;
         g_eGameState = S_NAME;
+        
+        calculateFinal ( user , Endtime );
+        highscoreWrite( user , g_Console , name);
+    
 		Beep(2000, 1000);
 	} 
 
