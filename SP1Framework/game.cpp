@@ -27,8 +27,11 @@ PMAP MapCollision;
 // stage clear checker
 bool init1 = 0;
 bool init2 = 0;
+bool extime2 = 0;
 bool init3 = 0;
+bool extime3 = 0;
 bool init4 = 0;
+bool extime4 = 0;
 
 int range;
 bool lostlives = 0;
@@ -80,7 +83,7 @@ void init( void )
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 25, L"Consolas");
-	user.difficulty = normal;
+	user.difficulty = insane;
 	if(user.difficulty == normal)
 	{
 		range = 6;
@@ -111,7 +114,6 @@ void init( void )
 	user.invis = 0;
 	user.invispot = 0;
 	user.MedsTaken = 0;
-	user.timelimit = 180;
     user.stage1 = 0;
     user.stage2 = 0;
     user.stage3 = 0;
@@ -188,8 +190,8 @@ void update(double dt)
         case S_GAME1:
 			if(init1 == 0)
 			{
-				g_sChar.m_cLocation.X = 1;
-				g_sChar.m_cLocation.Y = 1;
+				g_sChar.m_cLocation.X = 3;
+				g_sChar.m_cLocation.Y = 3;
 				reset();
                 /*user.boost = 0;
                 user.inventoryitems.clear();
@@ -225,21 +227,24 @@ void update(double dt)
         case S_GAME2:
 			if(init2 == 0)
 			{
-				if(user.difficulty == normal)
+				if(extime2 == 0)
 				{
-					user.timelimit += 150;
-				}
-				else if(user.difficulty == hard)
-				{
-					user.timelimit += 120;
-				}
-				else if(user.difficulty == insane)
-				{
-					user.timelimit += 90;
+					if(user.difficulty == normal)
+					{
+						user.timelimit += 150;
+					}
+					else if(user.difficulty == hard)
+					{
+						user.timelimit += 120;
+					}
+					else if(user.difficulty == insane)
+					{
+						user.timelimit += 90;
+					}
+					extime2 = 1;
 				}
 				g_sChar.m_cLocation.X = 46;
 				g_sChar.m_cLocation.Y = 3;
-				spawnblock(blocks);
 				reset();
 				//user.boost = 0;
 				//user.switch1 = 0;
@@ -272,17 +277,21 @@ void update(double dt)
 			case S_GAME3:
 			if(init3 == 0)
 			{
-				if(user.difficulty == normal)
+				if(extime3 == 0)
 				{
-					user.timelimit += 150;
-				}
-				else if(user.difficulty == hard)
-				{
-					user.timelimit += 120;
-				}
-				else if(user.difficulty == insane)
-				{
-					user.timelimit += 90;
+					if(user.difficulty == normal)
+					{
+						user.timelimit += 150;
+					}
+					else if(user.difficulty == hard)
+					{
+						user.timelimit += 120;
+					}
+					else if(user.difficulty == insane)
+					{
+						user.timelimit += 90;
+					}
+					extime3 = 1;
 				}
 				g_sChar.m_cLocation.X = 3;
 				g_sChar.m_cLocation.Y = 3;
@@ -318,17 +327,21 @@ void update(double dt)
 			case S_GAME4:
 			if(init4 == 0)
 			{
-				if(user.difficulty == normal)
+				if(extime4 == 0)
 				{
-					user.timelimit += 150;
-				}
-				else if(user.difficulty == hard)
-				{
-					user.timelimit += 120;
-				}
-				else if(user.difficulty == insane)
-				{
-					user.timelimit += 90;
+					if(user.difficulty == normal)
+					{
+						user.timelimit += 150;
+					}
+					else if(user.difficulty == hard)
+					{
+						user.timelimit += 120;
+					}
+					else if(user.difficulty == insane)
+					{
+						user.timelimit += 90;
+					}
+					extime4 = 1;
 				}
 				g_sChar.m_cLocation.X = 45;
 				g_sChar.m_cLocation.Y = 18;
@@ -354,8 +367,7 @@ void update(double dt)
             if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 			{
 				Endtime = g_dElapsedTime;
-                user.stage3 = 1;
-				//g_eGameState = S_SPLASHSCREEN4;
+                user.stage4 = 1;
 			}
 			break;
         case S_GAMEOVER:
@@ -383,6 +395,7 @@ void reset()
 	user.invistaken = 0;
 	user.TTaken = 0;
 	user.MedsTaken = 0;
+	spawnblock(blocks);
 }
 
 //--------------------------------------------------------------
