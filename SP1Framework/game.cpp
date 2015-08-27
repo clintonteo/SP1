@@ -14,6 +14,7 @@
 #include "AI.h"
 using std::cout;
 using std::endl;
+using std::cin;
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -53,6 +54,7 @@ int lastY = 0;
 
 player user;
 int count = 0;
+string name;
 
 //Damage Trackers
 bool lavadamage = 0;
@@ -166,7 +168,7 @@ void getInput( void )
     g_abKeyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key // Select items
     g_abKeyPressed[K_USE] = isKeyPressed(VK_SPACE); // Spacebar // Use items
 	g_abKeyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
-	g_abKeyPressed[K_ENTER] = isKeyPressed(VK_RETURN);
+    g_abKeyPressed[K_ENTER] = isKeyPressed(VK_RETURN); // Enter Key
 }
 
 //--------------------------------------------------------------
@@ -374,9 +376,22 @@ void update(double dt)
 			{
 				Endtime = g_dElapsedTime;
                 user.stage4 = 1;
+				g_eGameState = S_NAME;
 			}
 			break;
+
+        case S_NAME:
+            if (g_abKeyPressed[K_ENTER])
+            {
+                g_eGameState = S_GAMEOVER;
+            }
+            break;
+
         case S_GAMEOVER:
+            if (g_abKeyPressed[K_ENTER])
+            {
+                g_bQuitGame = true;
+            }
             break;
     }
 }
@@ -452,6 +467,11 @@ void render()
 			renderGame();
 			g_Console.writeToBuffer(51, 0, "STAGE 4", 10);
 			break;
+
+        case S_NAME:
+            renderEnterName();
+            break;
+
         case S_GAMEOVER:
             renderGameover();
 			break;
@@ -741,6 +761,7 @@ void moveCharacter()
         {
             init2 = 0;
         }
+
 		else if (g_eGameState == S_GAME3)
         {
             init3 = 0;
@@ -921,9 +942,28 @@ void renderGameover()  // renders the splash screen
     finalscore( g_Console , user , c , Endtime); //Final Score
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
+    
+    /*c.X = 30;
+    c.Y = 13;
+    g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);*/
+    cin >> name;
+
+    highscoreWrite( user , g_Console , c , name);
+    highscoreRead ( user , g_Console , c );
+
+    //highscore( highscorePoints , highscoreNames , user );
+}
+
+void renderEnterName()
+{
+    COORD c = g_Console.getConsoleSize();
+    c.X = 30;
+    c.Y = 13;
     g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);
-    highscoreWrite( user );
-    highscoreRead ( user , g_Console );
+    /*if (g_abKeyPressed[K_SELECT])
+    {
+        name += "K";
+    }*/
 }
 
 void renderStage1()
@@ -1104,7 +1144,7 @@ void renderGame()
 		//g_Console.writeToBuffer(51, 13, "YOU DIED", 0xf1);
         writeLog("You died!", g_dElapsedTime);
         Endtime = g_dElapsedTime;
-        g_eGameState = S_GAMEOVER;
+        g_eGameState = S_NAME;
 		Beep(2000, 1000);
 	} 
 

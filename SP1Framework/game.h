@@ -20,7 +20,7 @@ enum EKEYS
 	K_USE,
     K_SPACE,
 	K_RESET,
-	K_ENTER,
+    K_ENTER,
     K_COUNT
 };
 
@@ -35,6 +35,7 @@ enum EGAMESTATES
 	S_GAME3,
 	S_SPLASHSCREEN4,
 	S_GAME4,
+    S_NAME,
     S_GAMEOVER,
 	S_MENU,
 	S_OPTIONS,
@@ -72,6 +73,7 @@ void renderSplashStage2();  // renders the splash screen
 void renderSplashStage3();
 void renderSplashStage4();
 
+void renderEnterName();
 void renderGameover();
 void renderGame();// renders the game stuff
 
