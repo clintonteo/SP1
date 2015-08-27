@@ -24,19 +24,19 @@ void mainMenu(Console &console, player&user)
 	console.writeToBuffer(25, 5, "Tower Of PuzzMaz", 0xf7);
 	if(user.difficulty == 0)
 	{
-		console.writeToBuffer(25, 6, "Selected difficulty is Normal.", 0xf7);
+		console.writeToBuffer(23, 8, "Selected difficulty is Normal.", 0xf7);
 	}
 	else if(user.difficulty == 1)
 	{
-		console.writeToBuffer(25, 6, "Selected difficulty is Hard.", 0xf7);
+		console.writeToBuffer(25, 8, "Selected difficulty is Hard.", 0xf7);
 	}
 	else if(user.difficulty == 2)
 	{
-		console.writeToBuffer(25, 6, "Selected difficulty is INSANITY!!!.", 0xf7);
+		console.writeToBuffer(25, 8, "Selected difficulty is INSANITY!!!.", 0xf7);
 	}
 	else if(user.difficulty == 3)
 	{
-		console.writeToBuffer(25, 6, "Selected difficulty is Scrub. Noob.", 0xf7);
+		console.writeToBuffer(25, 8, "Selected difficulty is Scrub. Noob.", 0xf7);
 	}
 	for (int i = 0; i < 8; ++i)
 	{
@@ -108,7 +108,8 @@ void options(Console &console, player&user)
 	string Options[8] = {"Scrub","","Normal","", "Hard","", "Insane","" };
 
 	console.writeToBuffer(30, 5, "Difficulty", 0xf7);
-
+	console.writeToBuffer(15, 18, "The higher the difficulty, the smaller your vision range is ", 0xf7);
+	console.writeToBuffer(15, 19, "and the less time is provided to complete the stage.", 0xf7);
 	for (int i = 0; i < 8; ++i)
 	{
 		if (i == opPointer)
@@ -186,5 +187,16 @@ void exit()
 
 void help(Console &console)
 {
-	console.writeToBuffer(30, 10, "test", 0xf7);
+	console.writeToBuffer(25, 5, "Tutorial", 0xf7);
+	console.writeToBuffer(25, 7, ": is empty space.", 0xf7);
+	console.writeToBuffer(25, 8, "; is a damaging trap.", 0xf7);
+	console.writeToBuffer(25, 9, "= is lava.", 0xf7);
+	console.writeToBuffer(25, 10, "/ is lever to open XYZ walls.", 0xf7);
+	console.writeToBuffer(25, 11, "0 is a pitfall trap.", 0xf7);
+	console.writeToBuffer(25, 18, "Press enter to return to main menu.", 0xf7);
+	if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
+	{
+		stop = g_dElapsedTime + 0.2;
+		g_eGameState = S_MENU;
+	}
 }
