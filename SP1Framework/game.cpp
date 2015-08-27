@@ -83,7 +83,7 @@ void init( void )
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 25, L"Consolas");
-	user.difficulty = insane;
+	user.difficulty = normal;
 	if(user.difficulty == normal)
 	{
 		range = 6;
@@ -615,7 +615,7 @@ void moveCharacter()
     }
 
     // SELECTON
-    if ((g_abKeyPressed[K_SELECT]) && (user.inventory[0] == 't') && (user.select < user.inventoryitems.size()))
+    if ((g_abKeyPressed[K_SELECT])/* && (user.inventory[0] == 't') */&& (user.select < user.inventoryitems.size()))
     {
         user.select += 1;
         if (user.select >= user.inventoryitems.size()/*+1*/)
@@ -640,7 +640,7 @@ void moveCharacter()
         ++count;
 		//user.bomb = 1;
     }
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && user.invistaken == 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && user.invistaken == 0) //Invis
 	{
 		user.inventory[count] = 't';
         user.inventoryitems.push_back("Invis Pot");
@@ -722,6 +722,7 @@ void moveCharacter()
 			if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 			{
 				item2(user);
+				user.inventory[user.select] = 'f';
 			}
 		}
 		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'C')
@@ -729,6 +730,7 @@ void moveCharacter()
 			if(g_abKeyPressed[K_LEFT] && g_abKeyPressed[K_USE])
 			{
 				item2(user);
+				user.inventory[user.select] = 'f';
 			}
 		}
 		if(MapCollision->data[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X] == 'C')
@@ -736,6 +738,7 @@ void moveCharacter()
 			if(g_abKeyPressed[K_DOWN] && g_abKeyPressed[K_USE])
 			{
 				item2(user);
+				user.inventory[user.select] = 'f';
 			}
 		}
 		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'C')
@@ -743,16 +746,18 @@ void moveCharacter()
 			if(g_abKeyPressed[K_RIGHT] && g_abKeyPressed[K_USE])
 			{
 				item2(user);
+				user.inventory[user.select] = 'f';
 			}
 		}
 	}
 	
 	//Invis
-	if(user.invispot == 1)
+	if(user.invispot == 1 && user.inventoryitems[user.select] == "Invis Pot")
 	{
 		if (g_abKeyPressed[K_USE])
 		{
 			item3(user,g_sChar, g_dElapsedTime, invisExp);
+			user.inventory[user.select] = 'f';
 			writeLog("You are invis!", g_dElapsedTime);
 		}
 	}

@@ -186,15 +186,15 @@ void finalscore( Console & g_Console , player & user , COORD c , double Endtime)
 //Selector
 void selector( player & user , Console & g_Console )
 {
-    g_Console.writeToBuffer(59, 12 , "Item selected: ", 10);
+    g_Console.writeToBuffer(59, 13 , "Item selected: ", 10);
 
     if (user.inventory[user.select] == 't')
     {
-        g_Console.writeToBuffer(59, 13 , user.inventoryitems[user.select] , 10);
+        g_Console.writeToBuffer(59, 14 , user.inventoryitems[user.select] , 10);
     }
     else
     {
-        g_Console.writeToBuffer(59, 13 , "No item" , 10);
+        g_Console.writeToBuffer(59, 14 , "No item" , 10);
     }
 }
 
