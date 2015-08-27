@@ -21,8 +21,23 @@ void mainMenu(Console &console, player&user)
 {
 	string Menu[8] = {"Play","", "Difficulty","", "Tutorial","", "Exit",""};
 
-	console.writeToBuffer(30, 5, "Tower Of PuzzMaz", 0xf7);
-
+	console.writeToBuffer(25, 5, "Tower Of PuzzMaz", 0xf7);
+	if(user.difficulty == 0)
+	{
+		console.writeToBuffer(25, 6, "Selected difficulty is Normal.", 0xf7);
+	}
+	else if(user.difficulty == 1)
+	{
+		console.writeToBuffer(25, 6, "Selected difficulty is Hard.", 0xf7);
+	}
+	else if(user.difficulty == 2)
+	{
+		console.writeToBuffer(25, 6, "Selected difficulty is INSANITY!!!.", 0xf7);
+	}
+	else if(user.difficulty == 3)
+	{
+		console.writeToBuffer(25, 6, "Selected difficulty is Scrub. Noob.", 0xf7);
+	}
 	for (int i = 0; i < 8; ++i)
 	{
 		if (i == pointer)
