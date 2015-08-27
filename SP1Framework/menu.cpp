@@ -21,32 +21,33 @@ void mainMenu(Console &console, player&user)
 {
 	string Menu[8] = {"Play","", "Difficulty","", "Tutorial","", "Exit",""};
 
-	console.writeToBuffer(25, 5, "Tower Of PuzzMaz", 0xf7);
+	console.writeToBuffer(25, 5, "Tower Of PuzzMaz", 0xfc);
 	if(user.difficulty == 0)
 	{
-		console.writeToBuffer(23, 8, "Selected difficulty is Normal.", 0xf7);
+		console.writeToBuffer(23, 8, "Selected difficulty is Normal.", 0xf0);
 	}
 	else if(user.difficulty == 1)
 	{
-		console.writeToBuffer(25, 8, "Selected difficulty is Hard.", 0xf7);
+		console.writeToBuffer(25, 8, "Selected difficulty is Hard.", 0xf0);
 	}
 	else if(user.difficulty == 2)
 	{
-		console.writeToBuffer(25, 8, "Selected difficulty is INSANITY!!!.", 0xf7);
+		console.writeToBuffer(25, 8, "Selected difficulty is INSANITY!!!.", 0xf0);
 	}
 	else if(user.difficulty == 3)
 	{
-		console.writeToBuffer(25, 8, "Selected difficulty is Scrub. Noob.", 0xf7);
+		console.writeToBuffer(25, 8, "Selected difficulty is Scrub. Noob.", 0xf0);
 	}
+	console.writeToBuffer(20, 18, "Arrow Keys to navigate, Enter to select", 0xf0);
 	for (int i = 0; i < 8; ++i)
 	{
 		if (i == pointer)
 		{
-			console.writeToBuffer(30,10+i, Menu[i], 0xfb);
+			console.writeToBuffer(30,10+i, Menu[i], 0xf1);
 		}
 		else
 		{
-			console.writeToBuffer(30, 10+i, Menu[i], 0xf7);
+			console.writeToBuffer(30, 10+i, Menu[i], 0xfd);
 		}
 	}
 	if (g_abKeyPressed[K_UP])
@@ -107,18 +108,18 @@ void options(Console &console, player&user)
 {
 	string Options[8] = {"Scrub","","Normal","", "Hard","", "Insane","" };
 
-	console.writeToBuffer(30, 5, "Difficulty", 0xf7);
-	console.writeToBuffer(15, 18, "The higher the difficulty, the smaller your vision range is ", 0xf7);
-	console.writeToBuffer(15, 19, "and the less time is provided to complete the stage.", 0xf7);
+	console.writeToBuffer(30, 5, "Difficulty", 0xfc);
+	console.writeToBuffer(15, 18, "The higher the difficulty, the smaller your vision range is ", 0xf0);
+	console.writeToBuffer(15, 19, "and the less time is provided to complete the stage.", 0xf0);
 	for (int i = 0; i < 8; ++i)
 	{
 		if (i == opPointer)
 		{
-			console.writeToBuffer(30,10+i, Options[i], 0xfb);
+			console.writeToBuffer(30,10+i, Options[i], 0xf1);
 		}
 		else
 		{
-			console.writeToBuffer(30, 10+i, Options[i], 0xf7);
+			console.writeToBuffer(30, 10+i, Options[i], 0xfd);
 		}
 	}
 
@@ -187,18 +188,19 @@ void exit()
 
 void help(Console &console)
 {
-	console.writeToBuffer(25, 5, "Tutorial", 0xf7);
-	console.writeToBuffer(25, 7, "Arrow keys to move.", 0xf7);
-	console.writeToBuffer(25, 8, "Z to select item.", 0xf7);
-	console.writeToBuffer(25, 9, "Space to use item.", 0xf7);
-	console.writeToBuffer(25, 10, ": is empty space.", 0xf7);
-	console.writeToBuffer(25, 11, "; is a damaging trap.", 0xf7);
-	console.writeToBuffer(25, 12, "= is lava.", 0xf7);
-	console.writeToBuffer(25, 13, "/ is lever to open XYZ walls.", 0xf7);
-	console.writeToBuffer(25, 14, "0 is a pitfall trap.", 0xf7);
-	console.writeToBuffer(25, 15, "$ is a treasure.", 0xf7);
-	console.writeToBuffer(25, 16, "# to escape.", 0xf7);
-	console.writeToBuffer(25, 18, "Press Enter to return to main menu.", 0xf7);
+	console.writeToBuffer(25, 5, "Tutorial", 0xfc);
+	console.writeToBuffer(25, 7, "Arrow keys to move.", 0xf0);
+	console.writeToBuffer(25, 8, "Z to select item.", 0xf0);
+	console.writeToBuffer(25, 9, "Space to use item.", 0xf0);
+	console.writeToBuffer(25, 10, ": is empty space.", 0xf0);
+	console.writeToBuffer(25, 11, "; is a damaging trap.", 0xf0);
+	console.writeToBuffer(25, 12, "= is lava.", 0xf0);
+	console.writeToBuffer(25, 13, "/ is lever to open XYZ walls.", 0xf0);
+	console.writeToBuffer(25, 14, "0 is a pitfall trap.", 0xf0);
+	console.writeToBuffer(25, 15, "$ is a treasure.", 0xf0);
+	console.writeToBuffer(25, 16, "M is a monster. Avoid him!.", 0xf0);
+	console.writeToBuffer(25, 17, "# to escape.", 0xf0);
+	console.writeToBuffer(25, 20, "Press Enter to return to main menu.", 0xf0);
 	if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
 	{
 		stop = g_dElapsedTime + 0.2;
