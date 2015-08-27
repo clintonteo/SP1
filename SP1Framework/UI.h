@@ -22,6 +22,7 @@ struct player
     int select;
 	bool boost;
 	bool bomb;
+	bool bombtaken;
 	bool Cexplode;
 	bool invispot;
 	bool invis;

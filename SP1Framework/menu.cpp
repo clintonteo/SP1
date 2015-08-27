@@ -43,11 +43,11 @@ void mainMenu(Console &console, player&user)
 	{
 		if (i == pointer)
 		{
-			console.writeToBuffer(30,10+i, Menu[i], 0xf1);
+			console.writeToBuffer(30,10+i, Menu[i], 10);
 		}
 		else
 		{
-			console.writeToBuffer(30, 10+i, Menu[i], 0xfd);
+			console.writeToBuffer(30, 10+i, Menu[i], 0xf9);
 		}
 	}
 	if (g_abKeyPressed[K_UP])
@@ -115,11 +115,11 @@ void options(Console &console, player&user)
 	{
 		if (i == opPointer)
 		{
-			console.writeToBuffer(30,10+i, Options[i], 0xf1);
+			console.writeToBuffer(30,10+i, Options[i], 10);
 		}
 		else
 		{
-			console.writeToBuffer(30, 10+i, Options[i], 0xfd);
+			console.writeToBuffer(30, 10+i, Options[i], 0xf9);
 		}
 	}
 

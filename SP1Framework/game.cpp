@@ -875,7 +875,7 @@ void renderSplashScreen()  // renders the splash screen
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
     c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "Tower Of Maz STAGE 1", 0xf3);
+    g_Console.writeToBuffer(c, "Tower Of Maz STAGE 1", 0xfc);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 20;
     g_Console.writeToBuffer(c, "Hint: You can use boost over lava!!", 0xf9);
@@ -1031,9 +1031,10 @@ void renderGame()
 	{
 		user.boost = 1;
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bomb == 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bombtaken == 0 && user.bomb == 0)
 	{
 		user.bomb = 1;
+		user.bombtaken = 1;
         writeLog("You got a bomb!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && user.invistaken == 0)
