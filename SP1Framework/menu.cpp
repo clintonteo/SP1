@@ -16,7 +16,7 @@ const int normal = 0;
 const int hard = 1;
 const int insane = 2;
 
-void mainMenu(Console &console)
+void mainMenu(Console &console, player&user)
 {
 	string Menu[8] = {"start game","", "difficulty","", "help","", "exit",""};
 

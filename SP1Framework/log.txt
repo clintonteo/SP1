@@ -1,0 +1,2 @@
+You have a minute left!@60.116
+You died!@120.016

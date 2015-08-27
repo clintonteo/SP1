@@ -8,6 +8,7 @@ using std::string;
 using std::vector;
 struct player
 {
+	bool start;
     int lives;
     int health;
     char inventory[6];

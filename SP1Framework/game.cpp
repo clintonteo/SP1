@@ -123,7 +123,7 @@ void init( void )
     std::ofstream log;
     log.open("log.txt", std::fstream::trunc);
     log.close();
-	user.timelimit = 99999;
+	//user.timelimit = 99999;
 }
 //--------------------------------------------------------------
 // Purpose  : Reset before exiting the program
@@ -186,7 +186,7 @@ void update(double dt)
 
     switch (g_eGameState)
     {
-		case S_MENU: mainMenu(g_Console);
+		case S_MENU: mainMenu(g_Console, user);
 			break;
 		case S_OPTIONS: options(g_Console, user);
 			break;
@@ -219,7 +219,7 @@ void update(double dt)
 				range = 4;
 				user.timelimit = 120;
 			}
-
+			user.start = 1;
 			gameplay(); // gameplay logic when we are in the game
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 			{
@@ -379,7 +379,7 @@ void render()
 			break;
 		case S_OPTIONS: options(g_Console, user);
 			break;
-		case S_MENU: mainMenu(g_Console);
+		case S_MENU: mainMenu(g_Console, user);
 			break;
         case S_SPLASHSCREEN: renderSplashScreen();
             break;
@@ -1035,7 +1035,7 @@ void renderGame()
 		lavadamage = 0;
 	}
 	// time limit
-	if (g_dElapsedTime >= user.timelimit)
+	if (g_dElapsedTime >= user.timelimit && user.start == 1)
 	{
 		user.lives -= user.lives;
 	}

@@ -85,7 +85,7 @@ void renderCharacter(player&user);     // renders the character into the buffer
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 
-void mainMenu(Console&Console);
+void mainMenu(Console&Console, player&user);
 void exit();
 void options(Console&Console, player&user);
 void help(Console&Console);
