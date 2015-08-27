@@ -20,6 +20,7 @@ enum EKEYS
 	K_USE,
     K_SPACE,
 	K_RESET,
+	K_ENTER,
     K_COUNT
 };
 
@@ -35,6 +36,9 @@ enum EGAMESTATES
 	S_SPLASHSCREEN4,
 	S_GAME4,
     S_GAMEOVER,
+	S_MENU,
+	S_OPTIONS,
+	S_HELP,
     S_COUNT
 };
 
@@ -80,5 +84,10 @@ void renderMap();           // renders the map to the buffer first
 void renderCharacter(player&user);     // renders the character into the buffer
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
+
+void mainMenu(Console&Console);
+void exit();
+void options(Console&Console);
+void help(Console&Console);
 
 #endif // _GAME_H

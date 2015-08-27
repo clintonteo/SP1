@@ -78,7 +78,7 @@ void init( void )
     g_dBounceTime = 0.0;
 
     // sets the initial state for the game
-    g_eGameState = S_SPLASHSCREEN;
+    g_eGameState = S_MENU;
 
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
@@ -160,6 +160,7 @@ void getInput( void )
     g_abKeyPressed[K_SELECT] = isKeyPressed(0x5A); // Z key // Select items
     g_abKeyPressed[K_USE] = isKeyPressed(VK_SPACE); // Spacebar // Use items
 	g_abKeyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
+	g_abKeyPressed[K_ENTER] = isKeyPressed(VK_RETURN);
 }
 
 //--------------------------------------------------------------
@@ -184,6 +185,12 @@ void update(double dt)
 
     switch (g_eGameState)
     {
+		case S_MENU: mainMenu(g_Console);
+			break;
+		case S_OPTIONS: options(g_Console);
+			break;
+		case S_HELP: help(g_Console);
+			break;
         case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
             break;
         
@@ -350,6 +357,12 @@ void render()
     clearScreen();      // clears the current screen and draw from scratch 
     switch (g_eGameState)
     {
+		case S_HELP: help(g_Console);
+			break;
+		case S_OPTIONS: options(g_Console);
+			break;
+		case S_MENU: mainMenu(g_Console);
+			break;
         case S_SPLASHSCREEN: renderSplashScreen();
             break;
         case S_GAME1: 

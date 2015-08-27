@@ -82,6 +82,7 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="rendering.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
