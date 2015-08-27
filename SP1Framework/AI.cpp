@@ -89,25 +89,20 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 			{
 				mobD.MC.X++;
 			}
-			writeLog("Right",1);
 		}else if(charLocation.X < mobD.MC.X)
 		{
 			if(map->data[mobD.MC.Y][mobD.MC.X-1] == ' ' || map->data[mobD.MC.Y][mobD.MC.X-1] == 'D')
 			{
 				mobD.MC.X--;
-				writeLog("Left",1);
 			}else if(map->data[mobD.MC.Y][mobD.MC.X-1] == 'X' && user.switch1 == 1)
 			{
 				mobD.MC.X--;
-				writeLog("Left",1);
 			}else if(map->data[mobD.MC.Y][mobD.MC.X-1] == 'Y' && user.switch2 == 1)
 			{
 				mobD.MC.X--;
-				writeLog("Left",1);
 			}else if(map->data[mobD.MC.Y][mobD.MC.X-1] == 'Z' && user.switch3 == 1)
 			{
 				mobD.MC.X--;
-				writeLog("Left",1);
 			}
 		}
 	}else if(Ydifference > Xdifference && mobD.xqueue == 0 && mobD.yqueue==0)
@@ -127,7 +122,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 			{
 				mobD.MC.Y++;
 			}
-			writeLog("Down",1);
 		}else if(charLocation.Y < mobD.MC.Y)
 		{
 			if(map->data[mobD.MC.Y-1][mobD.MC.X] == ' ' || map->data[mobD.MC.Y-1][mobD.MC.X] == 'D')
@@ -143,7 +137,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 			{
 				mobD.MC.Y--;
 			}
-			writeLog("Up",1);
 		}
 	}else if(Xdifference == Ydifference && mobD.xqueue == 0 && mobD.yqueue==0)
 	{
@@ -237,17 +230,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 				console.writeToBuffer(mobD.MC,"M",10);
 		}
 	}
-	x = mobD.MC.X + 48;
-	cord += x;
-	y = mobD.MC.Y +48;
-	cord += " ";
-	cord += y;
-	xlast = mobD.lastMC.X + 48;
-	ylast = mobD.lastMC.Y + 48;
-	cord += " Last: ";
-	cord += xlast;
-	cord += " ";
-	cord += ylast;
 	if(timer %  2 == 1)
 	{
 		mobD.lastMC = mobD.MC;
@@ -255,7 +237,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 	//if(time - static_cast<int>(time) < 0.4 && time - static_cast<int>(time) > 0.0 && mobD.MC.X == mobD.lastMC.X && mobD.MC.Y == mobD.lastMC.Y)
 	if(timer % 2 == 1 && mobD.MC.X == mobD.lastMC.X && mobD.lastMC.Y == mobD.MC.Y)
 	{
-	console.writeToBuffer(51, 18, "Im stuck, pls halp", 10);
 	for(int i = 0; i < 5; ++i)
 	{
 		if(mobD.xqueue != 0)
@@ -272,7 +253,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 						mobD.xqueue = i;
 						mobD.yqueue = -2;
 						mobD.first = moveX;
-						writeLog("LeftDown", 10);
 					break;
 				}else if(map->data[mobD.MC.Y - i][mobD.MC.X+1] == ' ' || map->data[mobD.MC.Y - i][mobD.MC.X+1] == 'D') //Check how much spaces to the top he must go to escape
 				{
@@ -397,7 +377,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 		//Stuck between two empty spots on the X axis
 		if((map->data[mobD.MC.Y][mobD.MC.X-1] == 'D' || map->data[mobD.MC.Y][mobD.MC.X-1] == ' ') && (map->data[mobD.MC.Y][mobD.MC.X+1] == ' ' || map->data[mobD.MC.Y][mobD.MC.X+1] == 'D'))
 		{
-			console.writeToBuffer(51, 19, "Im stuck, between two spaces", 10);
 			if(charLocation.X < mobD.MC.X && (map->data[mobD.MC.Y][mobD.MC.X - 1] == ' ' || map->data[mobD.MC.Y][mobD.MC.X - 1] == 'D')) //if player is on the left of the mob
 			{
 				int steps = 0;
@@ -406,7 +385,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 					steps++;
 					if(charLocation.X == mobD.MC.X - steps)
 					{
-						writeLog("I'm going right", 10);
 						break;
 					}
 				}
@@ -424,7 +402,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 					steps++;
 					if(charLocation.X == mobD.MC.X + steps)
 					{
-						writeLog("I'm going left", 10);
 						break;
 					}
 				}
@@ -438,7 +415,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 			}
 		}else if((map->data[mobD.MC.Y-1][mobD.MC.X] == 'D' || map->data[mobD.MC.Y-1][mobD.MC.X] == ' ') && (map->data[mobD.MC.Y+1][mobD.MC.X] == ' ' || map->data[mobD.MC.Y+1][mobD.MC.X] == 'D'))
 		{
-			console.writeToBuffer(51, 19, "Im stuck, between two Y spaces", 10);
 			if(charLocation.Y < mobD.MC.Y && (map->data[mobD.MC.Y - 1][mobD.MC.X] == ' ' || map->data[mobD.MC.Y - 1][mobD.MC.X] == 'D')) //if player is above the mob
 			{
 				int steps = 0;
@@ -447,7 +423,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 					steps++;
 					if(charLocation.Y == mobD.MC.Y -steps)
 					{
-						writeLog("I'm going up", 10);
 						break;
 					}
 				}
@@ -465,7 +440,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 					steps++;
 					if(charLocation.Y == mobD.MC.Y+steps)
 					{
-						writeLog("I'm going down", 10);
 						break;
 					}
 				}
@@ -477,14 +451,6 @@ void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, P
 				mobD.first = moveY;
 			}
 		}
-		if(mobD.MC.Y == charLocation.Y)
-		{
-			console.writeToBuffer(51, 9, "I am not chasing u :(", 10);
-		}
 	}
-	}else
-	{
-		console.writeToBuffer(51,18,cord, 10);
 	}
 }
-void spawnmob(std::vector<mobData> &mob);

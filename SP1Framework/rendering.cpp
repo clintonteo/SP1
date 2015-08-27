@@ -474,11 +474,6 @@ void spawnblock(COORD &blocks)
 			{
 				blocks.X = j;
 				blocks.Y = i;
-				string line;
-
-				std::ofstream logger;
-				logger.open("log.txt");
-				logger << "Block spawned at" << blocks.X << " and " << blocks.Y;
 			}
 		}
 	}
@@ -501,10 +496,6 @@ void spawnmob(std::vector<mobData> &allMobs)
 				tempmob.MC.X = j;
 				tempmob.MC.Y = i;
 				allMobs.push_back(tempmob);
-				string line;
-				std::ofstream logger;
-				logger.open("log.txt");
-				logger << "Mob spawned at " << tempmob.MC.X << " and " << tempmob.MC.Y;
 			}
 		}
 	}
