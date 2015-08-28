@@ -38,6 +38,7 @@ int range;
 bool blind = 0;
 bool lostlives = 0;
 
+double stop1 = 0;
 double Endtime;
 double boostcd = 0;
 double invisExp = 0;
@@ -669,7 +670,7 @@ void moveCharacter()
 			{
 				if(user.switch1 == 1)
 				{
-					        Beep(1440, 30);
+			        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
 				}
 			}
@@ -843,13 +844,14 @@ void moveCharacter()
     }
 
     // SELECTON
-    if ((g_abKeyPressed[K_SELECT])/* && (user.inventory[0] == 't') */&& (user.select < user.inventoryitems.size()))
+    if ((g_abKeyPressed[K_SELECT])/* && (user.inventory[0] == 't') */&& (user.select < user.inventoryitems.size()) && stop1 < g_dElapsedTime)
     {
         user.select += 1;
         if (user.select >= user.inventoryitems.size()/*+1*/)
         {
             user.select = 0;
         }
+		stop1 = g_dElapsedTime + .2;
     }
 
     // INVENTORY
@@ -1339,8 +1341,8 @@ void renderGame()
 	// medpack
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MedsTaken == 0 && user.health != 5)
 	{
-		if(user.difficulty == normal || user.difficulty == hard || user.difficulty == ez)
-		{
+		//if(user.difficulty == normal || user.difficulty == hard || user.difficulty == ez)
+		//{
 			if (user.health < 4)
 			{
 				user.health += 2;
@@ -1351,8 +1353,8 @@ void renderGame()
 				user.health += 1;
 				user.MedsTaken = 1;
 			}
-		}
-		else if(user.difficulty == insane)
+		//}
+	/*	else if(user.difficulty == insane)
 		{
 			if (user.health < 3)
 			{
@@ -1369,7 +1371,7 @@ void renderGame()
 				user.health += 1;
 				user.MedsTaken = 1;
 			}
-		}
+		}*/
         writeLog("You have been healed!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0 && trapdamage == 0)
@@ -1399,17 +1401,17 @@ void renderGame()
 			init4 = 0;
 			init3 = 0;
 		}
-		else if(init3 == 1)
+		if(init3 == 1)
 		{
 			init3 = 0;
 			init2 = 0;
 		}
-		else if(init2 == 1)
+		if(init2 == 1)
 		{
 			init2 = 0;
 			init1 = 0;
 		}
-		g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 2);
+		g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 3);
 	}
     if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0)
 	{
