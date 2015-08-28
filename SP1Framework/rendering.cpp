@@ -27,7 +27,7 @@ const char crack = 178;
 const char bomb = 229;
 const char medkit = 43;
 const char pit = 48;
-const char invispot = 154;
+const char invispot = 147;
 char arr[12][12];
 
 void createMap(COORD charLocation, bool blind, int range, player &user, Console &g_Console, char* mapname)

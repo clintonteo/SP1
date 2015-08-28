@@ -67,6 +67,7 @@ enum EGAMESTATES
     S_MENU,
 	S_OPTIONS,
 	S_HELP,
+	S_HIGHSCORE,
     S_SPLASHSCREEN,
     S_GAME1,
 	S_SPLASHSCREEN2,
@@ -128,6 +129,7 @@ void mainMenu(Console&Console, player&user);
 void exit();
 void options(Console&Console, player&user);
 void help(Console&Console);
+void highscore(Console&Console);
 
 void EnterName();
 

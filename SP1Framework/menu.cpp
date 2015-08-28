@@ -38,8 +38,7 @@ void mainMenu(Console &console, player&user)
         title.close();
     }
 
-
-	string Menu[8] = {"Play", "Difficulty", "Tutorial", "Exit"};
+	string Menu[5] = {"Play", "Difficulty", "Tutorial", "Highscore", "Exit"};
 
 	//console.writeToBuffer(25, 5, "Tower Of PuzzMaz", 0xfc);
 	if(user.difficulty == 0)
@@ -76,14 +75,14 @@ void mainMenu(Console &console, player&user)
 		menuPointer -= 1;
 		if (menuPointer == -1)
 		{
-			menuPointer = 3;
+			menuPointer = 4;
 		}
 	}
 	else if (g_abKeyPressed[K_DOWN] && g_dElapsedTime > stop)
 	{
 		stop = g_dElapsedTime + .2;
 		menuPointer += 1;
-		if (menuPointer == 4)
+		if (menuPointer == 5)
 		{
 			menuPointer = 0;
 		}
@@ -110,6 +109,11 @@ void mainMenu(Console &console, player&user)
 				}
 				break;
 			case 3:
+				{
+					g_eGameState = S_HIGHSCORE;
+				}
+				break;
+			case 4:
 				{
 					exit();
 				}

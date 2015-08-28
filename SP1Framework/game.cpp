@@ -312,6 +312,8 @@ void update(double dt)
 			break;
 		case S_HELP: help(g_Console);
 			break;
+		case S_HIGHSCORE: highscoreMenu( g_Console, user);
+			break;
         case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
             break;
         
@@ -564,6 +566,8 @@ void render()
 		case S_OPTIONS: options(g_Console, user);
 			break;
 		case S_MENU: mainMenu(g_Console, user);
+			break;
+		case S_HIGHSCORE: highscoreMenu( g_Console, user);
 			break;
         case S_SPLASHSCREEN: renderSplashScreen();
             break;
