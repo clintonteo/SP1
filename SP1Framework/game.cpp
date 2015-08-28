@@ -1,4 +1,4 @@
-// This is the main file for the game logic and function
+ï»¿// This is the main file for the game logic and function
 //
 //
 #include "item.h"
@@ -1485,7 +1485,7 @@ void renderMap()
         c.X = 5 * i;
         c.Y = i + 1;
         colour(colors[i]);
-        g_Console.writeToBuffer(c, " °±²Û", colors[i]);
+        g_Console.writeToBuffer(c, " ï¿½ï¿½ï¿½ï¿½", colors[i]);
     }
 }
 
