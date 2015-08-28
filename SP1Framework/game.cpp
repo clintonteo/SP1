@@ -700,6 +700,7 @@ void moveCharacter()
 				        Beep(1440, 30);
 				g_sChar.m_cLocation.Y--;
 			}
+			g_dBounceTime = g_dElapsedTime + 0.2;
 		}		
     }
     if (g_abKeyPressed[K_LEFT])
@@ -743,6 +744,7 @@ void moveCharacter()
 				        Beep(1440, 30);
 				g_sChar.m_cLocation.X--;
 			}
+			g_dBounceTime = g_dElapsedTime + 0.2;
 		}
     }
 	if (g_abKeyPressed[K_DOWN])
@@ -785,8 +787,8 @@ void moveCharacter()
 				        Beep(1440, 30);
 				g_sChar.m_cLocation.Y++;
 			}
+			g_dBounceTime = g_dElapsedTime + 0.2;
 		}
-
 	}
     if (g_abKeyPressed[K_RIGHT])
     {
@@ -828,6 +830,7 @@ void moveCharacter()
 				        Beep(1440, 30);
 				g_sChar.m_cLocation.X++;
 			}
+			g_dBounceTime = g_dElapsedTime + 0.2;
 		}
     }
 

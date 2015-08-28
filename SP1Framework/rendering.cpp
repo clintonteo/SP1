@@ -170,17 +170,17 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 				else if(line[charLocation.X+k] == '1' && user.switch1 == 0)
 				{
 					//colour(0xf8);
-					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, switches, 0xf1);
+					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, switches, 0xf8);
 				}
 				else if(line[charLocation.X+k] == '2' && user.switch2 == 0)
 				{
 					//colour(0xf8);
-					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, switches, 0xf1);
+					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, switches, 0xf8);
 				}
 				else if(line[charLocation.X+k] == '3' && user.switch3 == 0)
 				{
 					//colour(0xf8);
-					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, switches, 0xf1);
+					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, switches, 0xf8);
 				}
 				else if(line[charLocation.X+k] == 'X'&& user.switch1 == 0)
 				{

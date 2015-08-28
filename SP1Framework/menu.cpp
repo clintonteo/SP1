@@ -124,7 +124,7 @@ void mainMenu(Console &console, player&user)
 
 void options(Console &console, player&user)
 {
-	string Options[8] = {"Scrub","Normal", "Hard", "Insane" };
+	string Options[4] = {"Scrub","Normal", "Hard", "Insane" };
 
 	console.writeToBuffer(30, 5, "Difficulty", 0xfc);
 	console.writeToBuffer(15, 18, "The higher the difficulty, the smaller your vision range is ", 0xf0);
