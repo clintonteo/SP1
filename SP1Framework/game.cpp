@@ -62,6 +62,16 @@ bool trapdamage = 0;
 //Mob Storage [Vector]
 std::vector<mobData> allMobs;
 
+//Mr Toh
+char   g_charBuffer[128];
+int    g_chInput = 0;
+ 
+bool   keydownNum[10];
+bool   keydownChar[26];
+
+int    i;
+bool   enterpressed = false;
+
 // Game specific variables here
 SGameChar g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
@@ -211,6 +221,67 @@ void getInput( void )
     g_abKeyPressed[K_X] = isKeyPressed(0x58);
     g_abKeyPressed[K_Y] = isKeyPressed(0x59);
     g_abKeyPressed[K_Z] = isKeyPressed(0x5A);
+
+    //// detect Numbers pressed
+    //for (i=0; i<10; i++)
+    //{
+    //        if (keydownNum[i] == false)
+    //        {
+    //                if (isKeyPressed('0'+i))
+    //                    keydownNum[i] = true;
+    //        }
+    //        else
+    //        {
+    //                if (!isKeyPressed('0'+i))
+    //                {
+    //                    g_charBuffer[g_chInput] = '0'+i;
+    //                    ++g_chInput %= 128;
+    //                    keydownNum[i] = false;
+    //                }
+    //        }
+    //                      
+    //        if (isKeyPressed(VK_RETURN))
+    //        {
+    //                enterpressed = true;             
+    //                break;
+    //        }
+    //}
+ 
+    //// detect A-Z pressed
+    //if (!enterpressed)
+    //{
+    //        for (i=0; i<27; i++)
+    //        {
+    //                if (keydownChar[i] == false)
+    //                {
+    //                    if (isKeyPressed('A'+i))
+    //                            keydownChar[i] = true;           
+    //                }
+    //                else
+    //                {
+    //                    if (!isKeyPressed('A'+i))
+    //                    {
+    //                            g_charBuffer[g_chInput] = 'a'+i;
+    //                            ++g_chInput %= 128;
+    //                            keydownChar[i] = false;          
+    //                    }
+    //                }
+    //                      
+    //                if (isKeyPressed(VK_RETURN))
+    //                {
+    //                    enterpressed = true;
+    //                    break;
+    //                }
+    //        }
+    //         
+    //}
+
+    ////Place char buffer into user.name
+    //for (int counter = 0; counter < 128; ++counter)
+    //{
+    //    user.name.push_back(g_charBuffer[counter]);
+    //}
+ 
 }
 
 //--------------------------------------------------------------
@@ -424,12 +495,6 @@ void update(double dt)
 			break;
 
         case S_NAME:
-            /*if (user.wroteHighScore == 0)
-            {
-                calculateFinal ( user , Endtime );
-                EnterName();
-                highscoreWrite( user , g_Console );
-            }*/
             if (g_abKeyPressed[K_ENTER])
             {
                 //user.gameover = 1;
@@ -916,15 +981,7 @@ void moveCharacter()
 			user.inventory[user.select] = 'f';
 			writeLog("You are invis!", g_dElapsedTime);
 		}
-	}
-
-    //Runs Highscore
-    /*if (user.gameover == 1)
-    {
-        calculateFinal ( user , Endtime );
-        EnterName();
-    }*/
-
+    }
     
 }
 void processUserInput()
@@ -1004,7 +1061,7 @@ void processUserInput()
 
 void EnterName()
 {
-    if (g_abKeyPressed[K_0]){ user.name += "0"; }
+    /*if (g_abKeyPressed[K_0]){ user.name += "0"; }
     if (g_abKeyPressed[K_1]){ user.name += "1"; }
     if (g_abKeyPressed[K_2]){ user.name += "2"; }
     if (g_abKeyPressed[K_3]){ user.name += "3"; }
@@ -1039,8 +1096,64 @@ void EnterName()
     if (g_abKeyPressed[K_W]){ user.name += "W"; }
     if (g_abKeyPressed[K_X]){ user.name += "X"; }
     if (g_abKeyPressed[K_Y]){ user.name += "Y"; }
-    if (g_abKeyPressed[K_Z]){ user.name += "Z"; }
+    if (g_abKeyPressed[K_Z]){ user.name += "Z"; }*/
     if (g_abKeyPressed[K_SPACE]){ user.name += " "; }
+
+    // detect Numbers pressed
+    for (i=0; i<10; i++)
+    {
+            if (keydownNum[i] == false)
+            {
+                    if (isKeyPressed('0'+i))
+                        keydownNum[i] = true;
+            }
+            else // (keydownNum[i] == true)
+            {
+                    if (!isKeyPressed('0'+i))
+                    {
+                        g_charBuffer[g_chInput] = '0'+i;
+                        ++g_chInput %= 128;
+                        user.name += '0'+i;
+                        keydownNum[i] = false;
+                    }
+            }
+                          
+            if (isKeyPressed(VK_RETURN))
+            {
+                    enterpressed = true;             
+                    break;
+            }
+    }
+ 
+    // detect A-Z pressed
+    if (!enterpressed)
+    {
+            for (i=0; i<27; i++)
+            {
+                    if (keydownChar[i] == false)
+                    {
+                        if (isKeyPressed('A'+i))
+                                keydownChar[i] = true;           
+                    }
+                    else
+                    {
+                        if (!isKeyPressed('A'+i))
+                        {
+                                g_charBuffer[g_chInput] = 'a'+i;
+                                ++g_chInput %= 128;
+                                keydownChar[i] = false;
+                                user.name += 'A'+i;
+                        }
+                    }
+                          
+                    if (isKeyPressed(VK_RETURN))
+                    {
+                        enterpressed = true;
+                        break;
+                    }
+            }
+             
+    }
 }
 
 void clearScreen()
@@ -1122,31 +1235,20 @@ void renderGameover()  // renders the splash screen
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     
-    /*c.X = 30;
-    c.Y = 13;
-    g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);*/
-    //cin >> name;
-
-    //if (user.wroteHighScore == 0)
-    //{
-    //    calculateFinal ( user , Endtime );
-    //    EnterName();
-    //    highscoreWrite( user , g_Console );
-    //}
     highscoreRead ( user , g_Console );
-
-    //highscore( highscorePoints , highscoreNames , user );
 }
 
 void renderEnterName()
 {
+    bool buttonPress = 0;
     COORD c = g_Console.getConsoleSize();
     c.X = 30;
     c.Y = 13;
     g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);
+
     EnterName();
-	c.Y += 1;
-	g_Console.writeToBuffer(c, user.name, 0xf9);
+    c.Y += 1;
+    g_Console.writeToBuffer(c, user.name, 0xf9);
 }
 
 void renderStage1()
