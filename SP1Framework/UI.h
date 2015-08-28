@@ -54,6 +54,7 @@ void finalscore ( Console & g_Console , player & user , double Endtime, COORD c)
 void calculateFinal ( player & user , double Endtime );
 void highscoreWrite ( player & user , Console & g_Console );
 void highscoreRead ( player & user , Console & g_Console );
+void highscoreBoard ( player & user , Console & g_Console );
 //void highscore ( vector<int>highscorePoints , vector<string>highscoreNames , player & user );
 
 #endif // _UI_H

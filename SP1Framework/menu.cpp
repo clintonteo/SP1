@@ -57,8 +57,8 @@ void mainMenu(Console &console, player&user)
 	{
 		console.writeToBuffer(25, 10, "Selected difficulty is Scrub. Noob.", 0xf0);
 	}
-	console.writeToBuffer(20, 18, "Arrow Keys to navigate, Enter to select", 0xf0);
-	for (int i = 0; i < 4; ++i)
+	console.writeToBuffer(20, 20, "Arrow Keys to navigate, Enter to select", 0xf0);
+	for (int i = 0; i < 5; ++i)
 	{
 		if (i == pointer)
 		{
@@ -189,6 +189,16 @@ void options(Console &console, player&user)
 				}
 				break;
 		}
+	}
+}
+
+void highscoreMenu(Console& g_Console, player&user)
+{
+	highscoreBoard (user , g_Console );
+	if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
+	{
+		stop = g_dElapsedTime + 0.2;
+		g_eGameState = S_MENU;
 	}
 }
 

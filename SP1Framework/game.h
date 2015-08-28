@@ -129,7 +129,7 @@ void mainMenu(Console&Console, player&user);
 void exit();
 void options(Console&Console, player&user);
 void help(Console&Console);
-void highscore(Console&Console);
+void highscoreMenu(Console&g_Console, player&user);
 
 void EnterName();
 

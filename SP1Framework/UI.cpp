@@ -428,3 +428,33 @@ void highscoreRead ( player & user , Console & g_Console )
         highscore.close();
     }
 }
+
+void highscoreBoard ( player & user , Console & g_Console )
+{
+    std::fstream highscore ("highscore.txt");
+    //highscore.open("highscore.txt");
+
+    string line;
+
+    int i = 1;
+
+    g_Console.writeToBuffer(30, 5 , "LEADERBOARDS" , 0xfc);
+
+    if (highscore.is_open())
+    {  
+        while (getline (highscore,line))
+        {
+            std::ostringstream strs;
+            strs << i;
+            string rank = strs.str();
+            g_Console.writeToBuffer(20, 7 + i , rank , 0xf9);
+            g_Console.writeToBuffer(30, 7 + i , line , 0xf9);
+            ++i;
+            if(i == 6)
+            {
+                break;
+            }
+        }
+        highscore.close();
+    }
+}
