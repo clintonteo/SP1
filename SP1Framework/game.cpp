@@ -446,6 +446,7 @@ void update(double dt)
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 				{
 					Endtime = g_dElapsedTime;
+                    user.stage3 = 1;
 					g_eGameState = S_SPLASHSCREEN4;
 				}
 			break;

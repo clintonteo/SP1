@@ -1,0 +1,95 @@
+X Switch Activated!@12.3578
+Boost is ready!@18.622
+Boost is ready!@22.6626
+Y Switch Activated!@23.0666
+Boost is ready!@30.3398
+Z Switch Activated!@35.6943
+Boost is ready!@37.4116
+Boost is ready!@41.3516
+Boost is ready!@47.615
+You have been hurt!@53.6779
+Boost is ready!@54.8901
+You have been hurt!@59.9417
+Boost is ready!@66.914
+You have been hurt!@70.8543
+Boost is ready!@72.8761
+You have been healed!@73.6842
+Boost is ready!@78.1296
+Boost is ready!@81.8673
+You have been hurt!@102.304
+You got a bomb!@107.557
+You have been hurt!@110.689
+Boost is ready!@111.699
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+X Switch Activated!@145.442
+Boost is ready!@145.543
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Boost is ready!@152.415
+You got an invis potion!@173.026
+Diagonal Down and Right@1
+You have been healed!@176.663
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+X Switch Activated!@185.078
+You have been healed!@186.897
+You got an invis potion!@190.839
+Y Switch Activated!@195.082
+You have been hurt!@207.407
+Diagonal Down and Right@1
+Z Switch Activated!@218.723
+You got a bomb!@220.238
+You have been hurt!@230.847
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+You have been hurt!@253.882
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Boost is ready!@256.205
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+You have been healed!@267.248
+Diagonal Down and Right@1
+X Switch Activated!@281.09
+You have been hurt!@285.335
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+X Switch Activated!@296.449
+You have been healed!@297.358
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Y Switch Activated!@338.375
+Diagonal Down and Right@1
+You have been hurt!@351.205
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+You have been hurt!@361.409
+You have been hurt!@365.954
+You died!@367.672

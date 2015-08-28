@@ -129,7 +129,7 @@ void options(Console &console, player&user)
 	console.writeToBuffer(30, 5, "Difficulty", 0xfc);
 	console.writeToBuffer(15, 18, "The higher the difficulty, the smaller your vision range is ", 0xf0);
 	console.writeToBuffer(15, 19, "and the less time is provided to complete the stage.", 0xf0);
-	for (int i = 0; i < 8; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		if (i == opPointer)
 		{
