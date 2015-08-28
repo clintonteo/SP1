@@ -1,3 +1,4 @@
-name 1700
-name 1700
-testforbugggy 1450
+DNO THESECOND 11468
+PO 2750
+DON 2500
+NUB 0

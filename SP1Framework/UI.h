@@ -35,7 +35,9 @@ struct player
     bool stage2;
     bool stage3;
     bool stage4;
+    string name; //NAME
     bool gameover;
+    bool wroteHighScore;
 };
 
 void timer (double g_dElapsedTime, Console & g_Console, player & user);
@@ -50,7 +52,7 @@ void readLog ( Console & g_Console );
 void writeLog ( string line , double time);
 void finalscore ( Console & g_Console , player & user , double Endtime, COORD c);
 void calculateFinal ( player & user , double Endtime );
-void highscoreWrite ( player & user , Console & g_Console , string name);
+void highscoreWrite ( player & user , Console & g_Console );
 void highscoreRead ( player & user , Console & g_Console );
 //void highscore ( vector<int>highscorePoints , vector<string>highscoreNames , player & user );
 

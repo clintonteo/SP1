@@ -54,7 +54,6 @@ int lastY = 0;
 
 player user;
 int count = 0;
-string name;
 
 //Damage Trackers
 bool lavadamage = 0;
@@ -132,6 +131,8 @@ void init( void )
     log.close();
 	//user.timelimit = 99999;
     user.gameover = 0;
+    user.name;
+    //user.wroteHighScore = 0;
 }
 //--------------------------------------------------------------
 // Purpose  : Reset before exiting the program
@@ -170,6 +171,45 @@ void getInput( void )
     g_abKeyPressed[K_USE] = isKeyPressed(VK_SPACE); // Spacebar // Use items
 	g_abKeyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
     g_abKeyPressed[K_ENTER] = isKeyPressed(VK_RETURN); // Enter Key
+    g_abKeyPressed[K_SPACE] = isKeyPressed(VK_SPACE); //SPACE BAR
+
+    //Name Inputs
+    g_abKeyPressed[K_0] = isKeyPressed(0x30);
+    g_abKeyPressed[K_1] = isKeyPressed(0x31);
+    g_abKeyPressed[K_2] = isKeyPressed(0x32);
+    g_abKeyPressed[K_3] = isKeyPressed(0x33);
+    g_abKeyPressed[K_4] = isKeyPressed(0x34);
+    g_abKeyPressed[K_5] = isKeyPressed(0x35);
+    g_abKeyPressed[K_6] = isKeyPressed(0x36);
+    g_abKeyPressed[K_7] = isKeyPressed(0x37);
+    g_abKeyPressed[K_8] = isKeyPressed(0x38);
+    g_abKeyPressed[K_9] = isKeyPressed(0x39);
+    g_abKeyPressed[K_A] = isKeyPressed(0x41);
+    g_abKeyPressed[K_B] = isKeyPressed(0x42);
+    g_abKeyPressed[K_C] = isKeyPressed(0x43);
+    g_abKeyPressed[K_D] = isKeyPressed(0x44);
+    g_abKeyPressed[K_E] = isKeyPressed(0x45);
+    g_abKeyPressed[K_F] = isKeyPressed(0x46);
+    g_abKeyPressed[K_G] = isKeyPressed(0x47);
+    g_abKeyPressed[K_H] = isKeyPressed(0x48);
+    g_abKeyPressed[K_I] = isKeyPressed(0x49);
+    g_abKeyPressed[K_J] = isKeyPressed(0x4A);
+    g_abKeyPressed[K_K] = isKeyPressed(0x4B);
+    g_abKeyPressed[K_L] = isKeyPressed(0x4C);
+    g_abKeyPressed[K_M] = isKeyPressed(0x4D);
+    g_abKeyPressed[K_N] = isKeyPressed(0x4E);
+    g_abKeyPressed[K_O] = isKeyPressed(0x4F);
+    g_abKeyPressed[K_P] = isKeyPressed(0x50);
+    g_abKeyPressed[K_Q] = isKeyPressed(0x51);
+    g_abKeyPressed[K_R] = isKeyPressed(0x52);
+    g_abKeyPressed[K_S] = isKeyPressed(0x53);
+    g_abKeyPressed[K_T] = isKeyPressed(0x54);
+    g_abKeyPressed[K_U] = isKeyPressed(0x55);
+    g_abKeyPressed[K_V] = isKeyPressed(0x56);
+    g_abKeyPressed[K_W] = isKeyPressed(0x57);
+    g_abKeyPressed[K_X] = isKeyPressed(0x58);
+    g_abKeyPressed[K_Y] = isKeyPressed(0x59);
+    g_abKeyPressed[K_Z] = isKeyPressed(0x5A);
 }
 
 //--------------------------------------------------------------
@@ -378,21 +418,38 @@ void update(double dt)
 				Endtime = g_dElapsedTime;
                 user.stage4 = 1;
 				g_eGameState = S_NAME;
+                user.gameover = 1;
 			}
 			break;
 
         case S_NAME:
+            /*if (user.wroteHighScore == 0)
+            {
+                calculateFinal ( user , Endtime );
+                EnterName();
+                highscoreWrite( user , g_Console );
+            }*/
             if (g_abKeyPressed[K_ENTER])
             {
-                user.gameover = 1;
+                //user.gameover = 1;
+                user.wroteHighScore = 1;
                 g_eGameState = S_GAMEOVER;
             }
+
             break;
 
         case S_GAMEOVER:
+            if (user.wroteHighScore == 1)
+            {
+                calculateFinal ( user , Endtime );
+                highscoreWrite( user , g_Console );
+                user.wroteHighScore = 0;
+            }
             if (g_abKeyPressed[K_ENTER])
             {
+                //g_eGameState = S_MENU;
                 g_bQuitGame = true;
+
             }
             break;
     }
@@ -862,14 +919,126 @@ void moveCharacter()
     //Runs Highscore
     /*if (user.gameover == 1)
     {
-        highscoreWrite( user , g_Console , name);
+        calculateFinal ( user , Endtime );
+        EnterName();
     }*/
+
+    
 }
 void processUserInput()
 {
     // quits the game if player hits the escape key
     if (g_abKeyPressed[K_ESCAPE])
-        g_bQuitGame = true;    
+        g_bQuitGame = true;
+
+    /*if (user.gameover == 1)
+    {
+        if (g_abKeyPressed[K_0])
+        {
+            user.name += "0";
+        }
+
+        if (g_abKeyPressed[K_1])
+        {
+            user.name += "1";
+        }
+
+        if (g_abKeyPressed[K_2])
+        {
+            user.name += "2";
+        }
+
+        if (g_abKeyPressed[K_3])
+        {
+            user.name += "3";
+        }
+
+        if (g_abKeyPressed[K_4])
+        {
+            user.name += "4";
+        }
+
+        if (g_abKeyPressed[K_5])
+        {
+            user.name += "5";
+        }
+
+        if (g_abKeyPressed[K_6])
+        {
+            user.name += "6";
+        }
+
+        if (g_abKeyPressed[K_7])
+        {
+            user.name += "7";
+        }
+
+        if (g_abKeyPressed[K_8])
+        {
+            user.name += "8";
+        }
+
+        if (g_abKeyPressed[K_9])
+        {
+            user.name += "9";
+        }
+
+        if (g_abKeyPressed[K_A])
+        {
+            user.name += "A";
+        }
+
+        if (g_abKeyPressed[K_B])
+        {
+            user.name += "B";
+        }
+
+        if (g_abKeyPressed[K_C])
+        {
+            user.name += "C";
+        }
+    }*/
+}
+
+void EnterName()
+{
+    if (g_abKeyPressed[K_0]){ user.name += "0"; }
+    if (g_abKeyPressed[K_1]){ user.name += "1"; }
+    if (g_abKeyPressed[K_2]){ user.name += "2"; }
+    if (g_abKeyPressed[K_3]){ user.name += "3"; }
+    if (g_abKeyPressed[K_4]){ user.name += "4"; }
+    if (g_abKeyPressed[K_5]){ user.name += "5"; }
+    if (g_abKeyPressed[K_6]){ user.name += "6"; }
+    if (g_abKeyPressed[K_7]){ user.name += "7"; }
+    if (g_abKeyPressed[K_8]){ user.name += "8"; }
+    if (g_abKeyPressed[K_9]){ user.name += "9"; }
+    if (g_abKeyPressed[K_A]){ user.name += "A"; }
+    if (g_abKeyPressed[K_B]){ user.name += "B"; }
+    if (g_abKeyPressed[K_C]){ user.name += "C"; }
+    if (g_abKeyPressed[K_D]){ user.name += "D"; }
+    if (g_abKeyPressed[K_E]){ user.name += "E"; }
+    if (g_abKeyPressed[K_F]){ user.name += "F"; }
+    if (g_abKeyPressed[K_G]){ user.name += "G"; }
+    if (g_abKeyPressed[K_H]){ user.name += "H"; }
+    if (g_abKeyPressed[K_I]){ user.name += "I"; }
+    if (g_abKeyPressed[K_J]){ user.name += "J"; }
+    if (g_abKeyPressed[K_K]){ user.name += "K"; }
+    if (g_abKeyPressed[K_L]){ user.name += "L"; }
+    if (g_abKeyPressed[K_M]){ user.name += "M"; }
+    if (g_abKeyPressed[K_N]){ user.name += "N"; }
+    if (g_abKeyPressed[K_O]){ user.name += "O"; }
+    if (g_abKeyPressed[K_P]){ user.name += "P"; }
+    if (g_abKeyPressed[K_Q]){ user.name += "Q"; }
+    if (g_abKeyPressed[K_R]){ user.name += "R"; }
+    if (g_abKeyPressed[K_S]){ user.name += "S"; }
+    if (g_abKeyPressed[K_T]){ user.name += "T"; }
+    if (g_abKeyPressed[K_U]){ user.name += "U"; }
+    if (g_abKeyPressed[K_V]){ user.name += "V"; }
+    if (g_abKeyPressed[K_W]){ user.name += "W"; }
+    if (g_abKeyPressed[K_X]){ user.name += "X"; }
+    if (g_abKeyPressed[K_Y]){ user.name += "Y"; }
+    if (g_abKeyPressed[K_Z]){ user.name += "Z"; }
+    if (g_abKeyPressed[K_SPACE]){ user.name += " "; }
 }
 
 void clearScreen()
@@ -956,7 +1125,12 @@ void renderGameover()  // renders the splash screen
     g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);*/
     //cin >> name;
 
-    //highscoreWrite( user , g_Console , c , name);
+    //if (user.wroteHighScore == 0)
+    //{
+    //    calculateFinal ( user , Endtime );
+    //    EnterName();
+    //    highscoreWrite( user , g_Console );
+    //}
     highscoreRead ( user , g_Console );
 
     //highscore( highscorePoints , highscoreNames , user );
@@ -968,10 +1142,7 @@ void renderEnterName()
     c.X = 30;
     c.Y = 13;
     g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);
-    /*if (g_abKeyPressed[K_SELECT])
-    {
-        name += "K";
-    }*/
+    EnterName();
 }
 
 void renderStage1()
@@ -1150,16 +1321,16 @@ void renderGame()
 	if (user.lives <= 0)
 	{
 		colour(BACKGROUND_RED);
+        Beep(2000, 1000);
 		//g_Console.writeToBuffer(51, 13, "YOU DIED", 0xf1);
         user.gameover = 1;
         writeLog("You died!", g_dElapsedTime);
         Endtime = g_dElapsedTime;
+
+        /*calculateFinal ( user , Endtime );
+        highscoreWrite( user , g_Console );*/
+
         g_eGameState = S_NAME;
-        
-        calculateFinal ( user , Endtime );
-        highscoreWrite( user , g_Console , name);
-    
-		Beep(2000, 1000);
 	} 
 
     //Check for cooldown

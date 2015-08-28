@@ -1,13 +1,44 @@
-Block spawned at41 and 4You have been hurt!@86.869
-You have been hurt!@90.8892
-You have been hurt!@91.8942
-You have been hurt!@92.4973
-You have been hurt!@93.1003
-You lost a live!@93.3013
-You have been hurt!@94.1053
-You have been hurt!@94.9094
-You have been hurt!@95.3114
-You have been hurt!@95.7134
-You have been hurt!@96.3164
-You lost a live!@96.5174
-You died!@96.5174
+You have been hurt!@1.82435
+X Switch Activated!@8.45905
+Boost is ready!@13.8864
+You have been hurt!@16.9017
+Y Switch Activated!@18.3088
+Boost is ready!@25.9476
+You have been healed!@26.5506
+You have been hurt!@28.5608
+Boost is ready!@31.576
+Boost is ready!@34.9937
+You have been hurt!@49.8841
+You got a bomb!@62.347
+Boost is ready!@66.5684
+Boost is ready!@72.1968
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+X Switch Activated!@97.7261
+Boost is ready!@97.7261
+Boost is ready!@105.164
+Diagonal Down and Right@1
+You got an invis potion!@120.241
+You are invis!@123.457
+You have been healed!@126.272
+X Switch Activated!@131.915
+Y Switch Activated!@140.157
+You have been hurt!@155.434
+You got a bomb!@165.284
+Z Switch Activated!@167.093
+You have been healed!@175.565
+You have been hurt!@193.857
+You have been hurt!@194.46
+Boost is ready!@196.269
+Diagonal Down and Right@1
+Diagonal Down and Right@1
+You have been healed!@202.516
+You have been hurt!@207.139
+You have been hurt!@214.778
+X Switch Activated!@216.185
+You have been hurt!@221.211
+Diagonal Down and Right@1
+You have been hurt!@240.91
+Y Switch Activated!@242.719
+Diagonal Down and Right@1
