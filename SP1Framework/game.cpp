@@ -1383,11 +1383,11 @@ void renderCharacter(player&user)
     WORD charColor = 0x0C;
     if (g_sChar.m_bActive && user.invis == 1)
     {
-        charColor = 0;
+        charColor = 0x12;
     }
 	else if (g_sChar.m_bActive)
 	{
-		charColor = 0xfC;
+		charColor = 0xe0;
 	}
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
 }
