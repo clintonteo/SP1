@@ -38,7 +38,7 @@ void mainMenu(Console &console, player&user)
         title.close();
     }
 
-	string Menu[5] = {"Play", "Difficulty", "Tutorial", "Highscore", "Exit"};
+	string Menu[5] = {"Play", "Difficulty", "Instructions", "Highscore", "Exit"};
 
 	//console.writeToBuffer(25, 5, "Tower Of PuzzMaz", 0xfc);
 	if(user.difficulty == 0)
@@ -209,7 +209,7 @@ void exit()
 
 void help(Console &console)
 {
-	console.writeToBuffer(25, 5, "Tutorial", 0xfc);
+	console.writeToBuffer(25, 5, "Instructions", 0xfc);
 	console.writeToBuffer(25, 7, "Arrow keys to move.", 0xf0);
 	console.writeToBuffer(25, 8, "Z to select item.", 0xf0);
 	console.writeToBuffer(25, 9, "Space to use item.", 0xf0);
