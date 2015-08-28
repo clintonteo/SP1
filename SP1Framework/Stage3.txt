@@ -1,7 +1,7 @@
 20 50
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 W                WWWWW      WWWWWWWWWWWWWWWWWWWWWW
-W S              XXXXX  D                    ZZ  W
+W                XXXXX  D                    ZZ  W
 W           D1   XXXXX      WWWWWWWWWW  D  WWWWD W
 W               MWWWWWWWWD  WWWWWWWWWW     WWWW  W
 WWWWWWWWYYYWWWWWWWWWWWWWW   W   D   2W D   WWWW  W
