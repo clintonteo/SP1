@@ -25,7 +25,7 @@ struct player
 	bool bombtaken;
 	bool Cexplode;
 	bool invispot;
-	bool invis;
+	bool invis; // invis state
 	bool invistaken;
 	bool MedsTaken;
 	COORD block;

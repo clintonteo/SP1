@@ -116,6 +116,7 @@ void init( void )
     user.select = 0;
 	user.boost = 0;
     user.bomb = 0;
+	user.bombtaken = 0;
 	user.invistaken = 0;
 	user.invis = 0;
 	user.invispot = 0;
@@ -469,9 +470,10 @@ void reset()
 	user.switch2 = 0;
 	user.switch3 = 0;
 	user.bomb = 0;
+	user.bombtaken = 0;
 	user.Cexplode = 0;
 	user.invispot = 0;
-	user.invis = 0;
+	user.invis = 0; // invis state
 	user.invistaken = 0;
 	user.TTaken = 0;
 	user.MedsTaken = 0;
@@ -1052,7 +1054,7 @@ void renderSplashScreen()  // renders the splash screen
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
     c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "Tower Of Maz STAGE 1", 0xfc);
+    g_Console.writeToBuffer(c, "Tower Of PuzzMaz STAGE 1", 0xfc);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 20;
     g_Console.writeToBuffer(c, "Hint: You can use boost over lava!!", 0xf9);
@@ -1066,7 +1068,7 @@ void renderSplashStage2()  // renders the splash screen
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
     c.X = c.X  / 2 - 9;
-    g_Console.writeToBuffer(c, "STAGE 2", 0xf3);
+    g_Console.writeToBuffer(c, "Tower Of PuzzMaz STAGE 2", 0xfc);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X  / 2 - 20;
     g_Console.writeToBuffer(c, "Hint: you can move diagonally skrub", 0xf9);
@@ -1080,7 +1082,7 @@ void renderSplashStage3()  // renders the splash screen
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
     c.X = c.X  / 2 - 9;
-    g_Console.writeToBuffer(c, "STAGE 3", 0xf3);
+    g_Console.writeToBuffer(c, "Tower Of PuzzMaz STAGE 3", 0xfc);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X  / 2 - 20;
     g_Console.writeToBuffer(c, "Hint: Arunning pls", 0xf9);
@@ -1094,7 +1096,7 @@ void renderSplashStage4()  // renders the splash screen
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
     c.X = c.X  / 2 - 9;
-    g_Console.writeToBuffer(c, "STAGE 4", 0xf3);
+    g_Console.writeToBuffer(c, "Tower Of PuzzMaz STAGE 4", 0xfc);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X  / 2 - 20;
     g_Console.writeToBuffer(c, "This will make you ragequit, a helpful hint is below.", 0xf9);
@@ -1143,6 +1145,8 @@ void renderEnterName()
     c.Y = 13;
     g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);
     EnterName();
+	c.Y += 1;
+	g_Console.writeToBuffer(c, user.name, 0xf9);
 }
 
 void renderStage1()

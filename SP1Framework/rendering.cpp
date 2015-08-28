@@ -224,7 +224,7 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 				else if (line[charLocation.X+k] == 'P')
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, pit, 0xf1);
-				}else if (line[charLocation.X+k] == 'J')
+				}else if (line[charLocation.X+k] == 'J' && user.bombtaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, bomb, 0xf1);
 				}
