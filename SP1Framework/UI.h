@@ -48,7 +48,7 @@ void renderInventory ( player & user , Console & g_Console , double &boostcd , d
 void point( player & user , Console & g_Console );
 void selector( player & user , Console & g_Console);
 void background( Console & g_Console );
-void readLog ( Console & g_Console );
+void readLog ( Console & g_Console , double g_dElapsedTime );
 void writeLog ( string line , double time);
 void finalscore ( Console & g_Console , player & user , double Endtime, COORD c);
 void calculateFinal ( player & user , double Endtime );

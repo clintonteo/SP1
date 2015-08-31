@@ -68,6 +68,7 @@ enum EGAMESTATES
 	S_OPTIONS,
 	S_HELP,
 	S_HIGHSCORE,
+    S_TUTORIAL,
     S_SPLASHSCREEN,
     S_GAME1,
 	S_SPLASHSCREEN2,
@@ -119,6 +120,7 @@ void renderStage1();
 void renderStage2();
 void renderStage3();
 void renderStage4();
+void renderTutorial();
 
 void renderMap();           // renders the map to the buffer first
 void renderCharacter(player&user);     // renders the character into the buffer
