@@ -39,6 +39,7 @@ bool blind = 0;
 bool lostlives = 0;
 
 double stop1 = 0;
+double lavastop = 0;
 double Endtime;
 double boostcd = 0;
 double invisExp = 0;
@@ -99,7 +100,7 @@ void init( void )
 
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
-    g_Console.setConsoleFont(40, 40, L"Raster");
+    g_Console.setConsoleFont(40, 40, L"Consolas");
 	//user.difficulty = normal;
 	//if(user.difficulty == normal)
 	//{
@@ -910,12 +911,12 @@ void moveCharacter()
         lostlives = 1;
         writeLog("You lost a live!", g_dElapsedTime);
 	}
-	////RESET
-	//if(g_abKeyPressed[K_RESET])
-	//{
-	//	//g_eGameState = S_SPLASHSCREEN2;
- //       g_eGameState = static_cast<EGAMESTATES>(g_eGameState + 1);
-	//}
+	//RESET
+	if(g_abKeyPressed[K_RESET])
+	{
+		//g_eGameState = S_SPLASHSCREEN2;
+        g_eGameState = static_cast<EGAMESTATES>(g_eGameState + 1);
+	}
 
     //POINTS
     if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && user.TTaken == 0)
@@ -1414,7 +1415,7 @@ void renderGame()
 		}
 		g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 2);
 	}
-    if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0)
+    if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0 && g_dElapsedTime > lavastop)
 	{
 		if(g_sChar.m_cLocation.X == blocks.X && g_sChar.m_cLocation.Y == blocks.Y)
 		{
@@ -1422,8 +1423,9 @@ void renderGame()
 		}
 		else
 		{
-			user.health -= user.health;
+			lavastop = g_dElapsedTime + .5;
 			lavadamage = 1;
+			user.health -= user.health;
 		}
 	}
     else
