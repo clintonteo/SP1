@@ -187,6 +187,7 @@ void getInput( void )
 	g_abKeyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
     g_abKeyPressed[K_ENTER] = isKeyPressed(VK_RETURN); // Enter Key
     g_abKeyPressed[K_SPACE] = isKeyPressed(VK_SPACE); //SPACE BAR
+	g_abKeyPressed[K_BACK] = isKeyPressed(VK_BACK);
 
     //Name Inputs
     //g_abKeyPressed[K_0] = isKeyPressed(0x30);
@@ -1061,6 +1062,7 @@ void EnterName()
     if (g_abKeyPressed[K_Y]){ user.name += "Y"; }
     if (g_abKeyPressed[K_Z]){ user.name += "Z"; }*/
     if (g_abKeyPressed[K_SPACE]){ user.name += " "; }
+	if (g_abKeyPressed[K_BACK]){user.name.pop_back();}
 
     // detect Numbers pressed
     for (i=0; i<10; i++)
