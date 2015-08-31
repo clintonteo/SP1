@@ -231,14 +231,15 @@ void readLog ( Console & g_Console , double g_dElapsedTime)
         {
             g_Console.writeToBuffer(52, 23 - i , line , 10);
             
+            ++i;
+
             if(i == 5)
             {
+                i = 0;
                 /*std::ofstream log;
                 log.open("log.txt", std::fstream::trunc);
                 log.close();*/
-                i = 0;
-            }
-            ++i;
+            }   
         }
         log.close();
     }
@@ -249,7 +250,7 @@ void writeLog ( string line , double time)
 {
     std::fstream log ("log.txt", std::fstream::app);
 
-    log << line << "@" << time << "\n";
+    log << line << "@" << static_cast<int>(time) << "\n";
 
     log.close();
 
