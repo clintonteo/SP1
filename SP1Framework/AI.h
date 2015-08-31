@@ -8,12 +8,14 @@ struct mobData
 {
 	COORD MC;
 	COORD lastMC;
+	COORD direction;
 	int xqueue;
 	int yqueue;
 	bool first;
+	bool playerImmunity;
 };
 
-void mobmove(COORD charLocation, mobData &mobD, double time, Console &console, PMAP map, player user, bool blind, int range);
+void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, PMAP map, player &user, bool blind, int range);
 void spawnmob(std::vector<mobData> &mob);
 
 #endif // _AI_H

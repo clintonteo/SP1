@@ -1265,10 +1265,10 @@ void renderStage1()
 {
 	MapCollision = load_map("stage1.txt");
 	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage1.txt");
-	for(unsigned int i = 0; i < allMobs.size(); ++i)
+	/*for(unsigned int i = 0; i < allMobs.size(); ++i)
 	{
 		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
-	}
+	}*/
 }
 void renderStage2()
 {
