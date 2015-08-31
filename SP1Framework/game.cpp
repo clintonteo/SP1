@@ -252,7 +252,7 @@ void update(double dt)
 			break;
 		case S_OPTIONS: options(g_Console, user);
 			break;
-		case S_HELP: help(g_Console);
+		case S_HELP: help(g_Console, user);
 			break;
 		case S_HIGHSCORE: highscoreMenu( g_Console, user);
 			break;
@@ -266,14 +266,19 @@ void update(double dt)
 				spawnmob(allMobs);
                 g_sChar.m_cLocation.X = 1;
                 g_sChar.m_cLocation.Y = 1;
-				user.timelimit = 999;
+				user.timelimit = 0;
                 tutorial_init = 1;
             }
             gameplay();
             if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 			{
-				Endtime = g_dElapsedTime;
+				//Endtime = g_dElapsedTime;
+				//tutorial_init = 0;
+				//g_eGameState = S_MENU;
+				//reset();
+				//writeLog("CONGRATS!", 999);
 				tutorial_init = 0;
+				g_dElapsedTime = 0;
 				g_eGameState = S_MENU;
 			}
             break;
@@ -530,7 +535,7 @@ void render()
     clearScreen();      // clears the current screen and draw from scratch 
     switch (g_eGameState)
     {
-		case S_HELP: help(g_Console);
+		case S_HELP: help(g_Console, user);
 			break;
 		case S_OPTIONS: options(g_Console, user);
 			break;

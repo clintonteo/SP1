@@ -130,7 +130,7 @@ void renderToScreen();      // dump the contents of the buffer to the screen, on
 void mainMenu(Console&Console, player&user);
 void exit();
 void options(Console&Console, player&user);
-void help(Console&Console);
+void help(Console &Console, player&user);
 void highscoreMenu(Console&g_Console, player&user);
 
 void EnterName();

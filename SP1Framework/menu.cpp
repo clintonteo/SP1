@@ -98,6 +98,8 @@ void mainMenu(Console &console, player&user)
 				{
 					g_eGameState = S_GAME1;
 					g_dElapsedTime = 0;
+					user.lives = 3;
+					user.health = 5;
 				}
 				break;
 			case 1:
@@ -209,7 +211,7 @@ void exit()
 	g_bQuitGame = true;
 }
 
-void help(Console &console)
+void help(Console &console, player&user)
 {
 	string Help[2] = {"Tutorial", "Back"};
 
@@ -266,6 +268,8 @@ void help(Console &console)
 			case 0:
 				{
 					g_eGameState = S_TUTORIAL;
+					user.lives = 5;
+					user.health = 5;
 					g_dElapsedTime = 0;
 				}
 				break;
