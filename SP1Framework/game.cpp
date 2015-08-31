@@ -266,16 +266,15 @@ void update(double dt)
 				spawnmob(allMobs);
                 g_sChar.m_cLocation.X = 1;
                 g_sChar.m_cLocation.Y = 1;
-				range = 6;
-				user.timelimit = 180;
-				blind = 1;
+				user.timelimit = 999;
                 tutorial_init = 1;
             }
             gameplay();
             if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 			{
 				Endtime = g_dElapsedTime;
-				g_eGameState = S_SPLASHSCREEN;
+				tutorial_init = 0;
+				g_eGameState = S_MENU;
 			}
             break;
         case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
@@ -295,19 +294,19 @@ void update(double dt)
 			
 			if(user.difficulty == normal)
 			{
-				range = 6;
+				range = 5;
 				user.timelimit = 180;
 				blind = 1;
 			}
 			if(user.difficulty == hard)
 			{
-				range = 5;
+				range = 4;
 				user.timelimit = 150;
 				blind = 1;
 			}
 			if(user.difficulty == insane)
 			{
-				range = 4;
+				range = 3;
 				user.timelimit = 120;
 				blind = 1;
 			}
@@ -872,7 +871,7 @@ void moveCharacter()
 		//user.boost = 1;
     }
 
-    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J') && (user.bomb == 0)) // Bomb
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J') && (user.bomb == 0) && (user.bombtaken == 0)) // Bomb
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Bomb");
@@ -1353,22 +1352,33 @@ void renderGame()
 	// pitfall
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'P' && user.health > 0)
 	{
-		if (init4 == 1)
+		if(tutorial_init == 1)
 		{
-			init4 = 0;
-			init3 = 0;
+			tutorial_init = 0;
 		}
-		else if(init3 == 1)
+		else
 		{
-			init3 = 0;
-			init2 = 0;
+			if (init4 == 1)
+			{
+				init4 = 0;
+				init3 = 0;
+			}
+			else if(init3 == 1)
+			{
+				init3 = 0;
+				init2 = 0;
+			}
+			else if(init2 == 1)
+			{
+				init2 = 0;
+				init1 = 0;
+			}
+			if(tutorial_init == 1)
+			{
+				tutorial_init = 0;
+			}
+			g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 2);
 		}
-		else if(init2 == 1)
-		{
-			init2 = 0;
-			init1 = 0;
-		}
-		g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 2);
 	}
     if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0 && g_dElapsedTime > lavastop)
 	{

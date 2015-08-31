@@ -13,6 +13,8 @@ int pointer = 0;
 int &menuPointer = pointer;
 int opPointer = 0;
 int &optionPointer = opPointer;
+int hPointer = 0;
+int &helpPointer = hPointer;
 const int normal = 0;
 const int hard = 1;
 const int insane = 2;
@@ -94,7 +96,7 @@ void mainMenu(Console &console, player&user)
 		{
 			case 0:
 				{
-					g_eGameState = S_TUTORIAL;
+					g_eGameState = S_GAME1;
 					g_dElapsedTime = 0;
 				}
 				break;
@@ -209,6 +211,8 @@ void exit()
 
 void help(Console &console)
 {
+	string Help[2] = {"Tutorial", "Back"};
+
 	console.writeToBuffer(25, 5, "Instructions", 0xfc);
 	console.writeToBuffer(25, 7, "Arrow keys to move.", 0xf0);
 	console.writeToBuffer(25, 8, "Z to select item.", 0xf0);
@@ -222,10 +226,60 @@ void help(Console &console)
 	console.writeToBuffer(25, 16, "+ is a health pack, Heal up!.", 0xf0);
 	console.writeToBuffer(25, 17, "M is a monster. Avoid him!.", 0xf0);
 	console.writeToBuffer(25, 18, "# to escape.", 0xf0);
-	console.writeToBuffer(25, 20, "Press Enter to return to main menu.", 0xf0);
-	if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
+	//console.writeToBuffer(25, 20, "Press Enter to return to main menu.", 0xf0);
+
+	for (int i = 0; i < 2; ++i)
+	{
+		if (i == hPointer)
+		{
+			console.writeToBuffer(30,20+i, Help[i], 10);
+		}
+		else
+		{
+			console.writeToBuffer(30, 20+i, Help[i], 0xf9);
+		}
+	}
+
+	if (g_abKeyPressed[K_UP] && g_dElapsedTime > stop)
+	{
+		stop = g_dElapsedTime + .2;
+		helpPointer -= 1;
+		if (helpPointer == -1)
+		{
+			helpPointer = 1;
+		}
+	}
+	else if (g_abKeyPressed[K_DOWN] && g_dElapsedTime > stop)
+	{
+		stop = g_dElapsedTime + .2;
+		helpPointer += 1;
+		if (helpPointer == 2)
+		{
+			helpPointer = 0;
+		}
+	}
+	else if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
+	{
+		stop = g_dElapsedTime + .2;
+		switch (helpPointer)
+		{
+			case 0:
+				{
+					g_eGameState = S_TUTORIAL;
+					g_dElapsedTime = 0;
+				}
+				break;
+			case 1:
+				{
+					g_eGameState = S_MENU;
+				}
+				break;
+		}
+	}
+
+	/*if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
 	{
 		stop = g_dElapsedTime + 0.2;
 		g_eGameState = S_MENU;
-	}
+	}*/
 }
