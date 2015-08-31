@@ -140,7 +140,7 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, pit, 0xf1);
 				}else if (line[charLocation.X-temprange+Xoffset+j] == 'J' && user.bombtaken == 0)
 				{
-					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, bomb, 0xfc);
+					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, bomb, 0xf1);
 				}
 				else if (line[charLocation.X-temprange+Xoffset+j] == 'L' && user.invispot == 0 && user.invistaken == 0)
 				{
@@ -226,7 +226,7 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, pit, 0xf1);
 				}else if (line[charLocation.X+k] == 'J' && user.bombtaken == 0)
 				{
-					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, bomb, 0xfc);
+					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, bomb, 0xf1);
 				}
 				else if (line[charLocation.X+k] == 'L' && user.invispot == 0 && user.invistaken == 0)
 				{

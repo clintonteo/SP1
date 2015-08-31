@@ -117,10 +117,10 @@ void renderInventory( player & user , Console & g_Console , double &boostcd , do
     
 }
 
-//Points
+//Points / Treasure
 void point( player & user , Console & g_Console )
 {
-    g_Console.writeToBuffer(61, 16 , "Points:" , 10);
+    g_Console.writeToBuffer(59, 16 , "Treasures:" , 10);
 
     if (user.TTaken == 1)
     {

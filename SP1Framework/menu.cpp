@@ -137,7 +137,7 @@ void options(Console &console, player&user)
 		}
 		else
 		{
-			console.writeToBuffer(30,10+i, Options[i], 0xf9);
+			console.writeToBuffer(30, 10+i, Options[i], 0xf9);
 		}
 	}
 
