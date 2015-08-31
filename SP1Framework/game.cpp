@@ -26,6 +26,7 @@ COORD mob;
 COORD lastknown;
 PMAP MapCollision;
 // stage clear checker
+bool tutorial_init = 0;
 bool init1 = 0;
 bool init2 = 0;
 bool extime2 = 0;
@@ -187,103 +188,42 @@ void getInput( void )
     g_abKeyPressed[K_SPACE] = isKeyPressed(VK_SPACE); //SPACE BAR
 
     //Name Inputs
-    g_abKeyPressed[K_0] = isKeyPressed(0x30);
-    g_abKeyPressed[K_1] = isKeyPressed(0x31);
-    g_abKeyPressed[K_2] = isKeyPressed(0x32);
-    g_abKeyPressed[K_3] = isKeyPressed(0x33);
-    g_abKeyPressed[K_4] = isKeyPressed(0x34);
-    g_abKeyPressed[K_5] = isKeyPressed(0x35);
-    g_abKeyPressed[K_6] = isKeyPressed(0x36);
-    g_abKeyPressed[K_7] = isKeyPressed(0x37);
-    g_abKeyPressed[K_8] = isKeyPressed(0x38);
-    g_abKeyPressed[K_9] = isKeyPressed(0x39);
-    g_abKeyPressed[K_A] = isKeyPressed(0x41);
-    g_abKeyPressed[K_B] = isKeyPressed(0x42);
-    g_abKeyPressed[K_C] = isKeyPressed(0x43);
-    g_abKeyPressed[K_D] = isKeyPressed(0x44);
-    g_abKeyPressed[K_E] = isKeyPressed(0x45);
-    g_abKeyPressed[K_F] = isKeyPressed(0x46);
-    g_abKeyPressed[K_G] = isKeyPressed(0x47);
-    g_abKeyPressed[K_H] = isKeyPressed(0x48);
-    g_abKeyPressed[K_I] = isKeyPressed(0x49);
-    g_abKeyPressed[K_J] = isKeyPressed(0x4A);
-    g_abKeyPressed[K_K] = isKeyPressed(0x4B);
-    g_abKeyPressed[K_L] = isKeyPressed(0x4C);
-    g_abKeyPressed[K_M] = isKeyPressed(0x4D);
-    g_abKeyPressed[K_N] = isKeyPressed(0x4E);
-    g_abKeyPressed[K_O] = isKeyPressed(0x4F);
-    g_abKeyPressed[K_P] = isKeyPressed(0x50);
-    g_abKeyPressed[K_Q] = isKeyPressed(0x51);
-    g_abKeyPressed[K_R] = isKeyPressed(0x52);
-    g_abKeyPressed[K_S] = isKeyPressed(0x53);
-    g_abKeyPressed[K_T] = isKeyPressed(0x54);
-    g_abKeyPressed[K_U] = isKeyPressed(0x55);
-    g_abKeyPressed[K_V] = isKeyPressed(0x56);
-    g_abKeyPressed[K_W] = isKeyPressed(0x57);
-    g_abKeyPressed[K_X] = isKeyPressed(0x58);
-    g_abKeyPressed[K_Y] = isKeyPressed(0x59);
-    g_abKeyPressed[K_Z] = isKeyPressed(0x5A);
-
-    //// detect Numbers pressed
-    //for (i=0; i<10; i++)
-    //{
-    //        if (keydownNum[i] == false)
-    //        {
-    //                if (isKeyPressed('0'+i))
-    //                    keydownNum[i] = true;
-    //        }
-    //        else
-    //        {
-    //                if (!isKeyPressed('0'+i))
-    //                {
-    //                    g_charBuffer[g_chInput] = '0'+i;
-    //                    ++g_chInput %= 128;
-    //                    keydownNum[i] = false;
-    //                }
-    //        }
-    //                      
-    //        if (isKeyPressed(VK_RETURN))
-    //        {
-    //                enterpressed = true;             
-    //                break;
-    //        }
-    //}
- 
-    //// detect A-Z pressed
-    //if (!enterpressed)
-    //{
-    //        for (i=0; i<27; i++)
-    //        {
-    //                if (keydownChar[i] == false)
-    //                {
-    //                    if (isKeyPressed('A'+i))
-    //                            keydownChar[i] = true;           
-    //                }
-    //                else
-    //                {
-    //                    if (!isKeyPressed('A'+i))
-    //                    {
-    //                            g_charBuffer[g_chInput] = 'a'+i;
-    //                            ++g_chInput %= 128;
-    //                            keydownChar[i] = false;          
-    //                    }
-    //                }
-    //                      
-    //                if (isKeyPressed(VK_RETURN))
-    //                {
-    //                    enterpressed = true;
-    //                    break;
-    //                }
-    //        }
-    //         
-    //}
-
-    ////Place char buffer into user.name
-    //for (int counter = 0; counter < 128; ++counter)
-    //{
-    //    user.name.push_back(g_charBuffer[counter]);
-    //}
- 
+    //g_abKeyPressed[K_0] = isKeyPressed(0x30);
+    //g_abKeyPressed[K_1] = isKeyPressed(0x31);
+    //g_abKeyPressed[K_2] = isKeyPressed(0x32);
+    //g_abKeyPressed[K_3] = isKeyPressed(0x33);
+    //g_abKeyPressed[K_4] = isKeyPressed(0x34);
+    //g_abKeyPressed[K_5] = isKeyPressed(0x35);
+    //g_abKeyPressed[K_6] = isKeyPressed(0x36);
+    //g_abKeyPressed[K_7] = isKeyPressed(0x37);
+    //g_abKeyPressed[K_8] = isKeyPressed(0x38);
+    //g_abKeyPressed[K_9] = isKeyPressed(0x39);
+    //g_abKeyPressed[K_A] = isKeyPressed(0x41);
+    //g_abKeyPressed[K_B] = isKeyPressed(0x42);
+    //g_abKeyPressed[K_C] = isKeyPressed(0x43);
+    //g_abKeyPressed[K_D] = isKeyPressed(0x44);
+    //g_abKeyPressed[K_E] = isKeyPressed(0x45);
+    //g_abKeyPressed[K_F] = isKeyPressed(0x46);
+    //g_abKeyPressed[K_G] = isKeyPressed(0x47);
+    //g_abKeyPressed[K_H] = isKeyPressed(0x48);
+    //g_abKeyPressed[K_I] = isKeyPressed(0x49);
+    //g_abKeyPressed[K_J] = isKeyPressed(0x4A);
+    //g_abKeyPressed[K_K] = isKeyPressed(0x4B);
+    //g_abKeyPressed[K_L] = isKeyPressed(0x4C);
+    //g_abKeyPressed[K_M] = isKeyPressed(0x4D);
+    //g_abKeyPressed[K_N] = isKeyPressed(0x4E);
+    //g_abKeyPressed[K_O] = isKeyPressed(0x4F);
+    //g_abKeyPressed[K_P] = isKeyPressed(0x50);
+    //g_abKeyPressed[K_Q] = isKeyPressed(0x51);
+    //g_abKeyPressed[K_R] = isKeyPressed(0x52);
+    //g_abKeyPressed[K_S] = isKeyPressed(0x53);
+    //g_abKeyPressed[K_T] = isKeyPressed(0x54);
+    //g_abKeyPressed[K_U] = isKeyPressed(0x55);
+    //g_abKeyPressed[K_V] = isKeyPressed(0x56);
+    //g_abKeyPressed[K_W] = isKeyPressed(0x57);
+    //g_abKeyPressed[K_X] = isKeyPressed(0x58);
+    //g_abKeyPressed[K_Y] = isKeyPressed(0x59);
+    //g_abKeyPressed[K_Z] = isKeyPressed(0x5A);
 }
 
 //--------------------------------------------------------------
@@ -316,6 +256,28 @@ void update(double dt)
 			break;
 		case S_HIGHSCORE: highscoreMenu( g_Console, user);
 			break;
+
+        case S_TUTORIAL:
+            if(tutorial_init == 0)
+            {
+                reset();
+                spawnblock(blocks);
+				allMobs.clear();
+				spawnmob(allMobs);
+                g_sChar.m_cLocation.X = 1;
+                g_sChar.m_cLocation.Y = 1;
+				range = 6;
+				user.timelimit = 180;
+				blind = 1;
+                tutorial_init = 1;
+            }
+            gameplay();
+            if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
+			{
+				Endtime = g_dElapsedTime;
+				g_eGameState = S_SPLASHSCREEN;
+			}
+            break;
         case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
             break;
         
@@ -550,6 +512,10 @@ void reset()
 	user.MedsTaken = 0;
 	allMobs.clear();
 	spawnblock(blocks);
+
+    std::ofstream log;
+    log.open("log.txt", std::fstream::trunc);
+    log.close();
 }
 
 //--------------------------------------------------------------
@@ -574,6 +540,11 @@ void render()
 		case S_HIGHSCORE: highscoreMenu( g_Console, user);
 			break;
         case S_SPLASHSCREEN: renderSplashScreen();
+            break;
+        case S_TUTORIAL: 
+            renderTutorial();
+            renderGame();
+            g_Console.writeToBuffer(51, 0, "TUTORIAL", 10);
             break;
         case S_GAME1: 
 			renderStage1();
@@ -837,6 +808,42 @@ void moveCharacter()
 			g_dBounceTime = g_dElapsedTime + 0.2;
 		}
     }
+    
+    //Tutorial Msg
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'a')
+    {
+            std::ofstream log;
+            log.open("log.txt", std::fstream::trunc);
+            log.close();
+            writeLog("Traps and Medkits ahead" , g_dElapsedTime);
+            writeLog("Traps damage you" , g_dElapsedTime);
+    }
+
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'b')
+    {
+            std::ofstream log;
+            log.open("log.txt", std::fstream::trunc);
+            log.close();
+            writeLog("Pitfalls Ahead" , g_dElapsedTime);
+            writeLog("They make you fall a level" , g_dElapsedTime);
+    }
+        
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'c')
+    {
+        std::ofstream log;
+        log.open("log.txt", std::fstream::trunc);
+        log.close();
+        writeLog("Bomb ahead, use it" , g_dElapsedTime);
+    }
+
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'd')
+    {
+        std::ofstream log;
+        log.open("log.txt", std::fstream::trunc);
+        log.close();
+        writeLog("Invisibility ahead, avoid enemy" , g_dElapsedTime);
+    }
+    
 
     // POINTS
     if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && user.TTaken == 0)
@@ -891,6 +898,11 @@ void moveCharacter()
         //g_eGameState = S_SPLASHSCREEN;
         --user.lives;
         user.health = 5;
+        if (g_eGameState == S_TUTORIAL)
+        {
+            tutorial_init = 0;
+        }
+
         if (g_eGameState == S_GAME1)
         {
             init1 = 0;
@@ -1001,74 +1013,6 @@ void processUserInput()
     // quits the game if player hits the escape key
     if (g_abKeyPressed[K_ESCAPE])
         g_bQuitGame = true;
-
-    /*if (user.gameover == 1)
-    {
-        if (g_abKeyPressed[K_0])
-        {
-            user.name += "0";
-        }
-
-        if (g_abKeyPressed[K_1])
-        {
-            user.name += "1";
-        }
-
-        if (g_abKeyPressed[K_2])
-        {
-            user.name += "2";
-        }
-
-        if (g_abKeyPressed[K_3])
-        {
-            user.name += "3";
-        }
-
-        if (g_abKeyPressed[K_4])
-        {
-            user.name += "4";
-        }
-
-        if (g_abKeyPressed[K_5])
-        {
-            user.name += "5";
-        }
-
-        if (g_abKeyPressed[K_6])
-        {
-            user.name += "6";
-        }
-
-        if (g_abKeyPressed[K_7])
-        {
-            user.name += "7";
-        }
-
-        if (g_abKeyPressed[K_8])
-        {
-            user.name += "8";
-        }
-
-        if (g_abKeyPressed[K_9])
-        {
-            user.name += "9";
-        }
-
-        if (g_abKeyPressed[K_A])
-        {
-            user.name += "A";
-        }
-
-        if (g_abKeyPressed[K_B])
-        {
-            user.name += "B";
-        }
-
-        if (g_abKeyPressed[K_C])
-        {
-            user.name += "C";
-        }
-    }*/
 }
 
 void EnterName()
@@ -1301,6 +1245,17 @@ void renderStage4()
 		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
 	}
 }
+
+void renderTutorial()
+{
+    MapCollision = load_map("tutorial.txt");
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "tutorial.txt");
+	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console, blind);
+	for(unsigned int i = 0; i < allMobs.size(); ++i)
+	{
+		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
+	}
+}
 void renderGame()
 {
     background ( g_Console );
@@ -1471,7 +1426,7 @@ void renderGame()
     renderInventory ( user , g_Console , boostcd , g_dElapsedTime);
     point( user , g_Console);
     selector ( user , g_Console);
-    readLog ( g_Console );
+    readLog ( g_Console , g_dElapsedTime);
 }
 
 void renderMap()

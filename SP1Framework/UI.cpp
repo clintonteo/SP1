@@ -215,7 +215,7 @@ void selector( player & user , Console & g_Console )
 }
 
 //Read Log
-void readLog ( Console & g_Console )
+void readLog ( Console & g_Console , double g_dElapsedTime)
 {
     std::fstream log ("log.txt");
 
@@ -230,29 +230,18 @@ void readLog ( Console & g_Console )
         while (getline (log,line))
         {
             g_Console.writeToBuffer(52, 23 - i , line , 10);
-            ++i;
+            
             if(i == 5)
             {
-                i = 0;
-                //g_Console.writeToBuffer(51, 23 - i ,  "----------------" , 10);
-                /*std::fstream log ("log.txt", std::fstream::app);
-                log << "\n";
+                /*std::ofstream log;
+                log.open("log.txt", std::fstream::trunc);
                 log.close();*/
+                i = 0;
             }
+            ++i;
         }
         log.close();
     }
-
-    /*for (int i = 0; i <= 5; ++i)
-    {
-        getline (log, line);
-        g_Console.writeToBuffer(51, 18 + i , line , 10);
-
-        if (i == 5)
-        {
-            i = 0;
-        }
-    }*/
 }
 
 //Write Log

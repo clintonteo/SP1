@@ -94,7 +94,7 @@ void mainMenu(Console &console, player&user)
 		{
 			case 0:
 				{
-					g_eGameState = S_SPLASHSCREEN;
+					g_eGameState = S_TUTORIAL;
 					g_dElapsedTime = 0;
 				}
 				break;
