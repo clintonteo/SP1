@@ -224,35 +224,35 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 						writeLog("Im on u", 1);
 						user.health--;
 						mobD.playerImmunity = 1;
-							//if(mobD.direction.X == mobD.MC.X - 1 && mobD.MC.Y == charLocation.Y)
-							//{
-							//	writeLog("I came from left", 1);
-							//	if(charLocation.X+2 < 50 && (map->data[charLocation.Y][charLocation.X+2] == ' ' || map->data[charLocation.Y][charLocation.X+2] == 'D'))
-							//	{
-							//	charLocation.X+=2;
-							//	}
-							//}else if(mobD.direction.X == mobD.MC.X + 1 && mobD.MC.Y == charLocation.Y)
-							//{
-							//	writeLog("I came from right", 1);
-							//	if(charLocation.X - 2 > 0 && (map->data[charLocation.Y][charLocation.X-2] == ' ' || map->data[charLocation.Y][charLocation.X-2] == 'D'))
-							//	{
-							//	charLocation.X-=2;
-							//	}
-							//}else if(mobD.direction.Y == mobD.MC.Y - 1 && mobD.MC.X == charLocation.X)
-							//{
-							//	writeLog("I came from top", 1);
-							//	if(charLocation.Y+2< 50 &&(map->data[charLocation.Y + 2][charLocation.X] == ' ' || map->data[charLocation.Y + 2][charLocation.X] == 'D'))
-							//	{
-							//	charLocation.Y+=2;
-							//	}
-							//}else if(mobD.direction.Y == mobD.MC.Y + 1 && mobD.MC.X == charLocation.X)
-							//{
-							//	writeLog("I came from below", 1);
-							//	if(charLocation.Y - 2 > 0 && (map->data[charLocation.Y - 2][charLocation.X] == ' ' || map->data[charLocation.Y - 2][charLocation.X] == 'D'))
-							//	{
-							//	charLocation.Y-=2;
-							//	}
-							//}
+							if(mobD.direction.X == mobD.MC.X - 1 && mobD.MC.Y == charLocation.Y)
+							{
+								writeLog("I came from left", 1);
+								if(charLocation.X+2 < 50 && (map->data[charLocation.Y][charLocation.X+2] == ' ' || map->data[charLocation.Y][charLocation.X+2] == 'D'))
+								{
+								charLocation.X+=2;
+								}
+							}else if(mobD.direction.X == mobD.MC.X + 1 && mobD.MC.Y == charLocation.Y)
+							{
+								writeLog("I came from right", 1);
+								if(charLocation.X - 2 > 0 && (map->data[charLocation.Y][charLocation.X-2] == ' ' || map->data[charLocation.Y][charLocation.X-2] == 'D'))
+								{
+								charLocation.X-=2;
+								}
+							}else if(mobD.direction.Y == mobD.MC.Y - 1 && mobD.MC.X == charLocation.X)
+							{
+								writeLog("I came from top", 1);
+								if(charLocation.Y+2< 20 &&(map->data[charLocation.Y + 2][charLocation.X] == ' ' || map->data[charLocation.Y + 2][charLocation.X] == 'D'))
+								{
+								charLocation.Y+=2;
+								}
+							}else if(mobD.direction.Y == mobD.MC.Y + 1 && mobD.MC.X == charLocation.X)
+							{
+								writeLog("I came from below", 1);
+								if(charLocation.Y - 2 > 0 && (map->data[charLocation.Y - 2][charLocation.X] == ' ' || map->data[charLocation.Y - 2][charLocation.X] == 'D'))
+								{
+								charLocation.Y-=2;
+								}
+							}
 					}
 				}else
 				{

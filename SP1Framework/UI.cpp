@@ -117,10 +117,10 @@ void renderInventory( player & user , Console & g_Console , double &boostcd , do
     
 }
 
-//Points
+//Points / Treasure
 void point( player & user , Console & g_Console )
 {
-    g_Console.writeToBuffer(61, 16 , "Points:" , 10);
+    g_Console.writeToBuffer(59, 16 , "Treasures:" , 10);
 
     if (user.TTaken == 1)
     {
@@ -154,7 +154,7 @@ void calculateFinal ( player & user , double Endtime )
     if (user.stage1 == 1)
     {
         user.final_score += 1000;
-        for (int time_score = 1; time_score <= (user.timelimit - Endtime); time_score += 10)
+        for (int time_score = 0; time_score <= (user.timelimit - Endtime); time_score += 60)
         {
             user.final_score += 50;
         }
@@ -162,22 +162,29 @@ void calculateFinal ( player & user , double Endtime )
         if (user.stage2 == 1)
         {
             user.final_score += 1000;
-            for (int time_score = 1; time_score <= (user.timelimit - Endtime); time_score += 10)
+            for (int time_score = 0; time_score <= (user.timelimit - Endtime); time_score += 60)
             {
                 user.final_score += time_score;
             }
             if (user.stage3 == 1)
             {
                 user.final_score += 1000;
-                for (int time_score = 1; time_score <= (user.timelimit - Endtime); time_score += 10)
+                for (int time_score = 0; time_score <= (user.timelimit - Endtime); time_score += 60)
                 {
                     user.final_score += time_score;
                 }
             }
+
         }
     }
 
     user.final_score += (user.points*500);
+	if(user.difficulty == 3)
+		user.final_score *=0.5;
+	else if(user.difficulty == 1)
+		user.final_score *=1.5;
+	else if(user.difficulty == 2)
+		user.final_score *= 2;
 }
 
 //Final Score
