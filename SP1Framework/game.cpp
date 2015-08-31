@@ -517,7 +517,7 @@ void update(double dt)
                 highscoreWrite( user , g_Console );
                 user.wroteHighScore = 0;
             }
-            if (g_abKeyPressed[K_ENTER] && g_dElapsedTime + 0.2)
+            if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop1)
             {
                 //g_eGameState = S_MENU;
                 g_bQuitGame = true;
