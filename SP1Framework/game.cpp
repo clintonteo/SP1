@@ -900,7 +900,7 @@ void moveCharacter()
 
 		else if (g_eGameState == S_GAME3)
         {
-            init3 = 0;
+            init3 = 0; 
         }
 		else if (g_eGameState == S_GAME4)
         {
@@ -909,12 +909,12 @@ void moveCharacter()
         lostlives = 1;
         writeLog("You lost a live!", g_dElapsedTime);
 	}
-	//RESET
-	if(g_abKeyPressed[K_RESET])
-	{
-		//g_eGameState = S_SPLASHSCREEN2;
-        g_eGameState = static_cast<EGAMESTATES>(g_eGameState + 1);
-	}
+	////RESET
+	//if(g_abKeyPressed[K_RESET])
+	//{
+	//	//g_eGameState = S_SPLASHSCREEN2;
+ //       g_eGameState = static_cast<EGAMESTATES>(g_eGameState + 1);
+	//}
 
     //POINTS
     if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && user.TTaken == 0)

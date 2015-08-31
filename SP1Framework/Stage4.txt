@@ -1,6 +1,6 @@
 20 50
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-W1               WWH          3WWD       D      LW
+W1               WWH           WWD       D      LW
 W   WWWWWWWWWWWD WW            WW  E       WWWWWWW
 W   W=       =W  WW      E     WW D             DW
 W   W=  ===D =W  WW            WW      D  B      W
@@ -10,7 +10,7 @@ W   W=  ======W DWW            WW     2WW  P W   W
 WD  WWZZZZZZZWW  WWYYYYYYYYYYYYWW      WW    WI  W
 W   WWZZZZZZZWW  WWYYYYYYYYYYYYWWWWWWWWWWD   WWWWW
 W    D           WW                          C   W
-W          D     WW                 D        C DKW
+W          D     WW                 D        C D3W
 WWWWWWWW   WWWWWWWWXXXXXXXXXXXXWWWWWWWWWWWWWWWWWWW
 WWWWWWWW   WWWWWWWWXXXXXXXXXXXXWWWWWWWWWWWWWWWWWWW
 W          D            P                        W
