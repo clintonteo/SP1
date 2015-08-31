@@ -19,7 +19,7 @@ const int normal = 0;
 const int hard = 1;
 const int insane = 2;
 const int ez = 3;
-double stop = 0;
+double stopmenu = 0;
 
 void mainMenu(Console &console, player&user)
 {
@@ -71,27 +71,27 @@ void mainMenu(Console &console, player&user)
 			console.writeToBuffer(30, 13+i, Menu[i], 0xf9);
 		}
 	}
-	if (g_abKeyPressed[K_UP] && g_dElapsedTime > stop)
+	if (g_abKeyPressed[K_UP] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + .2;
+		stopmenu = g_dElapsedTime + .2;
 		menuPointer -= 1;
 		if (menuPointer == -1)
 		{
 			menuPointer = 4;
 		}
 	}
-	else if (g_abKeyPressed[K_DOWN] && g_dElapsedTime > stop)
+	else if (g_abKeyPressed[K_DOWN] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + .2;
+		stopmenu = g_dElapsedTime + .2;
 		menuPointer += 1;
 		if (menuPointer == 5)
 		{
 			menuPointer = 0;
 		}
 	}
-	else if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
+	else if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + .2;
+		stopmenu = g_dElapsedTime + .2;
 		switch (menuPointer)
 		{
 			case 0:
@@ -100,6 +100,7 @@ void mainMenu(Console &console, player&user)
 					g_dElapsedTime = 0;
 					user.lives = 3;
 					user.health = 5;
+					stopmenu = 0;
 				}
 				break;
 			case 1:
@@ -145,27 +146,27 @@ void options(Console &console, player&user)
 		}
 	}
 
-	if (g_abKeyPressed[K_UP] && g_dElapsedTime > stop)
+	if (g_abKeyPressed[K_UP] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + .2;
+		stopmenu = g_dElapsedTime + .2;
 		optionPointer -= 1;
 		if (optionPointer == -1)
 		{
 			optionPointer = 3;
 		}
 	}
-	else if (g_abKeyPressed[K_DOWN] && g_dElapsedTime > stop)
+	else if (g_abKeyPressed[K_DOWN] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + .2;
+		stopmenu = g_dElapsedTime + .2;
 		optionPointer += 1;
 		if (optionPointer == 4)
 		{
 			optionPointer = 0;
 		}
 	}
-	else if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
+	else if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + .2;
+		stopmenu = g_dElapsedTime + .2;
 		switch (optionPointer)
 		{
 			case 0:
@@ -199,9 +200,9 @@ void options(Console &console, player&user)
 void highscoreMenu(Console& g_Console, player&user)
 {
 	highscoreBoard (user , g_Console );
-	if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
+	if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + 0.2;
+		stopmenu = g_dElapsedTime + 0.2;
 		g_eGameState = S_MENU;
 	}
 }
@@ -242,27 +243,27 @@ void help(Console &console, player&user)
 		}
 	}
 
-	if (g_abKeyPressed[K_UP] && g_dElapsedTime > stop)
+	if (g_abKeyPressed[K_UP] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + .2;
+		stopmenu = g_dElapsedTime + .2;
 		helpPointer -= 1;
 		if (helpPointer == -1)
 		{
 			helpPointer = 1;
 		}
 	}
-	else if (g_abKeyPressed[K_DOWN] && g_dElapsedTime > stop)
+	else if (g_abKeyPressed[K_DOWN] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + .2;
+		stopmenu = g_dElapsedTime + .2;
 		helpPointer += 1;
 		if (helpPointer == 2)
 		{
 			helpPointer = 0;
 		}
 	}
-	else if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
+	else if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopmenu)
 	{
-		stop = g_dElapsedTime + .2;
+		stopmenu = g_dElapsedTime + .2;
 		switch (helpPointer)
 		{
 			case 0:
@@ -271,6 +272,7 @@ void help(Console &console, player&user)
 					user.lives = 5;
 					user.health = 5;
 					g_dElapsedTime = 0;
+					stopmenu = 0;
 				}
 				break;
 			case 1:
@@ -280,10 +282,4 @@ void help(Console &console, player&user)
 				break;
 		}
 	}
-
-	/*if(g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop)
-	{
-		stop = g_dElapsedTime + 0.2;
-		g_eGameState = S_MENU;
-	}*/
 }

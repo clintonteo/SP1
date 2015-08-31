@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include "AI.h"
+
 using std::cout;
 using std::endl;
 using std::cin;
@@ -39,7 +40,7 @@ int range;
 bool blind = 0;
 bool lostlives = 0;
 
-double stop1 = 0;
+double stopswitch = 0;
 double lavastop = 0;
 double Endtime;
 double boostcd = 0;
@@ -278,7 +279,7 @@ void update(double dt)
 				//reset();
 				//writeLog("CONGRATS!", 999);
 				tutorial_init = 0;
-				g_dElapsedTime = 0;
+				/*g_dElapsedTime = 0;*/
 				g_eGameState = S_MENU;
 			}
             break;
@@ -471,7 +472,7 @@ void update(double dt)
                 //user.gameover = 1;
                 user.wroteHighScore = 1;
                 g_eGameState = S_GAMEOVER;
-				stop1 = g_dElapsedTime + 0.2;
+				stopswitch = g_dElapsedTime + 0.2;
             }
 
             break;
@@ -483,7 +484,7 @@ void update(double dt)
                 highscoreWrite( user , g_Console );
                 user.wroteHighScore = 0;
             }
-            if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stop1)
+            if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopswitch)
             {
                 //g_eGameState = S_MENU;
                 g_bQuitGame = true;
@@ -516,7 +517,9 @@ void reset()
 	user.MedsTaken = 0;
 	allMobs.clear();
 	spawnblock(blocks);
-
+	g_dBounceTime = 0;
+	stopswitch = 0;
+	lavastop = 0;
     std::ofstream log;
     log.open("log.txt", std::fstream::trunc);
     log.close();
@@ -857,14 +860,14 @@ void moveCharacter()
     }
 
     // SELECTON
-    if ((g_abKeyPressed[K_SELECT])/* && (user.inventory[0] == 't') */&& (user.select < user.inventoryitems.size() && g_dElapsedTime > stop1))
+    if ((g_abKeyPressed[K_SELECT])/* && (user.inventory[0] == 't') */&& (user.select < user.inventoryitems.size() && g_dElapsedTime > stopswitch))
     {
         user.select += 1;
         if (user.select >= user.inventoryitems.size()/*+1*/)
         {
             user.select = 0;
         }
-		stop1 = g_dElapsedTime + .2;
+		stopswitch = g_dElapsedTime + .2;
     }
 
     // INVENTORY
