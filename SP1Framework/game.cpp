@@ -101,7 +101,7 @@ void init( void )
 
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
-    g_Console.setConsoleFont(40, 40, L"Consolas");
+    g_Console.setConsoleFont(0, 25, L"Consolas");
 	//user.difficulty = normal;
 	//if(user.difficulty == normal)
 	//{
@@ -1477,7 +1477,7 @@ void renderFramerate()
     COORD c;
     // displays the framerate
     std::ostringstream ss;
-    ss << std::fixed << std::setprecision(3);
+    ss << std::fixed << std::setprecision(2);
     ss << 1.0 / g_dDeltaTime << "fps";
     c.X = 72;
     c.Y = 0;
