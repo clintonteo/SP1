@@ -38,6 +38,7 @@ int range;
 bool blind = 0;
 bool lostlives = 0;
 
+double stop1 = 0;
 double Endtime;
 double boostcd = 0;
 double invisExp = 0;
@@ -98,7 +99,7 @@ void init( void )
 
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
-    g_Console.setConsoleFont(0, 25, L"Consolas");
+    g_Console.setConsoleFont(40, 40, L"Raster");
 	//user.difficulty = normal;
 	//if(user.difficulty == normal)
 	//{
@@ -503,6 +504,7 @@ void update(double dt)
                 //user.gameover = 1;
                 user.wroteHighScore = 1;
                 g_eGameState = S_GAMEOVER;
+				stop1 = g_dElapsedTime + 0.2;
             }
 
             break;
@@ -514,7 +516,7 @@ void update(double dt)
                 highscoreWrite( user , g_Console );
                 user.wroteHighScore = 0;
             }
-            if (g_abKeyPressed[K_ENTER])
+            if (g_abKeyPressed[K_ENTER] && g_dElapsedTime + 0.2)
             {
                 //g_eGameState = S_MENU;
                 g_bQuitGame = true;
@@ -843,13 +845,14 @@ void moveCharacter()
     }
 
     // SELECTON
-    if ((g_abKeyPressed[K_SELECT])/* && (user.inventory[0] == 't') */&& (user.select < user.inventoryitems.size()))
+    if ((g_abKeyPressed[K_SELECT])/* && (user.inventory[0] == 't') */&& (user.select < user.inventoryitems.size() && g_dElapsedTime > stop1))
     {
         user.select += 1;
         if (user.select >= user.inventoryitems.size()/*+1*/)
         {
             user.select = 0;
         }
+		stop1 = g_dElapsedTime + .2;
     }
 
     // INVENTORY
