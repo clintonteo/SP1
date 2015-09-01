@@ -1,7 +1,0 @@
-You have been hurt! @4secs
-X Switch Activated! @10secs
-Boost is ready! @17secs
-Y Switch Activated! @22secs
-Boost is ready! @29secs
-Boost is ready! @37secs
-Stage Completed! @40secs
