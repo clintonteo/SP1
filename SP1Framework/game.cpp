@@ -29,6 +29,7 @@ PMAP MapCollision;
 // stage clear checker
 bool tutorial_init = 0;
 bool init1 = 0;
+bool extime1 = 0;
 bool init2 = 0;
 bool extime2 = 0;
 bool init3 = 0;
@@ -299,29 +300,41 @@ void update(double dt)
 				//spawnmob(allMobs);
 				init1 = 1;
 			}
-			
+			if (extime1 == 0)
+			{
+				if(user.difficulty == normal)
+				{
+					user.timelimit = 180;
+				}
+				if(user.difficulty == hard)
+				{
+					user.timelimit = 150;
+				}
+				if(user.difficulty == insane)
+				{
+					user.timelimit = 120;
+				}
+				if(user.difficulty == ez)
+				{
+					user.timelimit = 180;
+				}
+				extime1 = 1;
+			}
 			if(user.difficulty == normal)
-			{
-				range = 5;
-				user.timelimit = 180;
-				blind = 1;
-			}
+				{
+					range = 5;
+					blind = 1;
+				}
 			if(user.difficulty == hard)
-			{
-				range = 4;
-				user.timelimit = 150;
-				blind = 1;
-			}
+				{
+					range = 4;
+					blind = 1;
+				}
 			if(user.difficulty == insane)
-			{
-				range = 3;
-				user.timelimit = 120;
-				blind = 1;
-			}
-			if(user.difficulty == ez)
-			{
-				user.timelimit = 180;
-			}
+				{
+					range = 3;
+					blind = 1;
+				}
 			user.start = 1;
 			gameplay(); // gameplay logic when we are in the game
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
@@ -506,6 +519,7 @@ void update(double dt)
 				init2 = 0;
 				init3 = 0;
 				init4 = 0;
+				user.start = 0;
                 //g_bQuitGame = true;
 
             }
@@ -918,6 +932,7 @@ void moveCharacter()
 		init2 = 0;
 		init3 = 0;
 		init4 = 0;
+		user.start = 0;
 	}
 
     // quits if player lives at 0
@@ -1047,6 +1062,7 @@ void processUserInput()
 		init2 = 0;
 		init3 = 0;
 		init4 = 0;
+		user.start = 0;
 	}
 }
 
@@ -1389,6 +1405,7 @@ void renderGame()
 	// pitfall
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'P' && user.health > 0)
 	{
+		reset();
 		if(tutorial_init == 1)
 		{
 			tutorial_init = 0;
@@ -1403,18 +1420,14 @@ void renderGame()
 			else if(init3 == 1)
 			{
 				init3 = 0;
-				init2 = 0;
+				init2 = 0;			
 			}
 			else if(init2 == 1)
 			{
 				init2 = 0;
 				init1 = 0;
 			}
-			if(tutorial_init == 1)
-			{
-				tutorial_init = 0;
-			}
-			g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 2);
+			g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 3);
 		}
 	}
     if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0 && g_dElapsedTime > lavastop)
