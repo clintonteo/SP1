@@ -35,6 +35,7 @@ bool init3 = 0;
 bool extime3 = 0;
 bool init4 = 0;
 bool extime4 = 0;
+bool init_name = 0;
 
 int range;
 bool blind = 0;
@@ -187,7 +188,7 @@ void getInput( void )
 	g_abKeyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
     g_abKeyPressed[K_ENTER] = isKeyPressed(VK_RETURN); // Enter Key
     g_abKeyPressed[K_SPACE] = isKeyPressed(VK_SPACE); //SPACE BAR
-	g_abKeyPressed[K_BACK] = isKeyPressed(VK_BACK);
+     g_abKeyPressed[K_BACK] = isKeyPressed(VK_BACK);
 
     //Name Inputs
     //g_abKeyPressed[K_0] = isKeyPressed(0x30);
@@ -325,6 +326,7 @@ void update(double dt)
 			gameplay(); // gameplay logic when we are in the game
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 			{
+                writeLog("Stage Completed!" , g_dElapsedTime);
 				Endtime = g_dElapsedTime;
                 user.stage1 = 1;
 				g_eGameState = S_SPLASHSCREEN2;
@@ -370,6 +372,7 @@ void update(double dt)
 				gameplay();
 				if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 				{
+                    writeLog("Stage Completed!" , g_dElapsedTime);
 					Endtime = g_dElapsedTime;
                     user.stage2 = 1;
 					g_eGameState = S_SPLASHSCREEN3;
@@ -415,6 +418,7 @@ void update(double dt)
 			gameplay();
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 				{
+                    writeLog("Stage Completed!" , g_dElapsedTime);
 					Endtime = g_dElapsedTime;
                     user.stage3 = 1;
 					g_eGameState = S_SPLASHSCREEN4;
@@ -460,6 +464,7 @@ void update(double dt)
 			gameplay();
             if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 			{
+                writeLog("Stage Completed!" , g_dElapsedTime);
 				Endtime = g_dElapsedTime;
                 user.stage4 = 1;
 				g_eGameState = S_NAME;
@@ -468,9 +473,18 @@ void update(double dt)
 			break;
 
         case S_NAME:
+            if(user.name.size() > 0)
+            {
+                if (init_name == 0)
+                {
+                    user.name.clear();
+                    init_name = 1;
+                }
+            }
             if (g_abKeyPressed[K_ENTER])
             {
                 //user.gameover = 1;
+                
                 user.wroteHighScore = 1;
                 g_eGameState = S_GAMEOVER;
 				stopswitch = g_dElapsedTime + 0.2;
@@ -521,9 +535,6 @@ void reset()
 	g_dBounceTime = 0;
 	stopswitch = 0;
 	lavastop = 0;
-    std::ofstream log;
-    log.open("log.txt", std::fstream::trunc);
-    log.close();
 }
 
 //--------------------------------------------------------------
@@ -695,7 +706,7 @@ void moveCharacter()
 			{
 				if(user.switch1 == 1)
 				{
-					        Beep(1440, 30);
+					Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
 				}
 			}
@@ -703,7 +714,7 @@ void moveCharacter()
 			{
 				if(user.switch2 == 1)
 				{
-					        Beep(1440, 30);
+					Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
 				}
 			}
@@ -1062,7 +1073,7 @@ void EnterName()
     if (g_abKeyPressed[K_Y]){ user.name += "Y"; }
     if (g_abKeyPressed[K_Z]){ user.name += "Z"; }*/
     if (g_abKeyPressed[K_SPACE]){ user.name += " "; }
-	if (g_abKeyPressed[K_BACK]){user.name.pop_back();}
+    if (g_abKeyPressed[K_BACK]){ if(user.name.size() > 0) user.name.pop_back(); }
 
     // detect Numbers pressed
     for (i=0; i<10; i++)

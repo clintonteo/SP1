@@ -19,6 +19,7 @@ using std::cin;
 vector<int>highscorePoints;
 vector<string>highscoreNames;
 vector<string>highscore;
+int firstLine = 0;
 
 //Background
 void background( Console & g_Console )
@@ -217,6 +218,7 @@ void selector( player & user , Console & g_Console )
 //Read Log
 void readLog ( Console & g_Console , double g_dElapsedTime)
 {
+    vector<string>logText;
     std::fstream log ("log.txt");
 
     string line;
@@ -229,20 +231,35 @@ void readLog ( Console & g_Console , double g_dElapsedTime)
     {
         while (getline (log,line))
         {
-            g_Console.writeToBuffer(52, 23 - i , line , 10);
-            
+            logText.push_back(line);
+
+            /*g_Console.writeToBuffer(52, 23 - i , line , 10);
             ++i;
 
             if(i == 5)
             {
                 i = 0;
-                /*std::ofstream log;
-                log.open("log.txt", std::fstream::trunc);
-                log.close();*/
-            }   
+            }*/ 
         }
         log.close();
     }
+   
+    for(int counter = 0; ( counter + firstLine ) < logText.size(); ++counter)
+    {
+        g_Console.writeToBuffer(52, 23 - counter , logText[counter + firstLine] , 10);
+
+        if (counter == 5)
+        {
+            counter = -1;
+            ++firstLine;
+        }
+    }
+ /* std::ostringstream strs;
+    strs << logText.size();
+    string str;
+    str = strs.str();
+
+    g_Console.writeToBuffer(52, 25, str, 10);*/
 }
 
 //Write Log
@@ -250,7 +267,7 @@ void writeLog ( string line , double time)
 {
     std::fstream log ("log.txt", std::fstream::app);
 
-    log << line << "@" << static_cast<int>(time) << "\n";
+    log << line << " @" << static_cast<int>(time) << "secs" << "\n";
 
     log.close();
 

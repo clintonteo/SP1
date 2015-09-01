@@ -11,23 +11,23 @@ using std::string;
 PMAP MapRender;
 PMAP Push;
 
-const char block = 219;
-const char pblock = 254;
-const char grass = 58;
-const char lava = 247;
-const char trap = 59;
-const char treasure = 36;
-const char switches = 47;
-const char boost = 175;
-const char X = 88;
-const char Y = 89;
-const char Z = 90;
-const char ladder = 35;
-const char crack = 178;
-const char bomb = 229;
-const char medkit = 43;
-const char pit = 48;
-const char invispot = 147;
+unsigned const char block = 219;
+unsigned const char pblock = 254;
+unsigned const char grass = 58;
+unsigned const char lava = 247;
+unsigned const char trap = 59;
+unsigned const char treasure = 36;
+unsigned const char switches = 47;
+unsigned const char boost = 175;
+unsigned const char X = 88;
+unsigned const char Y = 89;
+unsigned const char Z = 90;
+unsigned const char ladder = 35;
+unsigned const char crack = 178;
+unsigned const char bomb = 229;
+unsigned const char medkit = 43;
+unsigned const char pit = 48;
+unsigned const char invispot = 147;
 char arr[12][12];
 
 void createMap(COORD charLocation, bool blind, int range, player &user, Console &g_Console, char* mapname)
@@ -480,7 +480,7 @@ void spawnblock(COORD &blocks)
 }
 void spawnmob(std::vector<mobData> &allMobs)
 {
-	COORD mob;
+	//COORD mob;
 	for(int i = 0;i< MapRender->nrow;++i)
 	{
 		for(int j = 0; j < MapRender->ncol; ++j)
