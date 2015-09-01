@@ -187,6 +187,15 @@ void mainMenu(Console &console, player&user)
 		}
 	}
 
+	if(g_dElapsedTime < 9)
+	{
+		console.writeToBuffer(29, 15, "Press <SPACE> to skip", 0xf0);
+		if(g_abKeyPressed[K_SPACE])
+		{
+			g_dElapsedTime = 9;
+		}
+	}
+
 	string Menu[5] = {"Play", "Difficulty", "Instructions", "Highscore", "Exit"};
 
 	if (g_dElapsedTime > 9)

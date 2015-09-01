@@ -123,29 +123,28 @@ void point( player & user , Console & g_Console )
 {
     g_Console.writeToBuffer(59, 16 , "Treasures:" , 10);
 
-    if (user.TTaken == 1)
-    {
+    //if (user.TTaken == 1)
+    //{
         if (user.points == 1)
         {
             g_Console.writeToBuffer(70, 16 , "1" , 10);
         }
-        if (user.points == 2)
+        else if (user.points == 2)
         {
             g_Console.writeToBuffer(70, 16 , "2" , 10);
         }
-        if (user.points == 3)
+        else if (user.points == 3)
         {
             g_Console.writeToBuffer(70, 16 , "3" , 10);
         }
-        if (user.points == 4)
+        else if (user.points == 4)
         {
             g_Console.writeToBuffer(70, 16 , "4" , 10);
         }
-    }
-    else
-    {
-        g_Console.writeToBuffer(70, 16 , "0" , 10);
-    }
+		else if (user.points == 0)
+		{
+			g_Console.writeToBuffer(70, 16 , "0" , 10);
+		}
 }
 
 //Calc. Final Score
