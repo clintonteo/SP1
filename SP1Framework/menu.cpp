@@ -245,7 +245,7 @@ void mainMenu(Console &console, player&user)
 			{
 				case 0:
 					{
-						g_eGameState = S_GAME1;
+						g_eGameState = S_SPLASHSCREEN;
 						g_dElapsedTime = 0;
 						user.lives = 3;
 						user.health = 5;

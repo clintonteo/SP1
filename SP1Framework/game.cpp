@@ -501,8 +501,12 @@ void update(double dt)
             }
             if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopswitch)
             {
-                //g_eGameState = S_MENU;
-                g_bQuitGame = true;
+                g_eGameState = S_MENU;
+				init1 = 0;
+				init2 = 0;
+				init3 = 0;
+				init4 = 0;
+                //g_bQuitGame = true;
 
             }
             break;
@@ -907,8 +911,14 @@ void moveCharacter()
 
 
     // quits the game if player hits the escape key
-    if (g_abKeyPressed[K_ESCAPE])
-        g_bQuitGame = true;
+    if (g_abKeyPressed[K_ESCAPE])   
+	{
+		g_eGameState = S_MENU;
+		init1 = 0;
+		init2 = 0;
+		init3 = 0;
+		init4 = 0;
+	}
 
     // quits if player lives at 0
     if (user.health <= 0)
@@ -1031,7 +1041,13 @@ void processUserInput()
 {
     // quits the game if player hits the escape key
     if (g_abKeyPressed[K_ESCAPE])
-        g_bQuitGame = true;
+	{
+		g_eGameState = S_MENU;
+		init1 = 0;
+		init2 = 0;
+		init3 = 0;
+		init4 = 0;
+	}
 }
 
 void EnterName()
@@ -1142,56 +1158,56 @@ void renderSplashScreen()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
-    c.X = c.X / 2 - 9;
+    c.X = c.X / 2.5 - 9;
     g_Console.writeToBuffer(c, "Tower Of PuzzMaz STAGE 1", 0xfc);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 20;
-    g_Console.writeToBuffer(c, "Hint: You can use boost over lava!!", 0xf9);
+    c.X = g_Console.getConsoleSize().X / 2.3 - 20;
+    g_Console.writeToBuffer(c, "You can use boost to cross lava, my friend.", 0xf9);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
+    c.X = g_Console.getConsoleSize().X / 2.8 - 9;
+    g_Console.writeToBuffer(c, "Press 'Esc' to return to the main menu.", 0xf9);
 }
 
 void renderSplashStage2()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
-    c.X = c.X  / 2 - 9;
+    c.X = c.X  / 2.5 - 9;
     g_Console.writeToBuffer(c, "Tower Of PuzzMaz STAGE 2", 0xfc);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X  / 2 - 20;
-    g_Console.writeToBuffer(c, "Hint: you can move diagonally skrub", 0xf9);
+    c.X = g_Console.getConsoleSize().X  / 2.3 - 20;
+    g_Console.writeToBuffer(c, "Some blocks are pushable, Player, use Strength!", 0xf9);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
+    c.X = g_Console.getConsoleSize().X / 2.8 - 9;
+    g_Console.writeToBuffer(c, "Press 'Esc' to return to the main menu.", 0xf9);
 }
 
 void renderSplashStage3()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
-    c.X = c.X  / 2 - 9;
+    c.X = c.X  / 2.5 - 9;
     g_Console.writeToBuffer(c, "Tower Of PuzzMaz STAGE 3", 0xfc);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X  / 2 - 20;
-    g_Console.writeToBuffer(c, "Hint: Arunning pls", 0xf9);
+    c.X = g_Console.getConsoleSize().X  / 3 - 20;
+    g_Console.writeToBuffer(c, "Number of treasures found is directly proportional to your points.", 0xf9);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xf9);
+    c.X = g_Console.getConsoleSize().X / 2.8 - 9;
+    g_Console.writeToBuffer(c, "Press 'Esc' to return to the main menu.", 0xf9);
 }
 
 void renderSplashStage4()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
-    c.X = c.X  / 2 - 9;
+    c.X = c.X  / 2.5 - 9;
     g_Console.writeToBuffer(c, "Tower Of PuzzMaz STAGE 4", 0xfc);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X  / 2 - 20;
-    g_Console.writeToBuffer(c, "This will make you ragequit, a helpful hint is below.", 0xf9);
+    c.X = g_Console.getConsoleSize().X  / 3 - 20;
+    g_Console.writeToBuffer(c, "You will still be hurt if you go near a monster while invisible.", 0xf9);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "Hint: Press 'Esc' to quit", 0xf9);
+    c.X = g_Console.getConsoleSize().X / 2.8 - 9;
+    g_Console.writeToBuffer(c, "Press 'Esc' to return to the main menu.", 0xf9);
 }
 
 void renderGameover()  // renders the splash screen
@@ -1202,7 +1218,7 @@ void renderGameover()  // renders the splash screen
     g_Console.writeToBuffer(c, "GAME OVER", 0xf3);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X  / 2 - 20;
-    g_Console.writeToBuffer(c, "TRY AGAIN NEXT TIME. COME BACK.", 0xf9);
+    g_Console.writeToBuffer(c, "Well, at least you tried. Come again!", 0xf9);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Your points are: ", 0xf9);
@@ -1318,8 +1334,8 @@ void renderGame()
 	// medpack
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MedsTaken == 0 && user.health != 5)
 	{
-		if(user.difficulty == normal || user.difficulty == hard || user.difficulty == ez)
-		{
+		/*if(user.difficulty == normal || user.difficulty == hard || user.difficulty == ez)
+		{*/
 			if (user.health < 4)
 			{
 				user.health += 2;
@@ -1330,8 +1346,8 @@ void renderGame()
 				user.health += 1;
 				user.MedsTaken = 1;
 			}
-		}
-		else if(user.difficulty == insane)
+		/*}*/
+		/*else if(user.difficulty == insane)
 		{
 			if (user.health < 3)
 			{
@@ -1348,7 +1364,7 @@ void renderGame()
 				user.health += 1;
 				user.MedsTaken = 1;
 			}
-		}
+		}*/
         writeLog("You have been healed!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0 && trapdamage == 0)
