@@ -16,6 +16,6 @@ W   WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW   WWW    W
 WD                 X                      WWW    W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW    W
 WD   D DDDJDDDDDDDD D    D    D   D          D   W
-W  D    DD DD   D    D P   D DD D  D             W
-WI  D        DD    D     DD D    D               W
+W  D    DD D    D    D P   D  D D  D             W
+WI  D        DD    D     DD      D               W
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
