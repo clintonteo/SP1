@@ -255,6 +255,7 @@ void update(double dt)
 			}
 			if (extime1 == 0)
 			{
+				user.TTaken = 0;
 				startGame(user, range, blind);
 				extime1 = 1;
 			}
@@ -277,6 +278,7 @@ void update(double dt)
 			{
 				if(extime2 == 0)
 				{
+					user.TTaken = 0;
 					addTime(user);
 					extime2 = 1;
 				}
@@ -309,6 +311,7 @@ void update(double dt)
 			{
 				if(extime3 == 0)
 				{
+					user.TTaken = 0;
 					addTime(user);
 					extime3 = 1;
 				}
@@ -341,6 +344,7 @@ void update(double dt)
 			{
 				if(extime4 == 0)
 				{
+					user.TTaken = 0;
 					addTime(user);
 					extime4 = 1;
 				}
@@ -414,7 +418,6 @@ void reset()
 	user.invispot = 0;
 	user.invis = 0; // invis state
 	user.invistaken = 0;
-	user.TTaken = 0;
 	user.MedsTaken = 0;
 	allMobs.clear();
 	spawnblock(blocks);
