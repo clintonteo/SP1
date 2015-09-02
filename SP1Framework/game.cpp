@@ -224,6 +224,10 @@ void update(double dt)
 				user.timelimit = 0;
                 tutorial_init = 1;
 				blind = 0;
+				for(int i = 0; i < allMobs.size(); i++)
+				{
+					allMobs[i].movedelay = 0.3;
+				}
             }
             gameplay();
             if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
@@ -242,7 +246,6 @@ void update(double dt)
 				g_sChar.m_cLocation.Y = 3;
 				reset();
 				spawnblock(blocks);
-				allMobs.clear();
 				boostcd = 0;
 				init1 = 1;
 			}
@@ -278,6 +281,10 @@ void update(double dt)
 				reset();
 				spawnblock(blocks);
 				spawnmob(allMobs);
+				for(int i = 0; i < allMobs.size(); i++)
+				{
+					allMobs[i].movedelay = monSpd(user, allMobs[i]);
+				}
 				init2 = 1;
 			}
 				gameplay();
@@ -306,6 +313,10 @@ void update(double dt)
 				reset();
 				spawnblock(blocks);
 				spawnmob(allMobs);
+				for(int i = 0; i < allMobs.size(); i++)
+				{
+					allMobs[i].movedelay = monSpd(user, allMobs[i]);
+				}
 				init3 = 1;
 			}
 			gameplay();
@@ -334,6 +345,10 @@ void update(double dt)
 				reset();
 				spawnblock(blocks);
 				spawnmob(allMobs);
+				for(int i = 0; i < allMobs.size(); i++)
+				{
+					allMobs[i].movedelay = monSpd(user, allMobs[i]);
+				}
 				init4 = 1;
 			}
 			gameplay();

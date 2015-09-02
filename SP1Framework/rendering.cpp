@@ -494,6 +494,7 @@ void spawnmob(std::vector<mobData> &allMobs)
 				tempmob.lastMC.X = 0;
 				tempmob.lastMC.Y = 0;
 				tempmob.delay = 0;
+				tempmob.movedelay = 0;
 				tempmob.MC.X = j;
 				tempmob.MC.Y = i;
 				tempmob.playerImmunity = 0;

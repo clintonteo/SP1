@@ -14,6 +14,7 @@ struct mobData
 	bool first;
 	bool playerImmunity;
 	double delay;
+	double movedelay;
 };
 
 void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, PMAP map, player &user, bool blind, int range);

@@ -63,8 +63,6 @@ void reset();
 
 void splashScreenWait();    // waits for time to pass in splash screen
 void splashNextStageWait();    // waits for time to pass in splash screen
-//void splashStage3Wait();
-//void splashStage4Wait();
 void splashGameoverWait();
 
 void gameplay();            // gameplay logic
