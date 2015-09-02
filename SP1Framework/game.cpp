@@ -354,7 +354,7 @@ void update(double dt)
                 init_name = 1;
             }
             
-            if (g_abKeyPressed[K_ENTER])
+            if (g_abKeyPressed[K_ENTER] && user.samename != 1)
             {
                 user.wroteHighScore = 1;
                 g_eGameState = S_GAMEOVER;
@@ -859,21 +859,6 @@ void moveCharacter()
 		}
     }
 
-    // quits the game if player hits the escape key
- //   if (g_abKeyPressed[K_ESCAPE])   
-	//{
-	//	g_eGameState = S_MENU;
-	//	init1 = 0;
-	//	init2 = 0;
-	//	init3 = 0;
-	//	init4 = 0;
-	//	extime1 = 0;
-	//	extime2 = 0;
-	//	extime3 = 0;
-	//	extime4 = 0;
-	//	user.start = 0;
-	//}
-
     // quits if player lives at 0
     if (user.health <= 0)
     {
@@ -944,8 +929,8 @@ void EnterName()
             {
                     if (!isKeyPressed('0'+i))
                     {
-                        g_charBuffer[g_chInput] = '0'+i;
-                        ++g_chInput %= 128;
+                        /*g_charBuffer[g_chInput] = '0'+i;
+                        ++g_chInput %= 128;*/
                         user.name += '0'+i;
                         keydownNum[i] = false;
                     }
@@ -972,8 +957,8 @@ void EnterName()
                     {
                         if (!isKeyPressed('A'+i))
                         {
-                                g_charBuffer[g_chInput] = 'a'+i;
-                                ++g_chInput %= 128;
+                                /*g_charBuffer[g_chInput] = 'a'+i;
+                                ++g_chInput %= 128;*/
                                 keydownChar[i] = false;
                                 user.name += 'A'+i;
                         }
@@ -987,6 +972,9 @@ void EnterName()
             }
              
     }
+
+    //Check for same name used.
+    checkName( user , g_Console );
 }
 
 void clearScreen()
@@ -1080,6 +1068,9 @@ void renderEnterName()
     g_Console.writeToBuffer(c, "Enter your name: ", 0xf9);
 
     EnterName();
+
+    //Check for same name used.
+    //checkName( user , g_Console );
     c.Y += 1;
     g_Console.writeToBuffer(c, user.name, 0xf9);
 }
@@ -1210,6 +1201,8 @@ void renderGame()
 			g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 3);
 		}
 	}
+
+    //Lava
     if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0 && g_dElapsedTime > lavastop)
 	{
 		if(g_sChar.m_cLocation.X == blocks.X && g_sChar.m_cLocation.Y == blocks.Y)

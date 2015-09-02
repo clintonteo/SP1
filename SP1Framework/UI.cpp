@@ -105,7 +105,7 @@ void renderInventory( player & user , Console & g_Console , double &boostcd , do
                 {
                     if (user.inventoryitems[find_boost] == "Boost")
                     {
-                        g_Console.writeToBuffer(62, 10 + find_boost , "(R)" , 10);
+                        g_Console.writeToBuffer(62, 10 + find_boost , " (Ready)" , 10);
                     }
                 }
             }
@@ -124,28 +124,18 @@ void point( player & user , Console & g_Console )
 {
     g_Console.writeToBuffer(59, 16 , "Treasures:" , 10);
 
-    //if (user.TTaken == 1)
-    //{
-        if (user.points == 1)
+    for (int TreasureCheck = 0; TreasureCheck <= 4; ++TreasureCheck)
+    {
+        if (user.points == TreasureCheck)
         {
-            g_Console.writeToBuffer(70, 16 , "1" , 10);
+            std::ostringstream Treasure;
+            Treasure << TreasureCheck; 
+            string final = Treasure.str();
+
+            g_Console.writeToBuffer(70, 16, final, 10);
         }
-        else if (user.points == 2)
-        {
-            g_Console.writeToBuffer(70, 16 , "2" , 10);
-        }
-        else if (user.points == 3)
-        {
-            g_Console.writeToBuffer(70, 16 , "3" , 10);
-        }
-        else if (user.points == 4)
-        {
-            g_Console.writeToBuffer(70, 16 , "4" , 10);
-        }
-		else if (user.points == 0)
-		{
-			g_Console.writeToBuffer(70, 16 , "0" , 10);
-		}
+    }
+
 }
 
 //Calc. Final Score
@@ -289,130 +279,7 @@ void writeLog ( string line , double time)
     }*/
 }
 
-//void highscoreWrite ( player & user , Console & g_Console )
-//{
-//    //Take Current Stats from Text File
-//    std::fstream highscorePointsValues ("highscorePoints.txt");
-//    string line;
-//    if (highscorePointsValues.is_open())
-//    {
-//        while (getline (highscorePointsValues,line))
-//        {
-//            int points;
-//            std::istringstream ( line ) >> points;
-//            highscorePoints.push_back(points);
-//        }
-//    }
-//    highscorePointsValues.close();
-//    //Truncate Points
-//    std::ofstream T_highscorePointsValues;
-//    T_highscorePointsValues.open("highscorePoints.txt", std::fstream::trunc);
-//    T_highscorePointsValues.close();
-//
-//
-//    std::fstream highscoreNameValues ("highscoreNames.txt");
-//    if (highscoreNameValues.is_open())
-//    {
-//        while (getline (highscoreNameValues,line))
-//        {
-//            highscoreNames.push_back(line);
-//        }
-//    }
-//    highscoreNameValues.close();
-//    //Truncate Names
-//    std::ofstream T_highscoreNameValues;
-//    T_highscoreNameValues.open("highscoreNames.txt", std::fstream::trunc);
-//    T_highscoreNameValues.close();
-//
-//    //Get current Combined Text Files
-//    std::fstream OldHighscore ("highscore.txt");
-//    if (OldHighscore.is_open())
-//    {
-//        while (getline (OldHighscore,line))
-//        {
-//            highscore.push_back(line);
-//        }
-//    }
-//    OldHighscore.close();
-//    //Truncate Old Combined File
-//    std::ofstream T_OldHighscore;
-//    T_OldHighscore.open("highscore.txt", std::fstream::trunc);
-//    T_OldHighscore.close();
-//
-//    //Input Current Highscore Values
-//    //cin >> name;
-//    user.name += " ";
-//
-//    highscorePoints.push_back(user.final_score);
-//    highscoreNames.push_back(user.name);
-//
-//    /*std::ostringstream strs;
-//    strs << name;
-//    strs << user.final_score; 
-//    string final = strs.str();
-//
-//    highscore.push_back(final);*/
-//    
-//    //Arrange in order
-//    for (int counter = 0; counter < highscorePoints.size(); ++counter)
-//    {
-//        for (int SecondCounter = counter + 1; SecondCounter < highscorePoints.size(); ++SecondCounter)
-//        {
-//            if (highscorePoints[SecondCounter] >= highscorePoints[counter])
-//            {
-//                int temp = highscorePoints[counter];
-//                highscorePoints[counter] = highscorePoints[SecondCounter];
-//                highscorePoints[SecondCounter] = temp;
-//
-//                string tempName = highscoreNames[counter];
-//                highscoreNames[counter] = highscoreNames[SecondCounter];
-//                highscoreNames[SecondCounter] = tempName;
-//            }
-//        }
-//    }
-//
-//    int counter = 0;
-//
-//    while (counter < highscorePoints.size())
-//    {
-//        //Write to Combined Text File
-//        std::fstream highscore ("highscore.txt", std::fstream::app);
-//
-//        std::ostringstream strs;
-//        strs << highscoreNames[counter];
-//        strs << highscorePoints[counter]; 
-//        string final = strs.str();
-//        highscore << final << "\n";
-//        
-//        highscore.close();
-//
-//        //Write Back to separate Text Files 
-//        //Points
-//        std::fstream highscorePointsValueNew ("highscorePoints.txt", std::fstream::app);
-//
-//        std::ostringstream points;
-//        points << highscorePoints[counter]; 
-//        string finalPoints = points.str();
-//
-//        highscorePointsValueNew << finalPoints << "\n";
-//        highscorePointsValueNew.close();
-//
-//        //Names
-//        std::fstream highscoreNamesValueNew ("highscoreNames.txt", std::fstream::app);
-//
-//        std::ostringstream names;
-//        names << highscoreNames[counter]; 
-//        string finalNames = names.str();
-//
-//        highscoreNamesValueNew << finalNames << "\n";
-//        highscoreNamesValueNew.close();
-//
-//        ++counter;
-//    }
-//
-//    user.wroteHighScore = 1;
-//}
-
+//Highscore Read & Write
 void highscoreWrite ( player & user , Console & g_Console ) // NEW HIGHSCORE
 {
     string line;
@@ -498,7 +365,6 @@ void highscoreRead ( player & user , Console & g_Console )
         highscore.close();
     }
 }
-
 void highscoreBoard ( player & user , Console & g_Console )
 {
     std::fstream highscore ("highscore.txt");
@@ -527,4 +393,24 @@ void highscoreBoard ( player & user , Console & g_Console )
         }
         highscore.close();
     }
+}
+
+// Check if name already used. <--IN PROGRESS-->
+void checkName( player & user , Console & g_Console ) 
+{
+    std::fstream highscoreCheck ("highscore.txt");
+
+    string name;
+    int score = 0;
+
+    while ( highscoreCheck.good() )
+    {
+        highscoreCheck >> name >> score;
+        if (name == user.name && name.size() > 0 && user.name.size() > 0)
+        {
+            g_Console.writeToBuffer(30, 16 , "CURRENT name taken. Please change." , 0xf9);
+            user.samename = 1;
+        }
+    }
+    highscoreCheck.close();
 }
