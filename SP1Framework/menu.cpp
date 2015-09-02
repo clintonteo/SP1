@@ -36,7 +36,7 @@ void mainMenu(Console &console, player&user)
 				++i;
 				if (i == 9)
 				{
-				i = 0;
+					i = 0;
 				}
 			}
 		}

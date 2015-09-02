@@ -106,22 +106,6 @@ void init( void )
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 25, L"Consolas");
-	//user.difficulty = normal;
-	//if(user.difficulty == normal)
-	//{
-	//	range = 6;
-	//	user.timelimit = 10;
-	//}
-	//if(user.difficulty == hard)
-	//{
-	//	range = 5;
-	//	user.timelimit = 150;
-	//}
-	//if(user.difficulty == insane)
-	//{
-	//	range = 4;
-	//	user.timelimit = 120;
-	//}
     mob.X = 1;
 	mob.Y = 2;
     if (lostlives == 0)
@@ -239,13 +223,7 @@ void update(double dt)
             gameplay();
             if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
 			{
-				//Endtime = g_dElapsedTime;
-				//tutorial_init = 0;
-				//g_eGameState = S_MENU;
-				//reset();
-				//writeLog("CONGRATS!", 999);
 				tutorial_init = 0;
-				/*g_dElapsedTime = 0;*/
 				g_eGameState = S_MENU;
 			}
             break;
@@ -260,9 +238,8 @@ void update(double dt)
 				reset();
 				spawnblock(blocks);
 				allMobs.clear();
-				//spawnmob(allMobs);
-				init1 = 1;
 				boostcd = 0;
+				init1 = 1;
 			}
 			if (extime1 == 0)
 			{
@@ -390,17 +367,20 @@ void update(double dt)
                 highscoreWrite( user , g_Console );
                 user.wroteHighScore = 0;
             }
-            if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopswitch)
-            {
-                g_eGameState = S_MENU;
-				init1 = 0;
-				init2 = 0;
-				init3 = 0;
-				init4 = 0;
-				user.start = 0;
-                //g_bQuitGame = true;
-
-            }
+			gameplay();
+    //        if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopswitch)
+    //        {
+    //            g_eGameState = S_MENU;
+				//init1 = 0;
+				//init2 = 0;
+				//init3 = 0;
+				//init4 = 0;
+				//extime1 = 0;
+				//extime2 = 0;
+				//extime3 = 0;
+				//extime4 = 0;
+				//user.start = 0;
+    //        }
             break;
     }
 }
@@ -487,7 +467,6 @@ void render()
 			renderGame();
 			g_Console.writeToBuffer(51, 0, "STAGE 4", 10);
 			break;
-
         case S_NAME:
             renderEnterName();
             break;
@@ -942,6 +921,10 @@ void processUserInput()
 		init2 = 0;
 		init3 = 0;
 		init4 = 0;
+		extime1 = 0;
+		extime2 = 0;
+		extime3 = 0;
+		extime4 = 0;
 		user.start = 0;
 	}
 }
@@ -1078,7 +1061,7 @@ void renderGameover()  // renders the splash screen
     g_Console.writeToBuffer(c, "GAME OVER", 0xf3);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X  / 2 - 20;
-    g_Console.writeToBuffer(c, "Well, at least you tried. Come again!", 0xf9);
+    g_Console.writeToBuffer(c, "Press Esc to return to the main menu.", 0xf9);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Your points are: ", 0xf9);

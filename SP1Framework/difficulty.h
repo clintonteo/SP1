@@ -6,5 +6,6 @@
 
 void startGame(player&user,int &range,bool &blind);
 void addTime(player&user);
+void reset();
 
 #endif //_DIFFICULTY_H
