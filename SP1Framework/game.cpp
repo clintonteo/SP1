@@ -198,7 +198,11 @@ void update(double dt)
 
     switch (g_eGameState)
     {
-		case S_MENU: mainMenu(g_Console, user);
+		case S_MENU: 
+            mainMenu(g_Console, user);
+            user.points = 0;
+            user.final_score = 0;
+            user.wroteHighScore = 0;
 			break;
 		case S_OPTIONS: options(g_Console, user);
 			break;
@@ -365,7 +369,7 @@ void update(double dt)
             {
                 calculateFinal ( user , Endtime );
                 highscoreWrite( user , g_Console );
-                user.wroteHighScore = 0;
+                //user.wroteHighScore = 0;
             }
 			gameplay();
     //        if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopswitch)
