@@ -1,0 +1,20 @@
+Credits
+
+Clinton:
+Level Design
+Item Mechanics
+Game Mechanics(Traps)
+Difficulty and Time Limit
+Menu (Design, Content)
+
+Arun:
+Map Rendering
+Game Mechanics(Coilision, Fog of War)
+Monster AI
+
+Donovan:
+User Interface
+Highscores
+
+Austin:
+Menu (Structure, Animation)
