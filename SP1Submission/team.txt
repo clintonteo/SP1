@@ -2,14 +2,15 @@ Credits
 
 Clinton:
 Level Design
-Item Mechanics
-Game Mechanics(Traps)
+Items
+Traps
 Difficulty and Time Limit
 Menu (Design, Content)
 
 Arun:
 Map Rendering
-Game Mechanics(Coilision, Fog of War)
+Collision
+Fog of War
 Monster AI
 
 Donovan:

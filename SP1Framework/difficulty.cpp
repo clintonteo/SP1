@@ -3,56 +3,27 @@
 #include "game.h"
 #include "Framework\console.h"
 
-//diffculty
-const int normal = 0;
-const int hard = 1;
-const int insane = 2;
-const int ez = 3;
-
+int difficulty [5][4] = 
+{{1, 1, 1, 0}, // for blind
+{5, 4, 3, 0}, // for range
+{180, 150, 120, 180}, // for starting time limit
+{150, 120, 90, 150}, // for adding to time limit for clearing stages
+{1, 1, 2, 1}}; // for trap damage
 
 void startGame(player&user, int &range, bool &blind)
 {
-	if(user.difficulty == normal)
-	{
-		user.timelimit = 180;
-		blind = 1;
-		range = 5;
-	}
-	if(user.difficulty == hard)
-	{
-		user.timelimit = 150;
-		blind = 1;
-		range = 4;
-	}
-	if(user.difficulty == insane)
-	{
-		user.timelimit = 120;
-		blind = 1;
-		range = 3;
-	}
-	if(user.difficulty == ez)
-	{
-		user.timelimit = 180;
-		blind = 0;
-	}
+	user.timelimit = difficulty [2][user.difficulty];
+	blind = difficulty [0][user.difficulty];
+	range = difficulty [1][user.difficulty];
 }
 
 void addTime(player&user)
 {
-	if(user.difficulty == normal)
-	{
-		user.timelimit += 150;
-	}
-	else if(user.difficulty == hard)
-	{
-		user.timelimit += 120;
-	}
-	else if(user.difficulty == insane)
-	{
-		user.timelimit += 90;
-	}
-	else if(user.difficulty == ez)
-	{
-		user.timelimit += 150;
-	}
+	user.timelimit += difficulty [3][user.difficulty];
 }
+
+void trapdmg(player&user)
+{
+	user.health -= difficulty [4][user.difficulty];
+}
+

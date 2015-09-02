@@ -252,3 +252,17 @@ void item3(player&user,SGameChar icon, double currentTime, double &invisExp)
 	user.invispot = 0;
 	user.invis = 1;
 }
+
+void medpack(player&user)
+{
+	if (user.health < 4)
+	{
+		user.health += 2;
+		user.MedsTaken = 1;
+	}
+	else if (user.health == 4)
+	{
+		user.health += 1;
+		user.MedsTaken = 1;
+	}
+}

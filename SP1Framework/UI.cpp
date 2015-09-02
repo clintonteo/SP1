@@ -490,7 +490,7 @@ void highscoreRead ( player & user , Console & g_Console )
             g_Console.writeToBuffer(20, 15 + i , rank , 0xf9);
             g_Console.writeToBuffer(30, 15 + i , line , 0xf9);
             ++i;
-            if(i == 6)
+            if(i == 10)
             {
                 break;
             }
@@ -520,7 +520,7 @@ void highscoreBoard ( player & user , Console & g_Console )
             g_Console.writeToBuffer(20, 7 + i , rank , 0xf9);
             g_Console.writeToBuffer(30, 7 + i , line , 0xf9);
             ++i;
-            if(i == 6)
+            if(i == 10)
             {
                 break;
             }

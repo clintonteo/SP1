@@ -11,5 +11,6 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user,double current
 void item1right(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd);
 void item2(player&user);
 void item3(player&user,SGameChar icon, double currentTime, double &invisexp);
+void medpack(player&user);
 
 #endif //_ITEM_H

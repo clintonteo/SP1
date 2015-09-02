@@ -6,6 +6,6 @@
 
 void startGame(player&user,int &range,bool &blind);
 void addTime(player&user);
-void reset();
+void trapdmg(player&user);
 
 #endif //_DIFFICULTY_H
