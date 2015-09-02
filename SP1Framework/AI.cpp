@@ -5,6 +5,8 @@
 
 const int moveY = 1;
 const int moveX = 0;
+double movedelay = 0.18;
+
 void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, PMAP map, player &user, bool blind, int range)
 {
 	double Xdifference = charLocation.X - mobD.MC.X;
@@ -16,12 +18,7 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 	char xlast;
 	char ylast;
 
-	string cord;
-
-	int timer = time;
-
-	//if(time - static_cast<int>(time) < 1 && time - static_cast<int>(time) > 0.4)
-	if(fmod(time, 1) < 0.1 && user.invis == 0)
+	if(fmod(time, 1) < 0.5 && user.invis == 0 && mobD.delay < time)
 	{
 			if(mobD.first == moveX) //Move X axis mobD.first
 			{
@@ -29,21 +26,25 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				{
 					mobD.MC.X--;
 					mobD.xqueue--;
+					mobD.delay = time + movedelay;
 				}
 				if(mobD.xqueue < 0)
 				{
 					mobD.MC.X++;
 					mobD.xqueue++;
+					mobD.delay = time + movedelay;
 				}
 
 				if(mobD.yqueue > 0 && mobD.xqueue == 0)
 				{
 					mobD.MC.Y--;
 					mobD.yqueue--;
+					mobD.delay = time + movedelay;
 				}else if(mobD.yqueue < 0 && mobD.xqueue == 0)
 				{
 					mobD.MC.Y++;
 					mobD.yqueue++;
+					mobD.delay = time + movedelay;
 				}
 			}else if(mobD.first == moveY) //Move Y axis mobD.first
 			{
@@ -51,91 +52,110 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				{
 					mobD.MC.X--;
 					mobD.xqueue--;
+					mobD.delay = time + movedelay;
 				}
 				if(mobD.xqueue < 0 && mobD.yqueue == 0)
 				{
 					mobD.MC.X++;
 					mobD.xqueue++;
+					mobD.delay = time + movedelay;
 				}
 
 				if(mobD.yqueue > 0)
 				{
 					mobD.MC.Y--;
 					mobD.yqueue--;
+					mobD.delay = time + movedelay;
 				}else if(mobD.yqueue < 0)
 				{
 					mobD.MC.Y++;
 					mobD.yqueue++;
+					mobD.delay = time + movedelay;
 				}
 			}
 		//Movement of AI
-		if(Xdifference > Ydifference && mobD.xqueue == 0 && mobD.yqueue==0)
+		if(Xdifference > Ydifference && mobD.xqueue == 0 && mobD.yqueue==0 && mobD.delay < time)
 		{
 			if(charLocation.X > mobD.MC.X)
 			{
 				if(map->data[mobD.MC.Y][mobD.MC.X+1] == ' ' || map->data[mobD.MC.Y][mobD.MC.X] == 'D')
 				{
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X+1] == 'X' && user.switch1 == 1)
 				{
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X+1] == 'Y' && user.switch2 == 1)
 				{
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X+1] == 'Z' && user.switch3 == 1)
 				{
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}
 			}else if(charLocation.X < mobD.MC.X)
 			{
 				if(map->data[mobD.MC.Y][mobD.MC.X-1] == ' ' || map->data[mobD.MC.Y][mobD.MC.X-1] == 'D')
 				{
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X-1] == 'X' && user.switch1 == 1)
 				{
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X-1] == 'Y' && user.switch2 == 1)
 				{
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X-1] == 'Z' && user.switch3 == 1)
 				{
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}
 			}
-		}else if(Ydifference > Xdifference && mobD.xqueue == 0 && mobD.yqueue==0)
+		}else if(Ydifference > Xdifference && mobD.xqueue == 0 && mobD.yqueue==0 && mobD.delay < time)
 		{
 			if(charLocation.Y > mobD.MC.Y)
 			{
 				if(map->data[mobD.MC.Y+1][mobD.MC.X] == ' ' && map->data[mobD.MC.Y+1][mobD.MC.X] != 'D')
 				{
 					mobD.MC.Y++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X] == 'X' && user.switch1 == 1)
 				{
 					mobD.MC.Y++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X] == 'Y' && user.switch2 == 1)
 				{
 					mobD.MC.Y++;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X] == 'Z' && user.switch3 == 1)
 				{
 					mobD.MC.Y++;
+					mobD.delay = time + movedelay;
 				}
-			}else if(charLocation.Y < mobD.MC.Y)
+			}else if(charLocation.Y < mobD.MC.Y && mobD.delay < time)
 			{
 				if(map->data[mobD.MC.Y-1][mobD.MC.X] == ' ' || map->data[mobD.MC.Y-1][mobD.MC.X] == 'D')
 				{
 					mobD.MC.Y--;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X] == 'X' && user.switch1 == 1)
 				{
 					mobD.MC.Y--;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X] == 'Y' && user.switch2 == 1)
 				{
 					mobD.MC.Y--;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X] == 'Z' && user.switch3 == 1)
 				{
 					mobD.MC.Y--;
+					mobD.delay = time + movedelay;
 				}
 			}
-		}else if(Xdifference == Ydifference && mobD.xqueue == 0 && mobD.yqueue==0)
+		}else if(Xdifference == Ydifference && mobD.xqueue == 0 && mobD.yqueue==0 && mobD.delay < time)
 		{
 			if((charLocation.Y > mobD.MC.Y) && (charLocation.X > mobD.MC.X))
 			{
@@ -143,18 +163,22 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				{
 					mobD.MC.Y++;
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X+1] == 'X' && user.switch1 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X+1] == 'Y' && user.switch2 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X+1] == 'Z' && user.switch3 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}
 			}else if((charLocation.Y < mobD.MC.Y) && (charLocation.X < mobD.MC.X))
 			{
@@ -162,18 +186,22 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				{
 					mobD.MC.Y--;
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}else if (map->data[mobD.MC.Y-1][mobD.MC.X-1] == 'X' && user.switch1 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}else if (map->data[mobD.MC.Y-1][mobD.MC.X-1] == 'Y' && user.switch2 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}else if (map->data[mobD.MC.Y-1][mobD.MC.X-1] == 'Z' && user.switch3 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}
 			}else if((charLocation.Y < mobD.MC.Y) && (charLocation.X > mobD.MC.X))
 			{
@@ -181,18 +209,22 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				{
 					mobD.MC.Y--;
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X+1] == 'X' && user.switch1 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X+1] == 'Y' && user.switch2 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X+1] == 'Z' && user.switch3 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X++;
+					mobD.delay = time + movedelay;
 				}
 			}else if((charLocation.Y > mobD.MC.Y) && (charLocation.X < mobD.MC.X))
 			{
@@ -200,54 +232,54 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				{
 					mobD.MC.Y++;
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X-1] == 'X' && user.switch1 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X-1] == 'Y' && user.switch2 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X-1] == 'Z' && user.switch3 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X--;
+					mobD.delay = time + movedelay;
 				}
 			}
 		}
+
 	}
 				//Damage Allocation
 				if(charLocation.X == mobD.MC.X && charLocation.Y == mobD.MC.Y)
 				{
 					if(mobD.playerImmunity == 0)
 					{
-						writeLog("Im on u", 1);
 						user.health--;
 						mobD.playerImmunity = 1;
 							if(mobD.direction.X == mobD.MC.X - 1 && mobD.MC.Y == charLocation.Y)
 							{
-								writeLog("I came from left", 1);
 								if(charLocation.X+2 < 50 && (map->data[charLocation.Y][charLocation.X+2] == ' ' || map->data[charLocation.Y][charLocation.X+2] == 'D'))
 								{
 								charLocation.X+=2;
 								}
 							}else if(mobD.direction.X == mobD.MC.X + 1 && mobD.MC.Y == charLocation.Y)
 							{
-								writeLog("I came from right", 1);
 								if(charLocation.X - 2 > 0 && (map->data[charLocation.Y][charLocation.X-2] == ' ' || map->data[charLocation.Y][charLocation.X-2] == 'D'))
 								{
 								charLocation.X-=2;
 								}
 							}else if(mobD.direction.Y == mobD.MC.Y - 1 && mobD.MC.X == charLocation.X)
 							{
-								writeLog("I came from top", 1);
-								if(charLocation.Y+2< 20 &&(map->data[charLocation.Y + 2][charLocation.X] == ' ' || map->data[charLocation.Y + 2][charLocation.X] == 'D'))
+								if(charLocation.Y+2< 20 && (map->data[charLocation.Y + 2][charLocation.X] == ' ' || map->data[charLocation.Y + 2][charLocation.X] == 'D'))
 								{
 								charLocation.Y+=2;
 								}
 							}else if(mobD.direction.Y == mobD.MC.Y + 1 && mobD.MC.X == charLocation.X)
 							{
-								writeLog("I came from below", 1);
 								if(charLocation.Y - 2 > 0 && (map->data[charLocation.Y - 2][charLocation.X] == ' ' || map->data[charLocation.Y - 2][charLocation.X] == 'D'))
 								{
 								charLocation.Y-=2;
@@ -269,12 +301,13 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				console.writeToBuffer(mobD.MC,"M",10);
 		}
 	}
-	if(fmod(time, 1) > 0.3)
+
+	if(fmod(time, 1) > 0.5)
 	{
 		mobD.lastMC = mobD.MC;
 	}
 	//if(time - static_cast<int>(time) < 0.4 && time - static_cast<int>(time) > 0.0 && mobD.MC.X == mobD.lastMC.X && mobD.MC.Y == mobD.lastMC.Y)
-	if(fmod(time, 1) > 0.3 && mobD.MC.X == mobD.lastMC.X && mobD.lastMC.Y == mobD.MC.Y)
+	if(fmod(time, 1) > 0.5 && mobD.MC.X == mobD.lastMC.X && mobD.lastMC.Y == mobD.MC.Y)
 	{
 	for(int i = 0; i < 5; ++i)
 	{
@@ -282,10 +315,10 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 		{
 			break;
 		}
-		//Right Corner Stuck
+		//Right Bottom Stuck
 		if(map->data[mobD.MC.Y][mobD.MC.X+1] == 'W' && map->data[mobD.MC.Y + 1][mobD.MC.X] == 'W')
 		{
-			for(int i = 1; i < 5; ++i)
+			for(int i = 0; i < 5; ++i)
 			{
 				if(map->data[mobD.MC.Y+1][mobD.MC.X-i] == ' ' || map->data[mobD.MC.Y+1][mobD.MC.X-i] == 'D') //Check How much spaces to the left he must go to escape
 				{
@@ -457,7 +490,6 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 					steps--;
 				}
 				mobD.xqueue = -steps;
-				//writeLog("I'm going down one space", 10);
 				mobD.first = moveX;
 			}
 		}else if((map->data[mobD.MC.Y-1][mobD.MC.X] == 'D' || map->data[mobD.MC.Y-1][mobD.MC.X] == ' ') && (map->data[mobD.MC.Y+1][mobD.MC.X] == ' ' || map->data[mobD.MC.Y+1][mobD.MC.X] == 'D'))
