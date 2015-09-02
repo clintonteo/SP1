@@ -69,47 +69,47 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
 {
 	if(currentTime >= boostcd)
 	{
-	bool stop = 0;
-	int count = 0;
-	for(; count <= 3; ++count)
-	{
-		if (MapCollision->data[charLocation.Y][charLocation.X - count] == 'W')
+		bool stop = 0;
+		int count = 0;
+		for(; count <= 3; ++count)
 		{
-			stop = 1;
-			break;
-		}
-		if (user.switch1 == 0)
-		{
-			if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'X')
+			if (MapCollision->data[charLocation.Y][charLocation.X - count] == 'W')
 			{
 				stop = 1;
 				break;
 			}
-		}
-		if(user.switch2 == 0)
-		{
-			if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'Y')
+			if (user.switch1 == 0)
 			{
-				stop = 1;
-				break;
+				if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'X')
+				{
+					stop = 1;
+					break;
+				}
 			}
-		}
-		if(user.switch3 == 0)
-		{
-			if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'Z')
+			if(user.switch2 == 0)
 			{
-				stop = 1;
-				break;
+				if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'Y')
+				{
+					stop = 1;
+					break;
+				}
 			}
-		}
-		if(user.Cexplode == 0)
-		{
-			if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'C')
+			if(user.switch3 == 0)
 			{
-				stop = 1;
-				break;
+				if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'Z')
+				{
+					stop = 1;
+					break;
+				}
 			}
-		}
+			if(user.Cexplode == 0)
+			{
+				if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'C')
+				{
+					stop = 1;
+					break;
+				}
+			}
 	}
 	if (stop == 0)
 	{

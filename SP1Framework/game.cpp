@@ -3,6 +3,7 @@
 //
 #include "item.h"
 #include "game.h"
+
 #include "Framework\console.h"
 #include "map.h"
 #include "UI.h"
@@ -11,11 +12,10 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <vector>
 #include "AI.h"
+#include "difficulty.h"
 
-using std::cout;
-using std::endl;
-using std::cin;
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -40,6 +40,7 @@ bool init_name = 0;
 
 int range;
 bool blind = 0;
+
 bool lostlives = 0;
 
 double stopswitch = 0;
@@ -272,6 +273,7 @@ void update(double dt)
                 g_sChar.m_cLocation.Y = 1;
 				user.timelimit = 0;
                 tutorial_init = 1;
+				blind = 0;
             }
             gameplay();
             if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
@@ -299,42 +301,13 @@ void update(double dt)
 				allMobs.clear();
 				//spawnmob(allMobs);
 				init1 = 1;
+				boostcd = 0;
 			}
 			if (extime1 == 0)
 			{
-				if(user.difficulty == normal)
-				{
-					user.timelimit = 180;
-				}
-				if(user.difficulty == hard)
-				{
-					user.timelimit = 150;
-				}
-				if(user.difficulty == insane)
-				{
-					user.timelimit = 120;
-				}
-				if(user.difficulty == ez)
-				{
-					user.timelimit = 180;
-				}
+				startGame(user, range, blind);
 				extime1 = 1;
 			}
-			if(user.difficulty == normal)
-				{
-					range = 5;
-					blind = 1;
-				}
-			if(user.difficulty == hard)
-				{
-					range = 4;
-					blind = 1;
-				}
-			if(user.difficulty == insane)
-				{
-					range = 3;
-					blind = 1;
-				}
 			user.start = 1;
 			gameplay(); // gameplay logic when we are in the game
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
@@ -354,25 +327,7 @@ void update(double dt)
 			{
 				if(extime2 == 0)
 				{
-					if(user.difficulty == normal)
-					{
-						user.timelimit += 150;
-						blind = 1;
-					}
-					else if(user.difficulty == hard)
-					{
-						user.timelimit += 120;
-						blind = 1;
-					}
-					else if(user.difficulty == insane)
-					{
-						user.timelimit += 90;
-						blind = 1;
-					}
-					else if(user.difficulty == ez)
-					{
-						user.timelimit += 150;
-					}
+					addTime(user);
 					extime2 = 1;
 				}
 				g_sChar.m_cLocation.X = 46;
@@ -400,25 +355,7 @@ void update(double dt)
 			{
 				if(extime3 == 0)
 				{
-					if(user.difficulty == normal)
-					{
-						user.timelimit += 150;
-						blind = 1;
-					}
-					else if(user.difficulty == hard)
-					{
-						user.timelimit += 120;
-						blind = 1;
-					}
-					else if(user.difficulty == insane)
-					{
-						user.timelimit += 90;
-						blind = 1;
-					}
-					else if(user.difficulty == ez)
-					{
-						user.timelimit += 150;
-					}
+					addTime(user);
 					extime3 = 1;
 				}
 				g_sChar.m_cLocation.X = 3;
@@ -446,25 +383,7 @@ void update(double dt)
 			{
 				if(extime4 == 0)
 				{
-					if(user.difficulty == normal)
-					{
-						user.timelimit += 150;
-						blind = 1;
-					}
-					else if(user.difficulty == hard)
-					{
-						user.timelimit += 120;
-						blind = 1;
-					}
-					else if(user.difficulty == insane)
-					{
-						user.timelimit += 90;
-						blind = 1;
-					}
-					if(user.difficulty == ez)
-					{
-						user.timelimit += 150;
-					}
+					addTime(user);
 					extime4 = 1;
 				}
 				g_sChar.m_cLocation.X = 45;
@@ -496,8 +415,6 @@ void update(double dt)
             }
             if (g_abKeyPressed[K_ENTER])
             {
-                //user.gameover = 1;
-                
                 user.wroteHighScore = 1;
                 g_eGameState = S_GAMEOVER;
 				stopswitch = g_dElapsedTime + 0.2;
@@ -932,6 +849,10 @@ void moveCharacter()
 		init2 = 0;
 		init3 = 0;
 		init4 = 0;
+		extime1 = 0;
+		extime2 = 0;
+		extime3 = 0;
+		extime4 = 0;
 		user.start = 0;
 	}
 
