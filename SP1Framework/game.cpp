@@ -347,14 +347,12 @@ void update(double dt)
 			break;
 
         case S_NAME:
-            if(user.name.size() > 0)
+            if (init_name == 0)
             {
-                if (init_name == 0)
-                {
-                    user.name.clear();
-                    init_name = 1;
-                }
+                user.name.clear();
+                init_name = 1;
             }
+            
             if (g_abKeyPressed[K_ENTER])
             {
                 user.wroteHighScore = 1;
@@ -369,22 +367,10 @@ void update(double dt)
             {
                 calculateFinal ( user , Endtime );
                 highscoreWrite( user , g_Console );
-                //user.wroteHighScore = 0;
+                user.wroteHighScore = 0;
             }
-			processUserInput();
-    //        if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopswitch)
-    //        {
-    //            g_eGameState = S_MENU;
-				//init1 = 0;
-				//init2 = 0;
-				//init3 = 0;
-				//init4 = 0;
-				//extime1 = 0;
-				//extime2 = 0;
-				//extime3 = 0;
-				//extime4 = 0;
-				//user.start = 0;
-    //        }
+
+			gameplay();
             break;
     }
 }
