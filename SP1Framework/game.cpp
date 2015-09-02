@@ -60,6 +60,7 @@ int lastX = 0;
 int lastY = 0;
 
 player user;
+mapBool mapUpdate;
 int count = 0;
 
 //Damage Trackers
@@ -115,13 +116,13 @@ void init( void )
     user.health = 5;
     user.points = 0;
     user.select = 0;
-	user.boost = 0;
+	mapUpdate.boost = 0;
     user.bomb = 0;
-	user.bombtaken = 0;
-	user.invistaken = 0;
+	mapUpdate.bombtaken = 0;
+	mapUpdate.invistaken = 0;
 	user.invis = 0;
 	user.invispot = 0;
-	user.MedsTaken = 0;
+	mapUpdate.MedsTaken = 0;
     user.stage1 = 0;
     user.stage2 = 0;
     user.stage3 = 0;
@@ -203,6 +204,8 @@ void update(double dt)
             user.points = 0;
             user.final_score = 0;
             user.wroteHighScore = 0;
+            user.name = "";
+            user.samename = 0;
 			break;
 		case S_OPTIONS: options(g_Console, user);
 			break;
@@ -376,9 +379,9 @@ void update(double dt)
                 user.name.clear();
                 init_name = 1;
             }
-            
+
             if (g_abKeyPressed[K_ENTER] && user.samename != 1)
-            {
+            {  
                 user.wroteHighScore = 1;
                 g_eGameState = S_GAMEOVER;
 				stopswitch = g_dElapsedTime + 0.2;
@@ -408,22 +411,26 @@ void reset()
 	}
 	user.inventoryitems.clear();
     count = 0;
-	user.boost = 0;
-	user.switch1 = 0;
-	user.switch2 = 0;
-	user.switch3 = 0;
+	mapUpdate.boost = 0;
+	mapUpdate.switch1 = 0;
+	mapUpdate.switch2 = 0;
+	mapUpdate.switch3 = 0;
 	user.bomb = 0;
-	user.bombtaken = 0;
-	user.Cexplode = 0;
+	mapUpdate.bombtaken = 0;
+	mapUpdate.Cexplode = 0;
 	user.invispot = 0;
 	user.invis = 0; // invis state
-	user.invistaken = 0;
-	user.MedsTaken = 0;
+
+	mapUpdate.invistaken = 0;
+	mapUpdate.TTaken = 0;
+	mapUpdate.MedsTaken = 0;
+
 	allMobs.clear();
 	spawnblock(blocks);
 	g_dBounceTime = 0;
 	stopswitch = 0;
 	lavastop = 0;
+    user.name = "";
 }
 
 //--------------------------------------------------------------
@@ -529,7 +536,7 @@ void moveCharacter()
 		{
 			if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'X')
 			{
-				if(user.switch1 == 1)
+				if(mapUpdate.switch1 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
@@ -537,7 +544,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'Y')
 			{
-				if(user.switch2 == 1)
+				if(mapUpdate.switch2 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
@@ -545,7 +552,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'Z')
 			{
-				if(user.switch3 == 1)
+				if(mapUpdate.switch3 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y--;
@@ -553,7 +560,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
 			{
-				if(user.Cexplode == 1)
+				if(mapUpdate.Cexplode == 1)
 				{
 					g_sChar.m_cLocation.Y--;
 				}
@@ -573,7 +580,7 @@ void moveCharacter()
 		{
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'X')
 			{
-				if(user.switch1 == 1)
+				if(mapUpdate.switch1 == 1)
 				{
 					Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
@@ -581,7 +588,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'Y')
 			{
-				if(user.switch2 == 1)
+				if(mapUpdate.switch2 == 1)
 				{
 					Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
@@ -589,7 +596,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'Z')
 			{
-				if(user.switch3 == 1)
+				if(mapUpdate.switch3 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X--;
@@ -597,7 +604,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'C')
 			{
-				if(user.Cexplode == 1)
+				if(mapUpdate.Cexplode == 1)
 				{
 					g_sChar.m_cLocation.X--;
 				}
@@ -616,7 +623,7 @@ void moveCharacter()
 		{
 			if(MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'X')
 			{
-				if(user.switch1 == 1)
+				if(mapUpdate.switch1 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y++;
@@ -624,7 +631,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'Y')
 			{
-				if(user.switch2 == 1)
+				if(mapUpdate.switch2 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y++;
@@ -632,7 +639,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'Z')
 			{
-				if(user.switch3 == 1)
+				if(mapUpdate.switch3 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.Y++;
@@ -640,7 +647,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y+1][g_sChar.m_cLocation.X] == 'C')
 			{
-				if(user.Cexplode == 1)
+				if(mapUpdate.Cexplode == 1)
 				{
 					g_sChar.m_cLocation.Y++;
 				}
@@ -659,7 +666,7 @@ void moveCharacter()
 		{
 			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'X')
 			{
-				if(user.switch1 == 1)
+				if(mapUpdate.switch1 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X++;
@@ -667,7 +674,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'Y')
 			{
-				if(user.switch2 == 1)
+				if(mapUpdate.switch2 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X++;
@@ -675,7 +682,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'Z')
 			{
-				if(user.switch3 == 1)
+				if(mapUpdate.switch3 == 1)
 				{
 					        Beep(1440, 30);
 					g_sChar.m_cLocation.X++;
@@ -683,7 +690,7 @@ void moveCharacter()
 			}
 			else if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'C')
 			{
-				if(user.Cexplode == 1)
+				if(mapUpdate.Cexplode == 1)
 				{
 					g_sChar.m_cLocation.X++;
 				}
@@ -734,10 +741,10 @@ void moveCharacter()
     
 
     // POINTS
-    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && user.TTaken == 0)
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && mapUpdate.TTaken == 0)
     {
         user.points += 1;
-		user.TTaken = 1; 
+		mapUpdate.TTaken = 1; 
     }
 
     // SELECTON
@@ -752,7 +759,7 @@ void moveCharacter()
     }
 
     // INVENTORY
-    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (user.boost == 0)) // Boost
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (mapUpdate.boost == 0)) // Boost
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Boost");
@@ -760,14 +767,14 @@ void moveCharacter()
 		//user.boost = 1;
     }
 
-    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J') && (user.bomb == 0) && (user.bombtaken == 0)) // Bomb
+    if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J') && (user.bomb == 0) && (mapUpdate.bombtaken == 0)) // Bomb
     {
         user.inventory[count] = 't';
         user.inventoryitems.push_back("Bomb");
         ++count;
 		//user.bomb = 1;
     }
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && user.invistaken == 0) //Invis
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && mapUpdate.invistaken == 0) //Invis
 	{
 		user.inventory[count] = 't';
         user.inventoryitems.push_back("Invis Pot");
@@ -784,31 +791,31 @@ void moveCharacter()
 	}
 
     //POINTS
-    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && user.TTaken == 0)
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'T' && mapUpdate.TTaken == 0)
     {
         user.points += 1;
-		user.TTaken = 1; 
+		mapUpdate.TTaken = 1; 
     }
 
     //Use Items
     //Boost
-    if (user.boost == 1 && /*user.inventory[user.select] == 't'*/ user.inventoryitems[user.select] == "Boost")
+    if (mapUpdate.boost == 1 && /*user.inventory[user.select] == 't'*/ user.inventoryitems[user.select] == "Boost")
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 		{
-			item1up(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime, g_Console, boostcd);
+			item1up(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime, g_Console, boostcd , mapUpdate);
 		}
 		else if(g_abKeyPressed[K_LEFT] && g_abKeyPressed[K_USE])
 		{
-			item1left(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime, g_Console, boostcd);
+			item1left(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime, g_Console, boostcd , mapUpdate);
 		}
 		else if(g_abKeyPressed[K_DOWN] && g_abKeyPressed[K_USE])
 		{
-			item1down(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime, g_Console, boostcd);
+			item1down(MapCollision, g_sChar.m_cLocation, user, g_dElapsedTime, g_Console, boostcd , mapUpdate);
 		}
 		else if(g_abKeyPressed[K_RIGHT] && g_abKeyPressed[K_USE])
 		{
-			item1right(MapCollision, g_sChar.m_cLocation,user, g_dElapsedTime, g_Console, boostcd);
+			item1right(MapCollision, g_sChar.m_cLocation,user, g_dElapsedTime, g_Console, boostcd , mapUpdate);
 		}
 	}
 	//Bomb
@@ -819,7 +826,7 @@ void moveCharacter()
 		{
 			if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 			{
-				item2(user);
+				item2(user , mapUpdate);
 				user.inventory[user.select] = 'f';
 			}
 		}
@@ -827,7 +834,7 @@ void moveCharacter()
 		{
 			if(g_abKeyPressed[K_LEFT] && g_abKeyPressed[K_USE])
 			{
-				item2(user);
+				item2(user , mapUpdate);
 				user.inventory[user.select] = 'f';
 			}
 		}
@@ -835,7 +842,7 @@ void moveCharacter()
 		{
 			if(g_abKeyPressed[K_DOWN] && g_abKeyPressed[K_USE])
 			{
-				item2(user);
+				item2(user , mapUpdate);
 				user.inventory[user.select] = 'f';
 			}
 		}
@@ -843,7 +850,7 @@ void moveCharacter()
 		{
 			if(g_abKeyPressed[K_RIGHT] && g_abKeyPressed[K_USE])
 			{
-				item2(user);
+				item2(user , mapUpdate);
 				user.inventory[user.select] = 'f';
 			}
 		}
@@ -975,7 +982,7 @@ void EnterName()
     }
 
     //Check for same name used.
-    checkName( user , g_Console );
+    //checkName( user , g_Console );
 }
 
 void clearScreen()
@@ -1071,7 +1078,7 @@ void renderEnterName()
     EnterName();
 
     //Check for same name used.
-    //checkName( user , g_Console );
+    checkName( user , g_Console );
     c.Y += 1;
     g_Console.writeToBuffer(c, user.name, 0xf9);
 }
@@ -1079,46 +1086,46 @@ void renderEnterName()
 void renderStage1()
 {
 	MapCollision = load_map("stage1.txt");
-	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage1.txt");
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage1.txt" , mapUpdate);
 }
 void renderStage2()
 {
 	MapCollision = load_map("stage2.txt");
-	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage2.txt");
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage2.txt" , mapUpdate);
 	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console, blind);
 	for(unsigned int i = 0; i < allMobs.size(); ++i)
 	{
-		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
+		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range, mapUpdate);
 	}
 }
 void renderStage3()
 {
 	MapCollision = load_map("stage3.txt");
-	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage3.txt");
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage3.txt" , mapUpdate);
 	for(unsigned int i = 0; i < allMobs.size(); ++i)
 	{
-		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
+		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range, mapUpdate);
 	}
 }
 void renderStage4()
 {
 	MapCollision = load_map("stage4.txt");
-	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage4.txt");
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage4.txt" , mapUpdate);
 	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console, blind);
 	for(unsigned int i = 0; i < allMobs.size(); ++i)
 	{
-		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
+		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range, mapUpdate);
 	}
 }
 
 void renderTutorial()
 {
     MapCollision = load_map("tutorial.txt");
-	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "tutorial.txt");
+	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "tutorial.txt" , mapUpdate);
 	blockp(g_sChar.m_cLocation, blocks, lastknown, range, g_Console, blind);
 	for(unsigned int i = 0; i < allMobs.size(); ++i)
 	{
-		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
+		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range, mapUpdate);
 	}
 }
 void renderGame()
@@ -1127,49 +1134,50 @@ void renderGame()
     renderCharacter(user);  // renders the character into the buffer
 
     // Alerts
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1){
-		user.switch1 = 1;
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && mapUpdate.switch1 != 1){
+		mapUpdate.switch1 = 1;
         writeLog("X Switch Activated!", g_dElapsedTime);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '2'  && user.switch2 != 1)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '2'  && mapUpdate.switch2 != 1)
 	{
-		user.switch2 = 1;
+		mapUpdate.switch2 = 1;
         writeLog("Y Switch Activated!", g_dElapsedTime);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '3'  && user.switch3 != 1)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '3'  && mapUpdate.switch3 != 1)
 	{
-		user.switch3 = 1;
+		mapUpdate.switch3 = 1;
         writeLog("Z Switch Activated!", g_dElapsedTime);
 	}
 
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && user.boost == 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && mapUpdate.boost == 0)
 	{
-		user.boost = 1;
+		mapUpdate.boost = 1;
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && user.bombtaken == 0 && user.bomb == 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && mapUpdate.bombtaken == 0 && user.bomb == 0)
 	{
 		user.bomb = 1;
-		user.bombtaken = 1;
+		mapUpdate.bombtaken = 1;
         writeLog("You got a bomb!", g_dElapsedTime);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && user.invistaken == 0)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && mapUpdate.invistaken == 0)
 	{
 		user.invispot = 1;
-		user.invistaken = 1;
+		mapUpdate.invistaken = 1;
         writeLog("You got an invis potion!", g_dElapsedTime);
 	}
 	// Medpack
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MedsTaken == 0 && user.health != 5)
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && mapUpdate.MedsTaken == 0 && user.health != 5)
 	{
-		medpack(user);
+		medpack(user , mapUpdate);
         writeLog("You have been healed!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0 && trapdamage == 0)
 	{
-				trapdmg(user);
-				writeLog("You have been hurt!", g_dElapsedTime);
-				trapdamage = 1;
-	}else if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] != 'D' )
+		trapdmg(user);
+		writeLog("You have been hurt!", g_dElapsedTime);
+		trapdamage = 1;
+	}
+    else if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] != 'D' )
 	{
 		trapdamage = 0;
 	}
@@ -1238,7 +1246,7 @@ void renderGame()
 	} 
 
     //Check for cooldown
-    if (g_dElapsedTime >= boostcd && user.boost == 1 && boostcd != -1)
+    if (g_dElapsedTime >= boostcd && mapUpdate.boost == 1 && boostcd != -1)
     {
         writeLog("Boost is ready!", g_dElapsedTime);
         boostcd = -1;
@@ -1253,7 +1261,7 @@ void renderGame()
     divider( g_Console) ;
     timer( g_dElapsedTime , g_Console , user);
     lives( user , g_Console);
-    renderInventory ( user , g_Console , boostcd , g_dElapsedTime);
+    renderInventory ( user , g_Console , boostcd , g_dElapsedTime , mapUpdate);
     point( user , g_Console);
     selector ( user , g_Console);
     readLog ( g_Console , g_dElapsedTime);

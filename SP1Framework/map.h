@@ -52,7 +52,7 @@ MAP, * PMAP;
 PMAP load_map(char* filename);
 
 void free_map(PMAP pmap);
-void createMap(COORD charLocation, bool blind, int range, player &user, Console &g_Console, char* mapname); //Creates Map for Output
+void createMap(COORD charLocation, bool blind, int range, player &user, Console &g_Console, char* mapname, mapBool & mapUpdate); //Creates Map for Output
 void blockp(COORD &charLocation, COORD &blocks, COORD &lastknown, int range, Console &g_Console, bool blind);
 void spawnblock(COORD &blocks);
 

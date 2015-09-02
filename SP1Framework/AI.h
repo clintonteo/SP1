@@ -3,6 +3,7 @@
 
 #include "Framework\console.h"
 #include "map.h"
+#include "UI.h"
 
 struct mobData
 {
@@ -17,7 +18,7 @@ struct mobData
 	double movedelay;
 };
 
-void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, PMAP map, player &user, bool blind, int range);
+void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, PMAP map, player &user, bool blind, int range, mapBool & mapUpdate);
 void spawnmob(std::vector<mobData> &mob);
 
 #endif // _AI_H

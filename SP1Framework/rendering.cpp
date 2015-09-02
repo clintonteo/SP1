@@ -1,6 +1,7 @@
 #include "game.h"
 #include "map.h"
 #include "AI.h"
+#include "UI.h"
 #include "Framework\console.h"
 #include <iostream>
 #include <fstream>
@@ -30,7 +31,7 @@ unsigned const char pit = 48;
 unsigned const char invispot = 147;
 char arr[12][12];
 
-void createMap(COORD charLocation, bool blind, int range, player &user, Console &g_Console, char* mapname)
+void createMap(COORD charLocation, bool blind, int range, player &user, Console &g_Console, char* mapname, mapBool & map)
 {
 	MapRender = load_map(mapname);
     //render the game
@@ -78,40 +79,40 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 					//colour(0xf7);
 					//cout << trap;
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, trap, 0xf1);
-				}else if(line[charLocation.X-temprange+Xoffset+j] == 'X' && user.switch1 == 0)
+				}else if(line[charLocation.X-temprange+Xoffset+j] == 'X' && map.switch1 == 0)
 				{
 					//colour(0xf1);
 					//cout << "X";
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, X, 0xf1);
 				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == 'Y' && user.switch2 == 0)
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'Y' && map.switch2 == 0)
 				{
 					//colour(0xf1);
 					//cout << "Y";
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, Y, 0xf1);
 				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == 'Z' && user.switch3 == 0)
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'Z' && map.switch3 == 0)
 				{
 					//colour(0xf1);
 					//cout << "Z";
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, Z, 0xf1);
 				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == '1' && user.switch1 == 0)
+				else if(line[charLocation.X-temprange+Xoffset+j] == '1' && map.switch1 == 0)
 				{
 					//colour(0xf8);
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, switches, 0xf8);
 				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == '2' && user.switch2 == 0)
+				else if(line[charLocation.X-temprange+Xoffset+j] == '2' && map.switch2 == 0)
 				{
 					//colour(0xf8);
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, switches, 0xf8);
 				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == '3' && user.switch3 == 0)
+				else if(line[charLocation.X-temprange+Xoffset+j] == '3' && map.switch3 == 0)
 				{
 					//colour(0xf8);
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, switches, 0xf8);
 				}
-				else if(line[charLocation.X-temprange+Xoffset+j] == 'C' && user.Cexplode == 0)
+				else if(line[charLocation.X-temprange+Xoffset+j] == 'C' && map.Cexplode == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, crack, 0xfc);
 				}
@@ -123,26 +124,26 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, ladder, 0xfc);
 				}
-				else if (line[charLocation.X-temprange+Xoffset+j] == 'T' && user.TTaken == 0)
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'T' && map.TTaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, treasure, 0xf6);
 				}
-				else if (line[charLocation.X-temprange+Xoffset+j] == 'I' && user.boost == 0)
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'I' && map.boost == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, boost, 0xf2);
 				}
-				else if (line[charLocation.X-temprange+Xoffset+j] == 'M' && user.MedsTaken == 0)
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'M' && map.MedsTaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, medkit, 0xf2);
 				}
 				else if (line[charLocation.X-temprange+Xoffset+j] == 'P')
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, pit, 0xf1);
-				}else if (line[charLocation.X-temprange+Xoffset+j] == 'J' && user.bombtaken == 0)
+				}else if (line[charLocation.X-temprange+Xoffset+j] == 'J' && map.bombtaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, bomb, 0xfc);
 				}
-				else if (line[charLocation.X-temprange+Xoffset+j] == 'L' && user.invispot == 0 && user.invistaken == 0)
+				else if (line[charLocation.X-temprange+Xoffset+j] == 'L' && user.invispot == 0 && map.invistaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X-temprange+Xoffset+j, charLocation.Y+temprange-i, invispot, 0xf2);
 				}
@@ -167,37 +168,37 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 					//cout << trap;
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, trap, 0xf1);
 				}
-				else if(line[charLocation.X+k] == '1' && user.switch1 == 0)
+				else if(line[charLocation.X+k] == '1' && map.switch1 == 0)
 				{
 					//colour(0xf8);
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, switches, 0xf8);
 				}
-				else if(line[charLocation.X+k] == '2' && user.switch2 == 0)
+				else if(line[charLocation.X+k] == '2' && map.switch2 == 0)
 				{
 					//colour(0xf8);
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, switches, 0xf8);
 				}
-				else if(line[charLocation.X+k] == '3' && user.switch3 == 0)
+				else if(line[charLocation.X+k] == '3' && map.switch3 == 0)
 				{
 					//colour(0xf8);
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, switches, 0xf8);
 				}
-				else if(line[charLocation.X+k] == 'X'&& user.switch1 == 0)
+				else if(line[charLocation.X+k] == 'X'&& map.switch1 == 0)
 				{
 					//colour(0xf1);
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, X, 0xf1);
 				}
-				else if(line[charLocation.X+k] == 'Y' && user.switch2 == 0)
+				else if(line[charLocation.X+k] == 'Y' && map.switch2 == 0)
 				{
 					//colour(0xf1);
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, Y, 0xf1);
 				}
-				else if(line[charLocation.X+k] == 'Z' && user.switch3 == 0)
+				else if(line[charLocation.X+k] == 'Z' && map.switch3 == 0)
 				{
 					//colour(0xf1);
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, Z, 0xf1);
 				}
-				else if(line[charLocation.X+k] == 'C' && user.Cexplode == 0)
+				else if(line[charLocation.X+k] == 'C' && map.Cexplode == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, crack, 0xfc);
 				}
@@ -209,26 +210,26 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, ladder, 0xfc);
 				}
-				else if (line[charLocation.X+k] == 'T' && user.TTaken == 0)
+				else if (line[charLocation.X+k] == 'T' && map.TTaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i,treasure, 0xf6);
 				}
-				else if (line[charLocation.X+k] == 'I' && user.boost == 0)
+				else if (line[charLocation.X+k] == 'I' && map.boost == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, boost, 0xf2);
 				}
-				else if (line[charLocation.X+k] == 'M' && user.MedsTaken == 0)
+				else if (line[charLocation.X+k] == 'M' && map.MedsTaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, medkit, 0xf2);
 				}
 				else if (line[charLocation.X+k] == 'P')
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, pit, 0xf1);
-				}else if (line[charLocation.X+k] == 'J' && user.bombtaken == 0)
+				}else if (line[charLocation.X+k] == 'J' && map.bombtaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, bomb, 0xfc);
 				}
-				else if (line[charLocation.X+k] == 'L' && user.invispot == 0 && user.invistaken == 0)
+				else if (line[charLocation.X+k] == 'L' && user.invispot == 0 && map.invistaken == 0)
 				{
 					g_Console.writeToBuffer(charLocation.X+k,charLocation.Y+temprange-i, invispot, 0xf2);
 				}
@@ -268,35 +269,35 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 					//colour(0xf7);
 					//cout << trap;
 					g_Console.writeToBuffer(j, i, trap, 0xf1);
-				}else if(MapRender->data[i][j] == 'X' && user.switch1 == 0)
+				}else if(MapRender->data[i][j] == 'X' && map.switch1 == 0)
 				{
 					//colour(0xf1);
 					//cout << "X";
 					g_Console.writeToBuffer(j, i, X, 0xf1);
 				}
-				else if(MapRender->data[i][j] == 'Y' && user.switch2 == 0)
+				else if(MapRender->data[i][j] == 'Y' && map.switch2 == 0)
 				{
 					//colour(0xf1);
 					//cout << "Y";
 					g_Console.writeToBuffer(j, i, Y, 0xf1);
 				}
-				else if(MapRender->data[i][j] == 'Z' && user.switch3 == 0)
+				else if(MapRender->data[i][j] == 'Z' && map.switch3 == 0)
 				{
 					//colour(0xf1);
 					//cout << "Z";
 					g_Console.writeToBuffer(j, i, Z, 0xf1);
 				}
-				else if(MapRender->data[i][j] == '1' && user.switch1 == 0)
+				else if(MapRender->data[i][j] == '1' && map.switch1 == 0)
 				{
 					//colour(0xf8);
 					g_Console.writeToBuffer(j, i, switches, 0xf8);
 				}
-				else if(MapRender->data[i][j] == '2' && user.switch2 == 0)
+				else if(MapRender->data[i][j] == '2' && map.switch2 == 0)
 				{
 					//colour(0xf8);
 					g_Console.writeToBuffer(j, i, switches, 0xf8);
 				}
-				else if(MapRender->data[i][j] == '3' && user.switch3 == 0)
+				else if(MapRender->data[i][j] == '3' && map.switch3 == 0)
 				{
 					//colour(0xf8);
 					g_Console.writeToBuffer(j, i, switches, 0xf8);
@@ -309,27 +310,27 @@ void createMap(COORD charLocation, bool blind, int range, player &user, Console 
 				{
 					g_Console.writeToBuffer(j, i, ladder, 0xfc);
 				}
-				else if(MapRender->data[i][j] == 'C' && user.Cexplode == 0)
+				else if(MapRender->data[i][j] == 'C' && map.Cexplode == 0)
 				{
 					g_Console.writeToBuffer(j, i, crack, 0xfc);
 				}
-				else if(MapRender->data[i][j] == 'J' && user.bomb == 0 && user.bombtaken == 0)
+				else if(MapRender->data[i][j] == 'J' && user.bomb == 0 && map.bombtaken == 0)
 				{
 					g_Console.writeToBuffer(j, i, bomb, 0xfc);
 				}
-				else if (MapRender->data[i][j] == 'T' && user.TTaken == 0)
+				else if (MapRender->data[i][j] == 'T' && map.TTaken == 0)
 				{
 					g_Console.writeToBuffer(j, i, treasure, 0xf6);
 				}
-				else if (MapRender->data[i][j] == 'I' && user.boost == 0)
+				else if (MapRender->data[i][j] == 'I' && map.boost == 0)
 				{
 					g_Console.writeToBuffer(j, i, boost, 0xf2);
 				}
-				else if (MapRender->data[i][j] == 'L' && user.invispot == 0 && user.invistaken == 0)
+				else if (MapRender->data[i][j] == 'L' && user.invispot == 0 && map.invistaken == 0)
 				{
 					g_Console.writeToBuffer(j, i, invispot, 0xf2);
 				}
-				else if (MapRender->data[i][j] == 'M' && user.MedsTaken == 0)
+				else if (MapRender->data[i][j] == 'M' && map.MedsTaken == 0)
 				{
 					g_Console.writeToBuffer(j, i, medkit, 0xf2);
 				}

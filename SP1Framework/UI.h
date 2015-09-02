@@ -13,21 +13,21 @@ struct player
     int health;
     char inventory[6];
     vector<string>inventoryitems;
-	bool switch1;
-	bool switch2;
-	bool switch3;
-	bool TTaken;
+	//bool switch1; //m
+	//bool switch2; //m
+	//bool switch3; //m
+	//bool TTaken; //m
     int points; // Treasure
     int final_score; // Final Score
     int select;
-	bool boost;
-	bool bomb;
-	bool bombtaken;
-	bool Cexplode;
-	bool invispot;
+	//bool boost; //m
+	bool bomb; 
+	//bool bombtaken; //m
+	//bool Cexplode; //m
+	bool invispot;  
 	bool invis; // invis state
-	bool invistaken;
-	bool MedsTaken;
+	//bool invistaken; //m
+	//bool MedsTaken; //m
 	COORD block;
 	double timelimit;
 	int difficulty;
@@ -42,10 +42,23 @@ struct player
     bool samename;
 };
 
+struct mapBool
+{
+    bool switch1; 
+	bool switch2; 
+	bool switch3; 
+	bool TTaken; 
+    bool boost; 
+    bool bombtaken; 
+	bool Cexplode; 
+    bool invistaken; 
+	bool MedsTaken; 
+};
+
 void timer (double g_dElapsedTime, Console & g_Console, player & user);
 void lives (player & user, Console & g_Console);
 void divider(Console & g_Console);
-void renderInventory ( player & user , Console & g_Console , double &boostcd , double g_dElapsedTime );
+void renderInventory ( player & user , Console & g_Console , double &boostcd , double g_dElapsedTime , mapBool & map);
 void point( player & user , Console & g_Console );
 void selector( player & user , Console & g_Console);
 void background( Console & g_Console );

@@ -7,7 +7,8 @@
 
 // item1 is boost, item2 is explosive, item3 is invisible potion
 
-void item1up(PMAP MapCollision, COORD &charLocation, player&user, double currentTime, Console & g_Console, double &boostcd)// boost up
+
+void item1up(PMAP MapCollision, COORD &charLocation, player&user, double currentTime, Console & g_Console, double &boostcd, mapBool & mapUpdate)
 {
 	if(currentTime >= boostcd)// check for cooldown
 	{
@@ -20,7 +21,7 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user, double current
 			    stop = 1;
 			    break;
 		    }
-		    if (user.switch1 == 0)
+		    if (mapUpdate.switch1 == 0)
 		    {
 			    if(MapCollision->data[charLocation.Y - count][charLocation.X] == 'X')
 			    {
@@ -28,7 +29,7 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user, double current
 				    break;
 			    }
 		    }
-		    if(user.switch2 == 0)
+		    if(mapUpdate.switch2 == 0)
 		    {
 			    if(MapCollision->data[charLocation.Y - count][charLocation.X] == 'Y')
 			    {
@@ -36,7 +37,7 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user, double current
 				    break;
 			    }
 		    }
-		    if(user.switch3 == 0)
+		    if(mapUpdate.switch3 == 0)
 		    {
 			    if(MapCollision->data[charLocation.Y - count][charLocation.X] == 'Z')
 			    {
@@ -44,7 +45,7 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user, double current
 				    break;
 			    }
 		    }
-		    if(user.Cexplode == 0)
+		    if(mapUpdate.Cexplode == 0)
 		    {
 			    if(MapCollision->data[charLocation.Y - count][charLocation.X] == 'C')
 			    {
@@ -65,7 +66,8 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user, double current
 	    }
 	}
 }
-void item1left(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd)// boost left
+
+void item1left(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate)
 {
 	if(currentTime >= boostcd)
 	{
@@ -78,7 +80,7 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
 				stop = 1;
 				break;
 			}
-			if (user.switch1 == 0)
+			if (mapUpdate.switch1 == 0)
 			{
 				if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'X')
 				{
@@ -86,7 +88,7 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
 					break;
 				}
 			}
-			if(user.switch2 == 0)
+			if(mapUpdate.switch2 == 0)
 			{
 				if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'Y')
 				{
@@ -94,7 +96,7 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
 					break;
 				}
 			}
-			if(user.switch3 == 0)
+			if(mapUpdate.switch3 == 0)
 			{
 				if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'Z')
 				{
@@ -102,7 +104,7 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
 					break;
 				}
 			}
-			if(user.Cexplode == 0)
+			if(mapUpdate.Cexplode == 0)
 			{
 				if(MapCollision->data[charLocation.Y][charLocation.X - count] == 'C')
 				{
@@ -123,7 +125,7 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
     }
 	}
 }
-void item1down(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd)// boost down
+void item1down(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate)
 {
 	if(currentTime >= boostcd)
 	{
@@ -136,7 +138,7 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user, double curren
 			stop = 1;
 			break;
 		}
-		if (user.switch1 == 0)
+		if (mapUpdate.switch1 == 0)
 		{
 			if(MapCollision->data[charLocation.Y + count][charLocation.X] == 'X')
 			{
@@ -144,7 +146,7 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user, double curren
 				break;
 			}
 		}
-		if(user.switch2 == 0)
+		if(mapUpdate.switch2 == 0)
 		{
 			if(MapCollision->data[charLocation.Y + count][charLocation.X] == 'Y')
 			{
@@ -152,7 +154,7 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user, double curren
 				break;
 			}
 		}
-		if(user.switch3 == 0)
+		if(mapUpdate.switch3 == 0)
 		{
 			if(MapCollision->data[charLocation.Y + count][charLocation.X] == 'Z')
 			{
@@ -160,7 +162,7 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user, double curren
 				break;
 			}
 		}
-		if(user.Cexplode == 0)
+		if(mapUpdate.Cexplode == 0)
 		{
 			if(MapCollision->data[charLocation.Y + count][charLocation.X] == 'C')
 			{
@@ -181,7 +183,7 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user, double curren
 	}
 	}
 }
-void item1right(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd)// boost right
+void item1right(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate)
 {
 	if(currentTime >= boostcd)
 	{
@@ -194,7 +196,7 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 			stop = 1;
 			break;
 		}
-		if (user.switch1 == 0)
+		if (mapUpdate.switch1 == 0)
 		{
 			if(MapCollision->data[charLocation.Y][charLocation.X + count] == 'X')
 			{
@@ -202,7 +204,7 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 				break;
 			}
 		}
-		if(user.switch2 == 0)
+		if(mapUpdate.switch2 == 0)
 		{
 			if(MapCollision->data[charLocation.Y][charLocation.X + count] == 'Y')
 			{
@@ -210,7 +212,7 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 				break;
 			}
 		}
-		if(user.switch3 == 0)
+		if(mapUpdate.switch3 == 0)
 		{
 			if(MapCollision->data[charLocation.Y][charLocation.X + count] == 'Z')
 			{
@@ -218,7 +220,7 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 				break;
 			}
 		}
-		if(user.Cexplode == 0)
+		if(mapUpdate.Cexplode == 0)
 		{
 			if(MapCollision->data[charLocation.Y][charLocation.X + count] == 'C')
 			{
@@ -240,9 +242,9 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 	}
 }
 
-void item2(player&user) // Bomb
+void item2(player&user , mapBool & mapUpdate)
 {
-	user.Cexplode = 1;
+	mapUpdate.Cexplode = 1;
 	user.bomb = 0;
 }
 
@@ -253,16 +255,16 @@ void item3(player&user,SGameChar icon, double currentTime, double &invisExp) // 
 	user.invis = 1;
 }
 
-void medpack(player&user) // Medpack
+void medpack(player&user , mapBool & mapUpdate)
 {
 	if (user.health < 4)
 	{
 		user.health += 2;
-		user.MedsTaken = 1;
+		mapUpdate.MedsTaken = 1;
 	}
 	else if (user.health == 4)
 	{
 		user.health += 1;
-		user.MedsTaken = 1;
+		mapUpdate.MedsTaken = 1;
 	}
 }

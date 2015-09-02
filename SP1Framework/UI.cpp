@@ -89,7 +89,7 @@ void lives( player & user, Console &g_Console )
 }
 
 //Render Inventory
-void renderInventory( player & user , Console & g_Console , double &boostcd , double g_dElapsedTime )
+void renderInventory( player & user , Console & g_Console , double &boostcd , double g_dElapsedTime , mapBool & map)
 {
     g_Console.writeToBuffer(59 , 9, "Inventory: ", 10);
 
@@ -99,7 +99,7 @@ void renderInventory( player & user , Console & g_Console , double &boostcd , do
         {
             g_Console.writeToBuffer(57, 10 + i , user.inventoryitems[i] , 10);
 
-            if (g_dElapsedTime >= boostcd && user.boost == 1 && user.inventoryitems[user.select] == "Boost")
+            if (g_dElapsedTime >= boostcd && map.boost == 1 && user.inventoryitems[user.select] == "Boost")
             {
                 for (int find_boost = 0; find_boost <  user.inventoryitems.size(); ++find_boost)
                 {
@@ -285,6 +285,8 @@ void highscoreWrite ( player & user , Console & g_Console ) // NEW HIGHSCORE
     string line;
     string name;
     int score = 0;
+    highscorePoints.clear();
+    highscoreNames.clear();
 
     std::fstream HighScore ("highscore.txt", std::fstream::app);
 
@@ -357,7 +359,7 @@ void highscoreRead ( player & user , Console & g_Console )
             g_Console.writeToBuffer(20, 15 + i , rank , 0xf9);
             g_Console.writeToBuffer(30, 15 + i , line , 0xf9);
             ++i;
-            if(i == 10)
+            if(i == 6)
             {
                 break;
             }
@@ -410,6 +412,10 @@ void checkName( player & user , Console & g_Console )
         {
             g_Console.writeToBuffer(30, 16 , "CURRENT name taken. Please change." , 0xf9);
             user.samename = 1;
+        }
+        else
+        {
+            user.samename = 0;
         }
     }
     highscoreCheck.close();
