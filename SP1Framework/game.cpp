@@ -235,6 +235,10 @@ void update(double dt)
 				tutorial_init = 0;
 				g_eGameState = S_MENU;
 			}
+			if(g_abKeyPressed[K_ESCAPE])
+			{
+				tutorial_init = 0;
+			}
             break;
         case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
             break;
