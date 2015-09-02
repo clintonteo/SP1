@@ -32,6 +32,7 @@ enum EGAMESTATES
 	S_OPTIONS,
 	S_HELP,
 	S_HIGHSCORE,
+	S_ICON,
     S_TUTORIAL,
     S_SPLASHSCREEN,
     S_GAME1,
@@ -96,6 +97,7 @@ void exit();
 void options(Console&Console, player&user);
 void help(Console &Console, player&user);
 void highscoreMenu(Console&g_Console, player&user);
+void playerIcon(Console&g_Console, player&user);
 
 void EnterName();
 

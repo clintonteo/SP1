@@ -210,7 +210,8 @@ void update(double dt)
 			break;
 		case S_HIGHSCORE: highscoreMenu( g_Console, user);
 			break;
-
+		case S_ICON: playerIcon(g_Console, user);
+			break;
         case S_TUTORIAL:
             if(tutorial_init == 0)
             {
@@ -423,6 +424,8 @@ void render()
 		case S_MENU: mainMenu(g_Console, user);
 			break;
 		case S_HIGHSCORE: highscoreMenu( g_Console, user);
+			break;
+		case S_ICON: playerIcon(g_Console, user);
 			break;
         case S_SPLASHSCREEN: renderSplashScreen();
             break;
@@ -1292,7 +1295,7 @@ void renderCharacter(player&user)
 	{
 		charColor = 0xe0;
 	}
-    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+	g_Console.writeToBuffer(g_sChar.m_cLocation, user.icon, charColor);
 }
 
 void renderFramerate()

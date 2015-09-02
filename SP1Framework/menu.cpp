@@ -15,6 +15,8 @@ int opPointer = 0;
 int &optionPointer = opPointer;
 int hPointer = 0;
 int &helpPointer = hPointer;
+int iPointer = 0;
+int &iconPointer = iPointer;
 const int normal = 0;
 const int hard = 1;
 const int insane = 2;
@@ -196,7 +198,7 @@ void mainMenu(Console &console, player&user)
 		}
 	}
 
-	string Menu[5] = {"Play", "Difficulty", "Instructions", "Highscore", "Exit"};
+	string Menu[6] = {"Play", "Difficulty", "Character Select", "Instructions", "Highscore", "Exit"};
 
 	if (g_dElapsedTime > 9)
 	{
@@ -218,7 +220,7 @@ void mainMenu(Console &console, player&user)
 			console.writeToBuffer(25, 10, "Selected difficulty is Scrub. Noob.", 0xf0);
 		}
 		console.writeToBuffer(20, 20, "Arrow Keys to navigate, Enter to select", 0xf0);
-		for (int i = 0; i < 5; ++i)
+		for (int i = 0; i < 6; ++i)
 		{
 			if (i == pointer)
 			{
@@ -235,14 +237,14 @@ void mainMenu(Console &console, player&user)
 			menuPointer -= 1;
 			if (menuPointer == -1)
 			{
-				menuPointer = 4;
+				menuPointer = 5;
 			}
 		}
 		else if (g_abKeyPressed[K_DOWN] && g_dElapsedTime > stopmenu)
 		{
 			stopmenu = g_dElapsedTime + .2;
 			menuPointer += 1;
-			if (menuPointer == 5)
+			if (menuPointer == 6)
 			{
 				menuPointer = 0;
 			}
@@ -268,15 +270,20 @@ void mainMenu(Console &console, player&user)
 					break;
 				case 2:
 					{
-						g_eGameState = S_HELP;
+						g_eGameState = S_ICON;
 					}
 					break;
 				case 3:
 					{
-						g_eGameState = S_HIGHSCORE;
+						g_eGameState = S_HELP;
 					}
 					break;
 				case 4:
+					{
+						g_eGameState = S_HIGHSCORE;
+					}
+					break;
+				case 5:
 					{
 						exit();
 					}
@@ -440,5 +447,73 @@ void help(Console &console, player&user)
 				}
 				break;
 		}
+	}
+}
+
+void playerIcon(Console &console, player&user)
+{
+	char sIcon[5] = {(char)232,(char)233,(char)234,(char)236,(char)237};
+
+	console.writeToBuffer(30, 5, "Character Select", 0xfc);
+	console.writeToBuffer(15, 18, "You can choose the icons here as your character", 0xf0);
+
+	for (int i = 0; i < 5; ++i)
+	{
+		if (i == iPointer)
+		{
+			console.writeToBuffer(30+i+i+i+i,10, sIcon[i], 10);
+		}
+		else
+		{
+			console.writeToBuffer(30+i+i+i+i,10, sIcon[i], 0xf9);
+		}
+	}
+	//console.writeToBuffer(30, 10, user.icon, 10);
+	if (g_abKeyPressed[K_LEFT] && g_dElapsedTime > stopmenu)
+	{
+		stopmenu = g_dElapsedTime + .2;
+		iconPointer -= 1;
+		if (iconPointer == -1)
+		{
+			iconPointer = 4;
+		}
+		//user.icon++;
+	}
+	else if (g_abKeyPressed[K_RIGHT] && g_dElapsedTime > stopmenu)
+	{
+		stopmenu = g_dElapsedTime + .2;
+		iconPointer += 1;
+		if (iconPointer == 5)
+		{
+			iconPointer = 0;
+		}
+		//user.icon--;
+	}
+	else if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopmenu)
+	{
+		stopmenu = g_dElapsedTime + .2;
+		user.icon = sIcon[iPointer];
+		//switch (iconPointer)
+		//{
+		//	case 0:
+		//		{
+		//			user.icon = 0;
+		//			g_eGameState = S_MENU;
+		//		}
+		//		break;
+		//	case 1:
+		//		{
+		//			user.icon = 1;
+		//			g_eGameState = S_MENU;
+		//		}
+		//		break;
+		//	case 2:
+		//		{
+		//			user.icon = 2;
+		//			g_eGameState = S_MENU;
+		//		}
+		//		break;
+		//}
+		g_eGameState = S_MENU;
 	}
 }

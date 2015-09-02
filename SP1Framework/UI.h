@@ -38,6 +38,7 @@ struct player
     string name; //NAME
     bool gameover;
     bool wroteHighScore;
+	char icon;
 };
 
 void timer (double g_dElapsedTime, Console & g_Console, player & user);
