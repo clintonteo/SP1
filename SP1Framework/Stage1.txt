@@ -3,18 +3,18 @@ WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 W   D             WW   D   =  D        ===D      W
 W              D  WW       =D    D     ===   DH  W
 W                 WW  DWWWWWWWWWWWWWWWWWWWWWWWWWWW
-W  D     D        WWD  =  MWW        D ===      DW
-W                 WW  DW   WW  D       ===D     3W
+W  D     D        WWD  =  MWW        D ===Z     DW
+W                 WW  DW   WW  D       ===Z     TW
 W      D          WW   WD  WW  WWWWWWWWWWWWWWWWWWW
 W    D    D       WWD  W   WW  WW     D===       W
 W                 WW              D    === D     W
 W  D  D  D    D   WWF          WW================W
 WWWWWWW     WWWWWWWWWWWWWWWWWWWWWWWWWWYYYYYWWWWWWW
 WWWWWWW         D               W                W
-WTD WWW               WW     D  W                W
+W3D WWW               WW     D  W                W
 W   WWW    DWWWWWWD   WW   WWW  W    D  WWWWD    W
 W  DWWW     W         WW  DWWW          WWWW     W
-WZZZWWW   WWWWWWWWWWWWWW   WWW          WWWW     W
+W   WWW   WWWWWWWWWWWWWW   WWW          WWWW     W
 W     D   W            W   WWW  WWWWWXXXWWWW     W
 WD        W    1    D           W   D   WWWW    DW
 W         W                   D W  I    WWWW    2W

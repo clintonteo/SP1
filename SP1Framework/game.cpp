@@ -367,7 +367,7 @@ void update(double dt)
                 highscoreWrite( user , g_Console );
                 user.wroteHighScore = 0;
             }
-			gameplay();
+			processUserInput();
     //        if (g_abKeyPressed[K_ENTER] && g_dElapsedTime > stopswitch)
     //        {
     //            g_eGameState = S_MENU;
@@ -867,15 +867,19 @@ void moveCharacter()
     }
 
     // quits the game if player hits the escape key
-    if (g_abKeyPressed[K_ESCAPE])   
-	{
-		g_eGameState = S_MENU;
-		init1 = 0;
-		init2 = 0;
-		init3 = 0;
-		init4 = 0;
-		user.start = 0;
-	}
+ //   if (g_abKeyPressed[K_ESCAPE])   
+	//{
+	//	g_eGameState = S_MENU;
+	//	init1 = 0;
+	//	init2 = 0;
+	//	init3 = 0;
+	//	init4 = 0;
+	//	extime1 = 0;
+	//	extime2 = 0;
+	//	extime3 = 0;
+	//	extime4 = 0;
+	//	user.start = 0;
+	//}
 
     // quits if player lives at 0
     if (user.health <= 0)
@@ -925,6 +929,7 @@ void processUserInput()
 		extime2 = 0;
 		extime3 = 0;
 		extime4 = 0;
+		user.points = 0;
 		user.start = 0;
 	}
 }
