@@ -1068,42 +1068,6 @@ void processUserInput()
 
 void EnterName()
 {
-    /*if (g_abKeyPressed[K_0]){ user.name += "0"; }
-    if (g_abKeyPressed[K_1]){ user.name += "1"; }
-    if (g_abKeyPressed[K_2]){ user.name += "2"; }
-    if (g_abKeyPressed[K_3]){ user.name += "3"; }
-    if (g_abKeyPressed[K_4]){ user.name += "4"; }
-    if (g_abKeyPressed[K_5]){ user.name += "5"; }
-    if (g_abKeyPressed[K_6]){ user.name += "6"; }
-    if (g_abKeyPressed[K_7]){ user.name += "7"; }
-    if (g_abKeyPressed[K_8]){ user.name += "8"; }
-    if (g_abKeyPressed[K_9]){ user.name += "9"; }
-    if (g_abKeyPressed[K_A]){ user.name += "A"; }
-    if (g_abKeyPressed[K_B]){ user.name += "B"; }
-    if (g_abKeyPressed[K_C]){ user.name += "C"; }
-    if (g_abKeyPressed[K_D]){ user.name += "D"; }
-    if (g_abKeyPressed[K_E]){ user.name += "E"; }
-    if (g_abKeyPressed[K_F]){ user.name += "F"; }
-    if (g_abKeyPressed[K_G]){ user.name += "G"; }
-    if (g_abKeyPressed[K_H]){ user.name += "H"; }
-    if (g_abKeyPressed[K_I]){ user.name += "I"; }
-    if (g_abKeyPressed[K_J]){ user.name += "J"; }
-    if (g_abKeyPressed[K_K]){ user.name += "K"; }
-    if (g_abKeyPressed[K_L]){ user.name += "L"; }
-    if (g_abKeyPressed[K_M]){ user.name += "M"; }
-    if (g_abKeyPressed[K_N]){ user.name += "N"; }
-    if (g_abKeyPressed[K_O]){ user.name += "O"; }
-    if (g_abKeyPressed[K_P]){ user.name += "P"; }
-    if (g_abKeyPressed[K_Q]){ user.name += "Q"; }
-    if (g_abKeyPressed[K_R]){ user.name += "R"; }
-    if (g_abKeyPressed[K_S]){ user.name += "S"; }
-    if (g_abKeyPressed[K_T]){ user.name += "T"; }
-    if (g_abKeyPressed[K_U]){ user.name += "U"; }
-    if (g_abKeyPressed[K_V]){ user.name += "V"; }
-    if (g_abKeyPressed[K_W]){ user.name += "W"; }
-    if (g_abKeyPressed[K_X]){ user.name += "X"; }
-    if (g_abKeyPressed[K_Y]){ user.name += "Y"; }
-    if (g_abKeyPressed[K_Z]){ user.name += "Z"; }*/
     if (g_abKeyPressed[K_SPACE]){ user.name += " "; }
     if (g_abKeyPressed[K_BACK]){ if(user.name.size() > 0) user.name.pop_back(); }
 
