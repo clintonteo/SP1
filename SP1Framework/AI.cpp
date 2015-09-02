@@ -79,15 +79,15 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				{
 					mobD.MC.X++;
 
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X+1] == 'X' && mapUpdate.switch1 == 1)
 				{
 					mobD.MC.X++;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X+1] == 'Y' && mapUpdate.switch2 == 1)
 				{
 					mobD.MC.X++;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X+1] == 'Z' && mapUpdate.switch3 == 1)
 				{
 					mobD.MC.X++;
@@ -98,15 +98,15 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				if(map->data[mobD.MC.Y][mobD.MC.X-1] == ' ' || map->data[mobD.MC.Y][mobD.MC.X-1] == 'D')
 				{
 					mobD.MC.X--;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X-1] == 'X' && mapUpdate.switch1 == 1)
 				{
 					mobD.MC.X--;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X-1] == 'Y' && mapUpdate.switch2 == 1)
 				{
 					mobD.MC.X--;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y][mobD.MC.X-1] == 'Z' && mapUpdate.switch3 == 1)
 				{
 					mobD.MC.X--;
@@ -121,11 +121,11 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				{
 					mobD.MC.Y++;
 
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X] == 'X' && mapUpdate.switch1 == 1)
 				{
 					mobD.MC.Y++;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X] == 'Y' && mapUpdate.switch2 == 1)
 
 				{
@@ -141,15 +141,15 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 				{
 					mobD.MC.Y--;
 
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X] == 'X' && mapUpdate.switch1 == 1)
 				{
 					mobD.MC.Y--;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X] == 'Y' && mapUpdate.switch2 == 1)
 				{
 					mobD.MC.Y--;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X] == 'Z' && mapUpdate.switch3 == 1)
 
 				{
@@ -166,17 +166,17 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 					mobD.MC.Y++;
 					mobD.MC.X++;
 
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X+1] == 'X' && mapUpdate.switch1 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X++;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X+1] == 'Y' && mapUpdate.switch2 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X++;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X+1] == 'Z' && mapUpdate.switch3 == 1)
 
 				{
@@ -191,17 +191,17 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 					mobD.MC.Y--;
 					mobD.MC.X--;
 
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if (map->data[mobD.MC.Y-1][mobD.MC.X-1] == 'X' && mapUpdate.switch1 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X--;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if (map->data[mobD.MC.Y-1][mobD.MC.X-1] == 'Y' && mapUpdate.switch2 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X--;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if (map->data[mobD.MC.Y-1][mobD.MC.X-1] == 'Z' && mapUpdate.switch3 == 1)
 
 				{
@@ -216,17 +216,17 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 					mobD.MC.Y--;
 					mobD.MC.X++;
 
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X+1] == 'X' && mapUpdate.switch1 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X++;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X+1] == 'Y' && mapUpdate.switch2 == 1)
 				{
 					mobD.MC.Y--;
 					mobD.MC.X++;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y-1][mobD.MC.X+1] == 'Z' && mapUpdate.switch3 == 1)
 
 				{
@@ -241,17 +241,17 @@ void mobmove(COORD &charLocation, mobData &mobD, double time, Console &console, 
 					mobD.MC.Y++;
 					mobD.MC.X--;
 
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X-1] == 'X' && mapUpdate.switch1 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X--;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X-1] == 'Y' && mapUpdate.switch2 == 1)
 				{
 					mobD.MC.Y++;
 					mobD.MC.X--;
-					mobD.delay = time + movedelay;
+					mobD.delay = time + mobD.movedelay;
 				}else if(map->data[mobD.MC.Y+1][mobD.MC.X-1] == 'Z' && mapUpdate.switch3 == 1)
 
 				{

@@ -8,7 +8,7 @@
 // item1 is boost, item2 is explosive, item3 is invisible potion
 
 
-void item1up(PMAP MapCollision, COORD &charLocation, player&user, double currentTime, Console & g_Console, double &boostcd, mapBool & mapUpdate)
+void item1up(PMAP MapCollision, COORD &charLocation, player&user, double currentTime, Console & g_Console, double &boostcd, mapBool & mapUpdate) // Boost up
 {
 	if(currentTime >= boostcd)// check for cooldown
 	{
@@ -67,7 +67,7 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user, double current
 	}
 }
 
-void item1left(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate)
+void item1left(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate)// Boost left
 {
 	if(currentTime >= boostcd)
 	{
@@ -125,7 +125,7 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
     }
 	}
 }
-void item1down(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate)
+void item1down(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate)// Boost down
 {
 	if(currentTime >= boostcd)
 	{
@@ -183,7 +183,7 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user, double curren
 	}
 	}
 }
-void item1right(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate)
+void item1right(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate)// Boost right
 {
 	if(currentTime >= boostcd)
 	{
@@ -242,10 +242,28 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 	}
 }
 
-void item2(player&user , mapBool & mapUpdate)
+void item2(player&user , mapBool & mapUpdate, PMAP MapCollision, COORD &charLocation) // Bomb
 {
-	mapUpdate.Cexplode = 1;
-	user.bomb = 0;
+	if(MapCollision->data[charLocation.Y - 1][charLocation.X] == 'C')
+	{
+		mapUpdate.Cexplode = 1;
+		user.bomb = 0;
+	}
+	else if(MapCollision->data[charLocation.Y + 1][charLocation.X] == 'C')
+	{
+		mapUpdate.Cexplode = 1;
+		user.bomb = 0;
+	}
+	else if(MapCollision->data[charLocation.Y][charLocation.X - 1] == 'C')
+	{
+		mapUpdate.Cexplode = 1;
+		user.bomb = 0;
+	}
+	else if(MapCollision->data[charLocation.Y][charLocation.X + 1] == 'C')
+	{
+		mapUpdate.Cexplode = 1;
+		user.bomb = 0;
+	}
 }
 
 void item3(player&user,SGameChar icon, double currentTime, double &invisExp) // Invisible potion
@@ -255,14 +273,14 @@ void item3(player&user,SGameChar icon, double currentTime, double &invisExp) // 
 	user.invis = 1;
 }
 
-void medpack(player&user , mapBool & mapUpdate)
+void medpack(player&user , mapBool & mapUpdate)// Medpack
 {
 	if (user.health < 4)
 	{
 		user.health += 2;
 		mapUpdate.MedsTaken = 1;
 	}
-	else if (user.health == 4)
+	else if (user.health == 4)// to prevent players having more than 5 health
 	{
 		user.health += 1;
 		mapUpdate.MedsTaken = 1;

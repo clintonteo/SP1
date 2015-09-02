@@ -9,7 +9,7 @@ void item1up(PMAP MapCollision, COORD &charLocation,player&user,double currentTi
 void item1left(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate);
 void item1down(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate);
 void item1right(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd , mapBool & mapUpdate);
-void item2(player&user , mapBool & mapUpdate);
+void item2(player&user , mapBool & mapUpdate,PMAP MapCollision, COORD &charLocation);
 void item3(player&user,SGameChar icon, double currentTime, double &invisexp);
 void medpack(player&user , mapBool & mapUpdate );
 

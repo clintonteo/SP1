@@ -258,7 +258,7 @@ void update(double dt)
 			}
 			if (extime1 == 0)
 			{
-				user.TTaken = 0;
+				mapUpdate.TTaken = 0;
 				startGame(user, range, blind);
 				extime1 = 1;
 			}
@@ -281,7 +281,7 @@ void update(double dt)
 			{
 				if(extime2 == 0)
 				{
-					user.TTaken = 0;
+					mapUpdate.TTaken = 0;
 					addTime(user);
 					extime2 = 1;
 				}
@@ -314,7 +314,7 @@ void update(double dt)
 			{
 				if(extime3 == 0)
 				{
-					user.TTaken = 0;
+					mapUpdate.TTaken = 0;
 					addTime(user);
 					extime3 = 1;
 				}
@@ -347,7 +347,7 @@ void update(double dt)
 			{
 				if(extime4 == 0)
 				{
-					user.TTaken = 0;
+					mapUpdate.TTaken = 0;
 					addTime(user);
 					extime4 = 1;
 				}
@@ -821,8 +821,11 @@ void moveCharacter()
 	//Bomb
     if(user.bomb == 1 && user.inventoryitems[user.select] == "Bomb"/*user.inventory[user.select] == 't'*/)
 	{
-		int amt = user.bomb;
-		if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
+		if(g_abKeyPressed[K_USE])
+		{
+			item2(user, mapUpdate, MapCollision, g_sChar.m_cLocation);
+		}
+		/*if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
 		{
 			if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 			{
@@ -853,7 +856,7 @@ void moveCharacter()
 				item2(user , mapUpdate);
 				user.inventory[user.select] = 'f';
 			}
-		}
+		}*/
 	}
 	
 	//Invis
@@ -1254,6 +1257,7 @@ void renderGame()
 	if(g_dElapsedTime >= invisExp && user.invis == 1)
 	{
 		user.invis = 0;
+		invisExp = 0;
 	}
    
     //UI functions
