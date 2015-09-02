@@ -147,7 +147,6 @@ void init( void )
     std::ofstream log;
     log.open("log.txt", std::fstream::trunc);
     log.close();
-	//user.timelimit = 99999;
     user.gameover = 0;
     user.name;
     //user.wroteHighScore = 0;
@@ -190,45 +189,7 @@ void getInput( void )
 	g_abKeyPressed[K_RESET] = isKeyPressed(0x52); // R key // Resets the game
     g_abKeyPressed[K_ENTER] = isKeyPressed(VK_RETURN); // Enter Key
     g_abKeyPressed[K_SPACE] = isKeyPressed(VK_SPACE); //SPACE BAR
-     g_abKeyPressed[K_BACK] = isKeyPressed(VK_BACK);
-
-    //Name Inputs
-    //g_abKeyPressed[K_0] = isKeyPressed(0x30);
-    //g_abKeyPressed[K_1] = isKeyPressed(0x31);
-    //g_abKeyPressed[K_2] = isKeyPressed(0x32);
-    //g_abKeyPressed[K_3] = isKeyPressed(0x33);
-    //g_abKeyPressed[K_4] = isKeyPressed(0x34);
-    //g_abKeyPressed[K_5] = isKeyPressed(0x35);
-    //g_abKeyPressed[K_6] = isKeyPressed(0x36);
-    //g_abKeyPressed[K_7] = isKeyPressed(0x37);
-    //g_abKeyPressed[K_8] = isKeyPressed(0x38);
-    //g_abKeyPressed[K_9] = isKeyPressed(0x39);
-    //g_abKeyPressed[K_A] = isKeyPressed(0x41);
-    //g_abKeyPressed[K_B] = isKeyPressed(0x42);
-    //g_abKeyPressed[K_C] = isKeyPressed(0x43);
-    //g_abKeyPressed[K_D] = isKeyPressed(0x44);
-    //g_abKeyPressed[K_E] = isKeyPressed(0x45);
-    //g_abKeyPressed[K_F] = isKeyPressed(0x46);
-    //g_abKeyPressed[K_G] = isKeyPressed(0x47);
-    //g_abKeyPressed[K_H] = isKeyPressed(0x48);
-    //g_abKeyPressed[K_I] = isKeyPressed(0x49);
-    //g_abKeyPressed[K_J] = isKeyPressed(0x4A);
-    //g_abKeyPressed[K_K] = isKeyPressed(0x4B);
-    //g_abKeyPressed[K_L] = isKeyPressed(0x4C);
-    //g_abKeyPressed[K_M] = isKeyPressed(0x4D);
-    //g_abKeyPressed[K_N] = isKeyPressed(0x4E);
-    //g_abKeyPressed[K_O] = isKeyPressed(0x4F);
-    //g_abKeyPressed[K_P] = isKeyPressed(0x50);
-    //g_abKeyPressed[K_Q] = isKeyPressed(0x51);
-    //g_abKeyPressed[K_R] = isKeyPressed(0x52);
-    //g_abKeyPressed[K_S] = isKeyPressed(0x53);
-    //g_abKeyPressed[K_T] = isKeyPressed(0x54);
-    //g_abKeyPressed[K_U] = isKeyPressed(0x55);
-    //g_abKeyPressed[K_V] = isKeyPressed(0x56);
-    //g_abKeyPressed[K_W] = isKeyPressed(0x57);
-    //g_abKeyPressed[K_X] = isKeyPressed(0x58);
-    //g_abKeyPressed[K_Y] = isKeyPressed(0x59);
-    //g_abKeyPressed[K_Z] = isKeyPressed(0x5A);
+    g_abKeyPressed[K_BACK] = isKeyPressed(VK_BACK);
 }
 
 //--------------------------------------------------------------
@@ -841,53 +802,7 @@ void moveCharacter()
 	}
 
 
-    // quits the game if player hits the escape key
-    if (g_abKeyPressed[K_ESCAPE])   
-	{
-		g_eGameState = S_MENU;
-		init1 = 0;
-		init2 = 0;
-		init3 = 0;
-		init4 = 0;
-		extime1 = 0;
-		extime2 = 0;
-		extime3 = 0;
-		extime4 = 0;
-		user.start = 0;
-	}
-
-    // quits if player lives at 0
-    if (user.health <= 0)
-    {
-        //g_bQuitGame = true;
-        //g_eGameState = S_SPLASHSCREEN;
-        --user.lives;
-        user.health = 5;
-        if (g_eGameState == S_TUTORIAL)
-        {
-            tutorial_init = 0;
-        }
-
-        if (g_eGameState == S_GAME1)
-        {
-            init1 = 0;
-        }
-        else if (g_eGameState == S_GAME2)
-        {
-            init2 = 0;
-        }
-
-		else if (g_eGameState == S_GAME3)
-        {
-            init3 = 0; 
-        }
-		else if (g_eGameState == S_GAME4)
-        {
-            init4 = 0;
-        }
-        lostlives = 1;
-        writeLog("You lost a live!", g_dElapsedTime);
-	}
+    
 	//RESET
 	if(g_abKeyPressed[K_RESET])
 	{
@@ -971,6 +886,50 @@ void moveCharacter()
 			writeLog("You are invis!", g_dElapsedTime);
 		}
     }
+
+    // quits the game if player hits the escape key
+    if (g_abKeyPressed[K_ESCAPE])   
+	{
+		g_eGameState = S_MENU;
+		init1 = 0;
+		init2 = 0;
+		init3 = 0;
+		init4 = 0;
+		user.start = 0;
+	}
+
+    // quits if player lives at 0
+    if (user.health <= 0)
+    {
+        //g_bQuitGame = true;
+        //g_eGameState = S_SPLASHSCREEN;
+        --user.lives;
+        user.health = 5;
+        if (g_eGameState == S_TUTORIAL)
+        {
+            tutorial_init = 0;
+        }
+
+        if (g_eGameState == S_GAME1)
+        {
+            init1 = 0;
+        }
+        else if (g_eGameState == S_GAME2)
+        {
+            init2 = 0;
+        }
+
+		else if (g_eGameState == S_GAME3)
+        {
+            init3 = 0; 
+        }
+		else if (g_eGameState == S_GAME4)
+        {
+            init4 = 0;
+        }
+        lostlives = 1;
+        writeLog("You lost a live!", g_dElapsedTime);
+	}
     
 }
 void processUserInput()
@@ -1148,10 +1107,6 @@ void renderStage1()
 {
 	MapCollision = load_map("stage1.txt");
 	createMap(g_sChar.m_cLocation, blind, range, user, g_Console, "stage1.txt");
-	/*for(unsigned int i = 0; i < allMobs.size(); ++i)
-	{
-		mobmove(g_sChar.m_cLocation,allMobs[i],g_dElapsedTime,g_Console, MapCollision, user, blind, range);
-	}*/
 }
 void renderStage2()
 {
@@ -1198,9 +1153,7 @@ void renderGame()
     background ( g_Console );
     renderCharacter(user);  // renders the character into the buffer
 
-    // Write Log
-	//mobmove(g_sChar.m_cLocation,mob,g_dElapsedTime,g_Console, MapCollision);
-    // Creating Map
+    // Alerts
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && user.switch1 != 1){
 		user.switch1 = 1;
         writeLog("X Switch Activated!", g_dElapsedTime);
@@ -1232,7 +1185,7 @@ void renderGame()
 		user.invistaken = 1;
         writeLog("You got an invis potion!", g_dElapsedTime);
 	}
-	// medpack
+	// Medpack
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && user.MedsTaken == 0 && user.health != 5)
 	{
 		/*if(user.difficulty == normal || user.difficulty == hard || user.difficulty == ez)
@@ -1247,30 +1200,10 @@ void renderGame()
 				user.health += 1;
 				user.MedsTaken = 1;
 			}
-		/*}*/
-		/*else if(user.difficulty == insane)
-		{
-			if (user.health < 3)
-			{
-				user.health += 3;
-				user.MedsTaken = 1;
-			}
-			else if (user.lives == 3)
-			{
-				user.health += 2;
-				user.MedsTaken = 1;
-			}
-			else if (user.lives == 4)
-			{
-				user.health += 1;
-				user.MedsTaken = 1;
-			}
-		}*/
         writeLog("You have been healed!", g_dElapsedTime);
 	}
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0 && trapdamage == 0)
 	{
-        //writeLog("You have been hurt!", g_dElapsedTime);
 		if(user.difficulty == hard || user.difficulty == normal || user.difficulty == ez)
 		{
 				user.health--;
@@ -1287,7 +1220,8 @@ void renderGame()
 	{
 		trapdamage = 0;
 	}
-	// pitfall
+
+	// Pitfall
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'P' && user.health > 0)
 	{
 		reset();
@@ -1341,13 +1275,9 @@ void renderGame()
 	{
 		colour(BACKGROUND_RED);
         Beep(2000, 1000);
-		//g_Console.writeToBuffer(51, 13, "YOU DIED", 0xf1);
         user.gameover = 1;
         writeLog("You died!", g_dElapsedTime);
         Endtime = g_dElapsedTime;
-
-        /*calculateFinal ( user , Endtime );
-        highscoreWrite( user , g_Console );*/
 
         g_eGameState = S_NAME;
 	} 
