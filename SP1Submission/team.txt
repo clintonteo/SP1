@@ -3,19 +3,37 @@ Credits
 Clinton:
 Level Design
 Items
+-Boost
+-Bomb
+-Invisibilty Potions
+-Health Kit
 Traps
 Difficulty and Time Limit
-Menu (Design, Content)
 
 Arun:
 Map Rendering
 Collision
 Fog of War
 Monster AI
+-Simple Pathfinding
+-Damage and Knockback
+-Dynamic Spawns
 
 Donovan:
 User Interface
+- Struct of player stats
+- Inventory + Inventory Select 
+- Notification Log
+- Health + Life
+Tutorial Stage + Tutorial Msg
 Highscores
 
 Austin:
-Menu (Structure, Animation)
+Menu
+-Selector
+-Structure
+-Animation
+
+Everyone:
+Debugging. Lots of it.
+and playtesting

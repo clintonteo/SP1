@@ -62,9 +62,9 @@ void shutdown    ( void );      // do clean up, free memory
 void reset();
 
 void splashScreenWait();    // waits for time to pass in splash screen
-void splashStage2Wait();    // waits for time to pass in splash screen
-void splashStage3Wait();
-void splashStage4Wait();
+void splashNextStageWait();    // waits for time to pass in splash screen
+//void splashStage3Wait();
+//void splashStage4Wait();
 void splashGameoverWait();
 
 void gameplay();            // gameplay logic

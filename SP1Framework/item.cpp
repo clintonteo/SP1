@@ -7,13 +7,13 @@
 
 // item1 is boost, item2 is explosive, item3 is invisible potion
 
-void item1up(PMAP MapCollision, COORD &charLocation, player&user, double currentTime, Console & g_Console, double &boostcd)
+void item1up(PMAP MapCollision, COORD &charLocation, player&user, double currentTime, Console & g_Console, double &boostcd)// boost up
 {
-	if(currentTime >= boostcd)
+	if(currentTime >= boostcd)// check for cooldown
 	{
 	    bool stop = 0;
 	    int count = 0;
-	    for(; count <= 3; ++count)
+	    for(; count <= 3; ++count)// detects if any impassable obstacle is in the way
 	    {
 		    if (MapCollision->data[charLocation.Y - count][charLocation.X] == 'W')
 		    {
@@ -53,19 +53,19 @@ void item1up(PMAP MapCollision, COORD &charLocation, player&user, double current
 			    }
 		    }
 	    }
-	    if (stop == 0)
+	    if (stop == 0)// boosts fully if nothing blocking is detected
 	    {
 		    charLocation.Y -= 3;
 		    boostcd = currentTime + 3;
 	    }
-	    else
+	    else // boosts player till before the tile that is blocking the user's boost range
 	    {
 		    charLocation.Y -= count - 1;
 		    boostcd = currentTime + 3;
 	    }
 	}
 }
-void item1left(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd)
+void item1left(PMAP MapCollision, COORD &charLocation,player&user,double currentTime, Console & g_Console, double &boostcd)// boost left
 {
 	if(currentTime >= boostcd)
 	{
@@ -123,7 +123,7 @@ void item1left(PMAP MapCollision, COORD &charLocation,player&user,double current
     }
 	}
 }
-void item1down(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd)
+void item1down(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd)// boost down
 {
 	if(currentTime >= boostcd)
 	{
@@ -181,7 +181,7 @@ void item1down(PMAP MapCollision, COORD &charLocation,player&user, double curren
 	}
 	}
 }
-void item1right(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd)
+void item1right(PMAP MapCollision, COORD &charLocation,player&user, double currentTime, Console & g_Console, double &boostcd)// boost right
 {
 	if(currentTime >= boostcd)
 	{
@@ -240,20 +240,20 @@ void item1right(PMAP MapCollision, COORD &charLocation,player&user, double curre
 	}
 }
 
-void item2(player&user)
+void item2(player&user) // Bomb
 {
 	user.Cexplode = 1;
 	user.bomb = 0;
 }
 
-void item3(player&user,SGameChar icon, double currentTime, double &invisExp)
+void item3(player&user,SGameChar icon, double currentTime, double &invisExp) // Invisible potion
 {
 	invisExp = currentTime + 5;
 	user.invispot = 0;
 	user.invis = 1;
 }
 
-void medpack(player&user)
+void medpack(player&user) // Medpack
 {
 	if (user.health < 4)
 	{

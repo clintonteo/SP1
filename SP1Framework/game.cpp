@@ -262,7 +262,7 @@ void update(double dt)
 			}
             break;
 		
-        case S_SPLASHSCREEN2: splashStage2Wait();
+        case S_SPLASHSCREEN2: splashNextStageWait() ;
 			break;
 		
         case S_GAME2:
@@ -290,7 +290,7 @@ void update(double dt)
 				}
 				break;
 
-			case S_SPLASHSCREEN3: splashStage3Wait();
+			case S_SPLASHSCREEN3: splashNextStageWait();
 				break;
 
 			case S_GAME3:
@@ -318,7 +318,7 @@ void update(double dt)
 				}
 			break;
         
-			case S_SPLASHSCREEN4: splashStage4Wait();
+			case S_SPLASHSCREEN4: splashNextStageWait();
 				break;
 
 			case S_GAME4:
@@ -480,34 +480,13 @@ void splashScreenWait()    // waits for time to pass in splash screen
 		g_dElapsedTime -= 3;
 	}
 }
-void splashStage2Wait()    // waits for time to pass in splash screen
+void splashNextStageWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
     {
-		g_eGameState = S_GAME2;
+		g_eGameState = static_cast<EGAMESTATES>(g_eGameState + 1);
 		g_dElapsedTime -= 3;
 	}
-}
-void splashStage3Wait()    // waits for time to pass in splash screen
-{
-    if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
-	{
-        g_eGameState = S_GAME3;
-		g_dElapsedTime -= 3;
-	}
-}
-void splashStage4Wait()    // waits for time to pass in splash screen
-{
-    if (g_dElapsedTime >= Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
-	{
-        g_eGameState = S_GAME4;
-		g_dElapsedTime -= 3;
-	}
-}
-void splashGameoverWait()
-{
-    if (g_dElapsedTime > Endtime + 3) // wait for 3 seconds to switch to game mode, else do nothing
-        g_eGameState = S_SPLASHSCREEN;
 }
 
 void gameplay()            // gameplay logic

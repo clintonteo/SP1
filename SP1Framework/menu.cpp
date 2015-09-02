@@ -385,7 +385,7 @@ void help(Console &console, player&user)
 	console.writeToBuffer(25, 5, "Instructions", 0xfc);
 	console.writeToBuffer(25, 7, "Arrow keys to move.", 0xf0);
 	console.writeToBuffer(25, 8, "Z to select item.", 0xf0);
-	console.writeToBuffer(25, 9, "Space to use item.", 0xf0);
+	console.writeToBuffer(25, 9, "Hold Space to use item.", 0xf0);
 	console.writeToBuffer(25, 10, ": is empty space.", 0xf0);
 	console.writeToBuffer(25, 11, "; is a damaging trap.", 0xf0);
 	console.writeToBuffer(25, 12, "= is lava.", 0xf0);
