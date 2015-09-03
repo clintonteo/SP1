@@ -1,0 +1,8 @@
+You got a bomb! @1secs
+You got an invis potion! @2secs
+Boost is ready! @2secs
+You have a minute left! @270secs
+You have a minute left! @270secs
+You have a minute left! @270secs
+You have a minute left! @270secs
+You died! @330secs
