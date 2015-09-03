@@ -1,8 +1,45 @@
-You got a bomb! @1secs
-You got an invis potion! @2secs
-Boost is ready! @2secs
-You have a minute left! @270secs
-You have a minute left! @270secs
-You have a minute left! @270secs
-You have a minute left! @270secs
-You died! @330secs
+You have been hurt! @2secs
+X Switch Activated! @9secs
+Boost is ready! @16secs
+Boost is ready! @20secs
+Y Switch Activated! @20secs
+Boost is ready! @28secs
+You have been healed! @29secs
+Boost is ready! @33secs
+Boost is ready! @36secs
+Stage Completed! @38secs
+You got a bomb! @61secs
+You have been hurt! @64secs
+Boost is ready! @65secs
+Boost is ready! @70secs
+Boost is ready! @76secs
+Boost is ready! @90secs
+Boost is ready! @94secs
+X Switch Activated! @94secs
+Boost is ready! @101secs
+Boost is ready! @106secs
+You have been hurt! @111secs
+Boost is ready! @111secs
+You have been healed! @120secs
+Stage Completed! @122secs
+X Switch Activated! @126secs
+You got an invis potion! @132secs
+Y Switch Activated! @136secs
+Z Switch Activated! @159secs
+You got a bomb! @161secs
+You have been healed! @168secs
+You are invis! @183secs
+Boost is ready! @188secs
+Stage Completed! @188secs
+You got a bomb! @200secs
+X Switch Activated! @207secs
+Z Switch Activated! @227secs
+You got an invis potion! @244secs
+Y Switch Activated! @251secs
+Boost is ready! @262secs
+You have been hurt! @266secs
+Boost is ready! @268secs
+Boost is ready! @275secs
+Boost is ready! @278secs
+You are invis! @280secs
+Stage Completed! @286secs
