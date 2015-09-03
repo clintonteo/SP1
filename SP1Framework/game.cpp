@@ -885,6 +885,7 @@ void processUserInput()
 		extime2 = 0;
 		extime3 = 0;
 		extime4 = 0;
+		abilitydelay = 0;
 		user.points = 0;
 		user.start = 0;
 	}
