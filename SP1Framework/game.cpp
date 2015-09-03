@@ -21,6 +21,8 @@ double  g_dElapsedTime;
 double  g_dDeltaTime;
 bool    g_abKeyPressed[K_COUNT];
 
+double abilitydelay = 0;
+
 COORD consoleSize;
 COORD blocks;
 COORD mob;
@@ -405,10 +407,6 @@ void update(double dt)
 void reset()
 {
 	user.select = 0;
-	for(int i=0; i < 6; ++i)
-	{
-		user.inventory[i] = 'f';
-	}
 	user.inventoryitems.clear();
     count = 0;
 	mapUpdate.boost = 0;
@@ -748,10 +746,10 @@ void moveCharacter()
     }
 
     // SELECTON
-    if ((g_abKeyPressed[K_SELECT])/* && (user.inventory[0] == 't') */&& (user.select < user.inventoryitems.size() && g_dElapsedTime > stopswitch))
+    if ((g_abKeyPressed[K_SELECT]) && g_dElapsedTime > stopswitch)
     {
         user.select += 1;
-        if (user.select >= user.inventoryitems.size()/*+1*/)
+        if (user.select >= user.inventoryitems.size())
         {
             user.select = 0;
         }
@@ -761,7 +759,6 @@ void moveCharacter()
     // INVENTORY
     if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I') && (mapUpdate.boost == 0)) // Boost
     {
-        user.inventory[count] = 't';
         user.inventoryitems.push_back("Boost");
         ++count;
 		//user.boost = 1;
@@ -769,20 +766,16 @@ void moveCharacter()
 
     if ((MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J') && (user.bomb == 0) && (mapUpdate.bombtaken == 0)) // Bomb
     {
-        user.inventory[count] = 't';
         user.inventoryitems.push_back("Bomb");
         ++count;
 		//user.bomb = 1;
     }
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && mapUpdate.invistaken == 0) //Invis
 	{
-		user.inventory[count] = 't';
         user.inventoryitems.push_back("Invis Pot");
         ++count;
 	}
 
-
-    
 	//RESET
 	if(g_abKeyPressed[K_RESET])
 	{
@@ -799,7 +792,7 @@ void moveCharacter()
 
     //Use Items
     //Boost
-    if (mapUpdate.boost == 1 && /*user.inventory[user.select] == 't'*/ user.inventoryitems[user.select] == "Boost")
+    if (mapUpdate.boost == 1 && user.inventoryitems[user.select] == "Boost")
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
 		{
@@ -818,56 +811,33 @@ void moveCharacter()
 			item1right(MapCollision, g_sChar.m_cLocation,user, g_dElapsedTime, g_Console, boostcd , mapUpdate);
 		}
 	}
+
 	//Bomb
-    if(user.bomb == 1 && user.inventoryitems[user.select] == "Bomb"/*user.inventory[user.select] == 't'*/)
+    if(user.bomb == 1 && user.inventoryitems[user.select] == "Bomb" && g_abKeyPressed[K_USE] && abilitydelay < g_dElapsedTime)
 	{
-		if(g_abKeyPressed[K_USE])
-		{
-			item2(user, mapUpdate, MapCollision, g_sChar.m_cLocation);
-		}
-		/*if(MapCollision->data[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X] == 'C')
-		{
-			if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
-			{
-				item2(user , mapUpdate);
-				user.inventory[user.select] = 'f';
-			}
-		}
-		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1] == 'C')
-		{
-			if(g_abKeyPressed[K_LEFT] && g_abKeyPressed[K_USE])
-			{
-				item2(user , mapUpdate);
-				user.inventory[user.select] = 'f';
-			}
-		}
-		if(MapCollision->data[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X] == 'C')
-		{
-			if(g_abKeyPressed[K_DOWN] && g_abKeyPressed[K_USE])
-			{
-				item2(user , mapUpdate);
-				user.inventory[user.select] = 'f';
-			}
-		}
-		if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1] == 'C')
-		{
-			if(g_abKeyPressed[K_RIGHT] && g_abKeyPressed[K_USE])
-			{
-				item2(user , mapUpdate);
-				user.inventory[user.select] = 'f';
-			}
-		}*/
+		item2(user, mapUpdate, MapCollision, g_sChar.m_cLocation);
+        abilitydelay = g_dElapsedTime + .2;
 	}
 	
 	//Invis
-	if(user.invispot == 1 && user.inventoryitems[user.select] == "Invis Pot")
+	if(user.invispot == 1 && user.inventoryitems[user.select] == "Invis Pot" && g_abKeyPressed[K_USE] && abilitydelay < g_dElapsedTime)
 	{
-		if (g_abKeyPressed[K_USE])
-		{
-			item3(user,g_sChar, g_dElapsedTime, invisExp);
-			user.inventory[user.select] = 'f';
-			writeLog("You are invis!", g_dElapsedTime);
-		}
+        for (int find_invis = 0; find_invis <  user.inventoryitems.size(); ++find_invis)
+        {
+            if (user.inventoryitems[find_invis] == "Invis Pot")
+            {
+                user.inventoryitems.erase(user.inventoryitems.begin() + find_invis);
+                if (user.select >= user.inventoryitems.size())
+                {
+                    user.select = 0;
+                }
+                break;
+            }
+        }
+
+		item3(user,g_sChar, g_dElapsedTime, invisExp);
+        abilitydelay = g_dElapsedTime + .2;
+		writeLog("You are invis!", g_dElapsedTime);
     }
 
     // quits if player lives at 0

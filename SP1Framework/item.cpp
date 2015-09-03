@@ -247,21 +247,69 @@ void item2(player&user , mapBool & mapUpdate, PMAP MapCollision, COORD &charLoca
 	if(MapCollision->data[charLocation.Y - 1][charLocation.X] == 'C')
 	{
 		mapUpdate.Cexplode = 1;
+        for (int find_bomb = 0; find_bomb <  user.inventoryitems.size(); ++find_bomb)
+        {
+            if (user.inventoryitems[find_bomb] == "Bomb")
+            {
+                user.inventoryitems.erase(user.inventoryitems.begin() + find_bomb);
+                if (user.select >= user.inventoryitems.size())
+                {
+                    user.select = 0;
+                }
+                break;
+            }
+        }
 		user.bomb = 0;
 	}
-	else if(MapCollision->data[charLocation.Y + 1][charLocation.X] == 'C')
+	if(MapCollision->data[charLocation.Y + 1][charLocation.X] == 'C')
 	{
 		mapUpdate.Cexplode = 1;
+        for (int find_bomb = 0; find_bomb <  user.inventoryitems.size(); ++find_bomb)
+        {
+            if (user.inventoryitems[find_bomb] == "Bomb")
+            {
+                user.inventoryitems.erase(user.inventoryitems.begin() + find_bomb);
+                if (user.select >= user.inventoryitems.size())
+                {
+                    user.select = 0;
+                }
+                break;
+            }
+        }
 		user.bomb = 0;
 	}
-	else if(MapCollision->data[charLocation.Y][charLocation.X - 1] == 'C')
+	if(MapCollision->data[charLocation.Y][charLocation.X - 1] == 'C')
 	{
 		mapUpdate.Cexplode = 1;
+        for (int find_bomb = 0; find_bomb <  user.inventoryitems.size(); ++find_bomb)
+        {
+            if (user.inventoryitems[find_bomb] == "Bomb")
+            {
+                user.inventoryitems.erase(user.inventoryitems.begin() + find_bomb);
+                if (user.select >= user.inventoryitems.size())
+                {
+                    user.select = 0;
+                }
+                break;
+            }
+        }
 		user.bomb = 0;
 	}
-	else if(MapCollision->data[charLocation.Y][charLocation.X + 1] == 'C')
+	if(MapCollision->data[charLocation.Y][charLocation.X + 1] == 'C')
 	{
 		mapUpdate.Cexplode = 1;
+        for (int find_bomb = 0; find_bomb <  user.inventoryitems.size(); ++find_bomb)
+        {
+            if (user.inventoryitems[find_bomb] == "Bomb")
+            {
+                user.inventoryitems.erase(user.inventoryitems.begin() + find_bomb);
+                if (user.select >= user.inventoryitems.size())
+                {
+                    user.select = 0;
+                }
+                break;
+            }
+        }
 		user.bomb = 0;
 	}
 }

@@ -11,23 +11,13 @@ struct player
 	bool start;
     int lives;
     int health;
-    char inventory[6];
     vector<string>inventoryitems;
-	//bool switch1; //m
-	//bool switch2; //m
-	//bool switch3; //m
-	//bool TTaken; //m
     int points; // Treasure
     double final_score; // Final Score
     int select;
-	//bool boost; //m
 	bool bomb; 
-	//bool bombtaken; //m
-	//bool Cexplode; //m
 	bool invispot;  
 	bool invis; // invis state
-	//bool invistaken; //m
-	//bool MedsTaken; //m
 	COORD block;
 	double timelimit;
 	int difficulty;

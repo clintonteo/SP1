@@ -94,27 +94,19 @@ void renderInventory( player & user , Console & g_Console , double &boostcd , do
     g_Console.writeToBuffer(59 , 9, "Inventory: ", 10);
 
     for (int i = 0; i < user.inventoryitems.size(); ++i)
-    {
-        if (user.inventory[i] == 't')
-        {
-            g_Console.writeToBuffer(57, 10 + i , user.inventoryitems[i] , 10);
+    {   
+        g_Console.writeToBuffer(57, 10 + i , user.inventoryitems[i] , 10);
 
-            if (g_dElapsedTime >= boostcd && map.boost == 1 && user.inventoryitems[user.select] == "Boost")
+        if (g_dElapsedTime >= boostcd && map.boost == 1 && user.inventoryitems[user.select] == "Boost")
+        {
+            for (int find_boost = 0; find_boost <  user.inventoryitems.size(); ++find_boost)
             {
-                for (int find_boost = 0; find_boost <  user.inventoryitems.size(); ++find_boost)
+                if (user.inventoryitems[find_boost] == "Boost")
                 {
-                    if (user.inventoryitems[find_boost] == "Boost")
-                    {
-                        g_Console.writeToBuffer(62, 10 + find_boost , " (Ready)" , 10);
-                    }
+                    g_Console.writeToBuffer(62, 10 + find_boost , " (Ready)" , 10);
                 }
             }
         }
-
-        /*if (g_dElapsedTime >= boostcd && user.boost == 1 && user.inventoryitems[user.select] == "Boost")
-        {
-            g_Console.writeToBuffer(62, 10 + i , "(R)" , 10);
-        }*/
     }
     
 }
@@ -161,11 +153,11 @@ void calculateFinal ( player & user , double Endtime )
     }
 
     int pointsAdded = 0;
-    for (int time_score = 0; time_score <= (user.timelimit - Endtime); time_score += 60)
+    for (int time_score = 60; time_score <= (user.timelimit - Endtime); time_score += 60)
     {
-        user.final_score += time_score;
         pointsAdded += 50;
     }
+    user.final_score += pointsAdded;
 
     user.final_score += (user.points*500); // Treasure Count
 
@@ -200,7 +192,7 @@ void selector( player & user , Console & g_Console )
 {
     g_Console.writeToBuffer(59, 13 , "Item selected: ", 10);
 
-    if (user.inventory[user.select] == 't')
+    if (!user.inventoryitems.empty())
     {
         g_Console.writeToBuffer(59, 14 , user.inventoryitems[user.select] , 10);
     }
@@ -402,7 +394,7 @@ void highscoreBoard ( player & user , Console & g_Console )
     }
 }
 
-// Check if name already used. <--IN PROGRESS-->
+// Check if name already used.
 void checkName( player & user , Console & g_Console ) 
 {
     std::fstream highscoreCheck ("highscore.txt");
