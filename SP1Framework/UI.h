@@ -18,7 +18,7 @@ struct player
 	//bool switch3; //m
 	//bool TTaken; //m
     int points; // Treasure
-    int final_score; // Final Score
+    double final_score; // Final Score
     int select;
 	//bool boost; //m
 	bool bomb; 

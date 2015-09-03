@@ -145,37 +145,42 @@ void calculateFinal ( player & user , double Endtime )
     if (user.stage1 == 1)
     {
         user.final_score += 1000;
-        for (int time_score = 0; time_score <= (user.timelimit - Endtime); time_score += 60)
-        {
-            user.final_score += 50;
-        }
-
         if (user.stage2 == 1)
         {
             user.final_score += 1000;
-            for (int time_score = 0; time_score <= (user.timelimit - Endtime); time_score += 60)
-            {
-                user.final_score += time_score;
-            }
+            
             if (user.stage3 == 1)
             {
                 user.final_score += 1000;
-                for (int time_score = 0; time_score <= (user.timelimit - Endtime); time_score += 60)
+                if (user.stage4 == 1)
                 {
-                    user.final_score += time_score;
+                    user.final_score += 1000;
                 }
             }
-
         }
     }
 
-    user.final_score += (user.points*500);
+    int pointsAdded = 0;
+    for (int time_score = 0; time_score <= (user.timelimit - Endtime); time_score += 60)
+    {
+        user.final_score += time_score;
+        pointsAdded += 50;
+    }
+
+    user.final_score += (user.points*500); // Treasure Count
+
 	if(user.difficulty == 3)
-		user.final_score *=0.5;
+    {
+		user.final_score *= 0.5;
+    }
 	else if(user.difficulty == 1)
-		user.final_score *=1.5;
+    {
+		user.final_score *= 1.5;
+    }
 	else if(user.difficulty == 2)
+    {
 		user.final_score *= 2;
+    }
 }
 
 //Final Score
