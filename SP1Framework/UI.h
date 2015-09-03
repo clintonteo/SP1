@@ -30,6 +30,7 @@ struct player
     bool wroteHighScore;
 	char icon;
     bool samename;
+	bool aniDone;
 };
 
 struct mapBool
@@ -43,6 +44,15 @@ struct mapBool
 	bool Cexplode; 
     bool invistaken; 
 	bool MedsTaken; 
+};
+
+struct scoreboard
+{
+	int stage1;
+	int stage2;
+	int stage3;
+	int stage4;
+	bool pointcalcdone;
 };
 
 void timer (double g_dElapsedTime, Console & g_Console, player & user);
@@ -60,5 +70,6 @@ void highscoreWrite ( player & user , Console & g_Console );
 void highscoreRead ( player & user , Console & g_Console );
 void highscoreBoard ( player & user , Console & g_Console );
 void checkName( player & user , Console & g_Console );
+void animateScoreBoard(Console & console, player &user, scoreboard &aniScore, double time, double EndTime);
 
 #endif // _UI_H

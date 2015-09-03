@@ -82,6 +82,9 @@ bool   keydownChar[26];
 int    i;
 bool   enterpressed = false;
 
+//Scoreboard Animation
+scoreboard aniScore;
+
 // Game specific variables here
 SGameChar g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
@@ -489,9 +492,13 @@ void render()
 			break;
         case S_NAME:
             renderEnterName();
+			g_dElapsedTime = 0;
             break;
 
         case S_GAMEOVER:
+			if(user.aniDone == 0)
+            animateScoreBoard(g_Console,user,aniScore, g_dElapsedTime, Endtime);
+			else
             renderGameover();
 			break;
     }
@@ -886,6 +893,7 @@ void processUserInput()
 		extime3 = 0;
 		extime4 = 0;
 		abilitydelay = 0;
+		user.aniDone = 0;
 		user.points = 0;
 		user.start = 0;
 	}

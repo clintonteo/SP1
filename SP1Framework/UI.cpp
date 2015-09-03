@@ -22,6 +22,13 @@ vector<string>highscore;
 
 int firstLine = 0;
 
+//Scoreboard Animation Initializations
+double delay = 0;
+int treasurecalc = 0;
+int Tscore = 60;
+int finaltscore = 0;
+int timepoints = 0;
+
 //Background
 void background( Console & g_Console )
 {
@@ -416,4 +423,157 @@ void checkName( player & user , Console & g_Console )
         }
     }
     highscoreCheck.close();
+}
+
+void animateScoreBoard(Console & console, player &user, scoreboard &aniScore, double time, double EndTime)
+{
+	int randomNumber;
+	console.writeToBuffer(15, 5, "SCORE CALCULATION", 0xf9);
+
+	if(time < 1.5)
+	{
+		randomNumber = rand() % 1000 + 1;
+		std::ostringstream strs;
+		strs << randomNumber;
+		string str;
+		str += "Stage 1 Points      : ";
+		str += strs.str();
+		console.writeToBuffer(15, 7, str, 0xf0);
+	}else
+	{
+		if(user.stage1 == 1)
+		{
+			console.writeToBuffer(15, 7, "Stage 1 Points      : 1000", 0xf0);
+			aniScore.stage1 = 1000;
+		}else
+			console.writeToBuffer(15, 7, "Stage 1 Points      : 0", 0xf0);
+	}
+
+	if(time < 2)
+	{
+		randomNumber = rand() % 1000 + 1;
+		std::ostringstream strs;
+		strs << randomNumber;
+		string str;
+		str += "Stage 2 Points      : ";
+		str += strs.str();
+		console.writeToBuffer(15, 8, str, 0xf0);
+
+	}else
+	{
+		if(user.stage2 == 1)
+		{
+			console.writeToBuffer(15, 8, "Stage 2 Points      : 1000", 0xf0);
+			aniScore.stage2 = 1000;
+		}else
+			console.writeToBuffer(15, 8, "Stage 2 Points      : 0", 0xf0);
+	}
+
+	if(time < 2.5)
+	{
+		randomNumber = rand() % 1000 + 1;
+		std::ostringstream strs;
+		strs << randomNumber;
+		string str;
+		str += "Stage 3 Points      : ";
+		str += strs.str();
+		console.writeToBuffer(15, 9, str, 0xf0);
+	}else
+	{
+		if(user.stage3 == 1)
+		{
+			console.writeToBuffer(15, 9, "Stage 3 Points      : 1000", 0xf0);
+			aniScore.stage3 = 1000;
+		}else
+			console.writeToBuffer(15, 9, "Stage 3 Points      : 0", 0xf0);
+	}
+
+	if(time < 3)
+	{
+		randomNumber = rand() % 1000 + 1;
+		std::ostringstream strs;
+		strs << randomNumber;
+		string str;
+		str += "Stage 4 Points      : ";
+		str += strs.str();
+		console.writeToBuffer(15, 10, str, 0xf0);
+	}else
+	{
+		if(user.stage4 == 1)
+		{
+			console.writeToBuffer(15, 10, "Stage 4 Points      : 1000", 0xf0);
+			aniScore.stage4 = 1000;
+		}else
+			console.writeToBuffer(15, 10, "Stage 4 Points      : 0", 0xf0);
+	}
+
+	if(time > 3)
+	{
+		if(treasurecalc < user.points*500 && time > delay)
+		{
+		treasurecalc+=50;
+		delay = time + 0.001;
+		}
+		std::ostringstream strs;
+		strs << treasurecalc;
+		string str;
+		str += "Treasure Points     : ";
+		str += strs.str();
+		if(treasurecalc > 0)
+		console.writeToBuffer(15, 11, str, 0xf0);
+		else
+			console.writeToBuffer(15,11,"Treasure Points     : 0", 0xf0);
+	}
+
+	if(Tscore <= user.timelimit - EndTime)
+	{
+		Tscore += 60;
+		timepoints += 50;
+	}
+
+	if(time > 5)
+	{
+		if(finaltscore < timepoints && time > delay)
+		{
+			finaltscore += 25;
+			delay = time + 0.01;
+		}
+		std::ostringstream strs;
+		strs << finaltscore;
+		string str;
+		str += "Time Score          : ";
+		str += strs.str();
+		console.writeToBuffer(15, 12, str, 0xf0);
+		aniScore.pointcalcdone = 1;
+	}
+	
+	if(aniScore.pointcalcdone == 1)
+	{
+	std::ostringstream strs;
+	int finale = aniScore.stage1 + aniScore.stage2 + aniScore.stage3 + aniScore.stage4 + finaltscore + treasurecalc;
+	if(user.difficulty == 0)
+	console.writeToBuffer(15, 13, "Difficulty Modifier : 1x", 0xf0);
+	else if(user.difficulty == 1)
+	{
+	console.writeToBuffer(15, 13, "Difficulty Modifier : 1.5x", 0xf0);
+		finale*=1.5;
+	}
+	else if(user.difficulty == 2)
+	{
+	console.writeToBuffer(15, 13, "Difficulty Modifier : 2x", 0xf0);
+		finale*=2;
+	}
+	else if (user.difficulty == 3)
+	{
+	console.writeToBuffer(15, 13, "Difficulty Modifier : 0.5x", 0xf0);
+		finale*=0.5;
+	}
+	strs << finale;
+	string str;
+	str += "Final Score         : ";
+	str += strs.str();
+	console.writeToBuffer(15, 15, str, 0xf0);
+	}
+	if(time > 12)
+		user.aniDone = 1;
 }
