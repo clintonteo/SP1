@@ -249,7 +249,7 @@ void update(double dt)
             break;
         
         case S_GAME1:
-			if(init1 == 0)
+			if(init1 == 0)// initialise the stage such as player starting location and monster spawns
 			{
 				g_sChar.m_cLocation.X = 3;
 				g_sChar.m_cLocation.Y = 3;
@@ -258,15 +258,15 @@ void update(double dt)
 				boostcd = 0;
 				init1 = 1;
 			}
-			if (extime1 == 0)
+			if (extime1 == 0)// initialise variables that are not supposed to be reset on death or pitfall trap such as treasures and time limit extensions
 			{
 				mapUpdate.TTaken = 0;
 				startGame(user, range, blind);
 				extime1 = 1;
 			}
-			user.start = 1;
+			user.start = 1;// activates the time limit
 			gameplay(); // gameplay logic when we are in the game
-			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
+			if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')// exit
 			{
                 writeLog("Stage Completed!" , g_dElapsedTime);
 				Endtime = g_dElapsedTime;
@@ -275,7 +275,7 @@ void update(double dt)
 			}
             break;
 		
-        case S_SPLASHSCREEN2: splashNextStageWait() ;
+        case S_SPLASHSCREEN2: splashNextStageWait();
 			break;
 		
         case S_GAME2:
@@ -292,7 +292,7 @@ void update(double dt)
 				reset();
 				spawnblock(blocks);
 				spawnmob(allMobs);
-				for(int i = 0; i < allMobs.size(); i++)
+				for(int i = 0; i < allMobs.size(); i++)// sets mobs' move delay based on difficulty
 				{
 					allMobs[i].movedelay = monSpd(user, allMobs[i]);
 				}
@@ -776,7 +776,7 @@ void moveCharacter()
         ++count;
 	}
 
-	//RESET
+	//RESET (for debugging by skipping stages)
 	if(g_abKeyPressed[K_RESET])
 	{
 		//g_eGameState = S_SPLASHSCREEN2;
@@ -789,9 +789,8 @@ void moveCharacter()
         user.points += 1;
 		mapUpdate.TTaken = 1; 
     }
-
-    //Use Items
-    //Boost
+    //Item Usage
+    //-----Boost-----
     if (mapUpdate.boost == 1 && user.inventoryitems[user.select] == "Boost")
 	{
 		if(g_abKeyPressed[K_UP] && g_abKeyPressed[K_USE])
@@ -811,15 +810,13 @@ void moveCharacter()
 			item1right(MapCollision, g_sChar.m_cLocation,user, g_dElapsedTime, g_Console, boostcd , mapUpdate);
 		}
 	}
-
-	//Bomb
+	//-----Bomb-----
     if(user.bomb == 1 && user.inventoryitems[user.select] == "Bomb" && g_abKeyPressed[K_USE] && abilitydelay < g_dElapsedTime)
 	{
 		item2(user, mapUpdate, MapCollision, g_sChar.m_cLocation);
         abilitydelay = g_dElapsedTime + .2;
 	}
-	
-	//Invis
+	//-----Invis-----
 	if(user.invispot == 1 && user.inventoryitems[user.select] == "Invis Pot" && g_abKeyPressed[K_USE] && abilitydelay < g_dElapsedTime)
 	{
         for (int find_invis = 0; find_invis <  user.inventoryitems.size(); ++find_invis)
@@ -840,7 +837,7 @@ void moveCharacter()
 		writeLog("You are invis!", g_dElapsedTime);
     }
 
-    // quits if player lives at 0
+    // respawn if player health is at 0
     if (user.health <= 0)
     {
         //g_bQuitGame = true;
@@ -876,7 +873,7 @@ void moveCharacter()
 }
 void processUserInput()
 {
-    // quits the game if player hits the escape key
+    // resets the game and goes back to main menu if player hits the escape key
     if (g_abKeyPressed[K_ESCAPE])
 	{
 		g_eGameState = S_MENU;
@@ -1106,7 +1103,7 @@ void renderGame()
     background ( g_Console );
     renderCharacter(user);  // renders the character into the buffer
 
-    // Alerts
+    // Switch Alerts
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '1' && mapUpdate.switch1 != 1){
 		mapUpdate.switch1 = 1;
         writeLog("X Switch Activated!", g_dElapsedTime);
@@ -1121,30 +1118,33 @@ void renderGame()
 		mapUpdate.switch3 = 1;
         writeLog("Z Switch Activated!", g_dElapsedTime);
 	}
-
+	// ---If boost is taken---
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'I' && mapUpdate.boost == 0)
 	{
 		mapUpdate.boost = 1;
 	}
+	// ---If bomb is taken---
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'J' && mapUpdate.bombtaken == 0 && user.bomb == 0)
 	{
 		user.bomb = 1;
 		mapUpdate.bombtaken = 1;
         writeLog("You got a bomb!", g_dElapsedTime);
 	}
+	// ---If invisible potion is taken---
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'L' && user.invispot == 0 && mapUpdate.invistaken == 0)
 	{
 		user.invispot = 1;
 		mapUpdate.invistaken = 1;
         writeLog("You got an invis potion!", g_dElapsedTime);
 	}
-	// Medpack
+	//-----Medpack-----
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'M' && mapUpdate.MedsTaken == 0 && user.health != 5)
 	{
 		medpack(user , mapUpdate);
         writeLog("You have been healed!", g_dElapsedTime);
 	}
-	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0 && trapdamage == 0)
+	//-----Damage Trap----
+	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'D' && user.health > 0 && trapdamage == 0)// trapdamage is to prevent players to take more damage than intended
 	{
 		trapdmg(user);
 		writeLog("You have been hurt!", g_dElapsedTime);
@@ -1154,16 +1154,15 @@ void renderGame()
 	{
 		trapdamage = 0;
 	}
-
-	// Pitfall
+	// -----Pitfall-----
 	if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'P' && user.health > 0)
 	{
 		reset();
-		if(tutorial_init == 1)
+		if(tutorial_init == 1)// for tutorial stage
 		{
 			tutorial_init = 0;
 		}
-		else
+		else // to reset the init values for the current and previous stage
 		{
 			if (init4 == 1)
 			{
@@ -1180,14 +1179,14 @@ void renderGame()
 				init2 = 0;
 				init1 = 0;
 			}
-			g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 3);
+			g_eGameState = static_cast<EGAMESTATES>(g_eGameState - 3);// Force players back to the splashscreen of the previous stage
 		}
 	}
 
-    //Lava
-    if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0 && g_dElapsedTime > lavastop)
+    //-----Lava-----
+    if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == '=' && user.health > 0 && lavadamage == 0 && g_dElapsedTime > lavastop)// lavadamage is the same purpose as trapdamage, lavastop prevents more lives being removed than intended
 	{
-		if(g_sChar.m_cLocation.X == blocks.X && g_sChar.m_cLocation.Y == blocks.Y)
+		if(g_sChar.m_cLocation.X == blocks.X && g_sChar.m_cLocation.Y == blocks.Y)// If player is ontop of a pushable block in the lava
 		{
 			lavadamage = 1;
 		}
@@ -1202,11 +1201,12 @@ void renderGame()
 	{
 		lavadamage = 0;
 	}
-	// time limit
+	//----Remove all player lives if g_dElapsedTime exceeds the time limit-----
 	if (g_dElapsedTime >= user.timelimit && user.start == 1)
 	{
 		user.lives -= user.lives;
 	}
+
 	if (user.lives <= 0)
 	{
 		colour(BACKGROUND_RED);
@@ -1224,6 +1224,7 @@ void renderGame()
         writeLog("Boost is ready!", g_dElapsedTime);
         boostcd = -1;
     }
+	//-----If invisible effect wears off-----
 	if(g_dElapsedTime >= invisExp && user.invis == 1)
 	{
 		user.invis = 0;
@@ -1263,7 +1264,7 @@ void renderCharacter(player&user)
 {
     // Draw the location of the character
     WORD charColor = 0x0C;
-    if (g_sChar.m_bActive && user.invis == 1)
+    if (g_sChar.m_bActive && user.invis == 1)// change colour of player if invisible
     {
         charColor = 0x12;
     }

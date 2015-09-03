@@ -33,6 +33,7 @@ Menu
 -Selector
 -Structure
 -Animation
+Character Selection
 
 Everyone:
 Debugging. Lots of it.
