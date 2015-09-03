@@ -43,7 +43,11 @@ struct mapBool
     bool bombtaken; 
 	bool Cexplode; 
     bool invistaken; 
-	bool MedsTaken; 
+	bool MedsTaken;
+    bool TutorialMsg1;
+    bool TutorialMsg2;
+    bool TutorialMsg3;
+    bool TutorialMsg4;
 };
 
 struct scoreboard

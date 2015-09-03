@@ -139,6 +139,10 @@ void init( void )
     log.close();
     user.gameover = 0;
     user.name;
+    mapUpdate.TutorialMsg1 = 0;
+    mapUpdate.TutorialMsg2 = 0;
+    mapUpdate.TutorialMsg3 = 0;
+    mapUpdate.TutorialMsg4 = 0;
     //user.wroteHighScore = 0;
 }
 //--------------------------------------------------------------
@@ -236,6 +240,10 @@ void update(double dt)
 				{
 					allMobs[i].movedelay = 0.3;
 				}
+                mapUpdate.TutorialMsg1 = 0;
+                mapUpdate.TutorialMsg2 = 0;
+                mapUpdate.TutorialMsg3 = 0;
+                mapUpdate.TutorialMsg4 = 0;
             }
             gameplay();
             if(MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'H')
@@ -710,38 +718,30 @@ void moveCharacter()
     }
     
     //Tutorial Msg
-    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'a')
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'a' && mapUpdate.TutorialMsg1 == 0)
     {
-            std::ofstream log;
-            log.open("log.txt", std::fstream::trunc);
-            log.close();
             writeLog("Traps and Medkits ahead" , g_dElapsedTime);
             writeLog("Traps damage you" , g_dElapsedTime);
+            mapUpdate.TutorialMsg1 = 1;
     }
 
-    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'b')
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'b' && mapUpdate.TutorialMsg2 == 0)
     {
-            std::ofstream log;
-            log.open("log.txt", std::fstream::trunc);
-            log.close();
             writeLog("Pitfalls Ahead" , g_dElapsedTime);
             writeLog("They make you fall a level" , g_dElapsedTime);
+            mapUpdate.TutorialMsg2 = 1;
     }
         
-    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'c')
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'c' && mapUpdate.TutorialMsg3 == 0)
     {
-        std::ofstream log;
-        log.open("log.txt", std::fstream::trunc);
-        log.close();
         writeLog("Bomb ahead, use it" , g_dElapsedTime);
+        mapUpdate.TutorialMsg3 = 1;
     }
 
-    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'd')
+    if (MapCollision->data[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] == 'd' && mapUpdate.TutorialMsg4 == 0)
     {
-        std::ofstream log;
-        log.open("log.txt", std::fstream::trunc);
-        log.close();
         writeLog("Invisibility ahead, avoid enemy" , g_dElapsedTime);
+        mapUpdate.TutorialMsg4 = 1;
     }
     
 
